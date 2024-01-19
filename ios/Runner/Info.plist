@@ -2,6 +2,18 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+    <key>NSAlertsUsageDescription</key>
+    <string>Notify you about important updates</string>
+    <key>NSCriticalAlertsUsageDescription</key>
+    <string>Notify you about critical updates</string>
+    <key>NSCameraUsageDescription</key>
+    <string>Used to capture photos</string>
+    <key>NSPhotoLibraryUsageDescription</key>
+    <string>Used to access photo library</string>
+    <key>NSLocationWhenInUseUsageDescription</key>
+    <string>Your location is needed for XYZ</string>
+    <key>NSLocationAlwaysUsageDescription</key>
+    <string>Your location is needed for ABC</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
