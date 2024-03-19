@@ -1,6 +1,8 @@
-import 'package:app_vacca/login/splashy.dart';
-
+import 'package:app_vacca/features/Ui/permission/permission_file.dart';
+import 'package:app_vacca/features/providerHelper.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
 
 void main() {
   runApp(const MyApp());
@@ -11,12 +13,19 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor:  const Color(0xffF4F4F4)),
-          useMaterial3: false,
-        ),
-        debugShowCheckedModeBanner: false,
-        home: SplashScreen());
+    return ScreenUtilInit(
+      designSize: const Size(700, 890),
+      minTextAdapt: true,
+      splitScreenMode: true,
+      builder: (_, child) {
+        return ChangeNotifierProvider(
+          create: (_) => ProviderHelper(),
+          child: MaterialApp(
+              debugShowCheckedModeBanner: false,
+              home: child),
+        );
+      },
+      child: LoginPage(),
+    );
   }
 }
