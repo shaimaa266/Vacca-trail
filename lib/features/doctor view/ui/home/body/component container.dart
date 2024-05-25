@@ -4,12 +4,14 @@ import 'package:app_vacca/features/display%20view/activity_system/presentation/v
 import 'package:app_vacca/features/display%20view/cow_status/cow_status_screen.dart';
 import 'package:app_vacca/features/display%20view/custom_widgets/constants_mixin.dart';
 import 'package:app_vacca/features/doctor%20view/presentation/manage/state%20managment/providerHelper.dart';
-import 'package:app_vacca/features/doctor%20view/presentation/view/features/activity%20place/doctor%20activity%20place.dart';
-import 'package:app_vacca/features/doctor%20view/presentation/view/features/activity%20system/doctor%20activity%20sys.dart';
-import 'package:app_vacca/features/doctor%20view/presentation/view/features/breeding%20system/doctor%20breeding.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
+
+import '../../../features/activity place/doctor activity place.dart';
+import '../../../features/activity system/doctor activity sys.dart';
+import '../../../features/breeding system/doctor breeding.dart';
 
 class ComponentContainer extends StatelessWidget with MyConstants {
   ComponentContainer({Key? key}) : super(key: key);

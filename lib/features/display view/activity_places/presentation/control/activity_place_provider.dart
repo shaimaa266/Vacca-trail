@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import '../../data/repos/activity_place_repo.dart';
 
 
-
 class ActivityPlacesProvider extends ChangeNotifier {
   final ActivityPlaceRepo activityPlaceRepo;
 
@@ -37,4 +36,3 @@ class ActivityPlacesProvider extends ChangeNotifier {
     }
   }
 }
-

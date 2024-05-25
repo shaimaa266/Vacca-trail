@@ -1,7 +1,7 @@
 
 
 import 'package:app_vacca/features/display%20view/activity_system/presentation/control/activity_system_provider.dart';
-import 'package:app_vacca/features/display%20view/activity_system/presentation/view/first.dart';
+import 'package:app_vacca/features/display%20view/activity_system/presentation/view/activity system view.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

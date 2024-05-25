@@ -20,10 +20,12 @@ void main() {
 class MyApp extends StatelessWidget {
   MyApp({super.key});
   final dio = Dio();
+  //hala token ="15|S1hVLMGgJ73ZOwRVCQPlSSG5vA3p2PtR9PpGWnge39d34a81"  lian1@gmail.com; 123456
+  //shaza token ="4|lKpe9uxto1VyXkKs5SMJAo0Cyh7UaSwYaNk02rEbdbc54d23'; shaimaa@gamil.com 12345
 
   BreedingRepo breedingRepo = BreedingRepo(
     ApiService(
-        baseUrl: 'https://7326-156-197-197-176.ngrok-free.app/api',
+        baseUrl: 'https://4515-45-243-221-149.ngrok-free.app/api',
         dio: Dio(),
         token: "4|lKpe9uxto1VyXkKs5SMJAo0Cyh7UaSwYaNk02rEbdbc54d23"),
   );
@@ -31,11 +33,11 @@ class MyApp extends StatelessWidget {
     ApiService(
         dio: Dio(),
         token: "4|lKpe9uxto1VyXkKs5SMJAo0Cyh7UaSwYaNk02rEbdbc54d23",
-        baseUrl: "https://7326-156-197-197-176.ngrok-free.app/api"),
+        baseUrl: "https://4515-45-243-221-149.ngrok-free.app/api"),
   );
   ActivityPlaceRepo activityPlaceRepo = ActivityPlaceRepo(
     ApiService(
-        baseUrl: 'https://7326-156-197-197-176.ngrok-free.app/api',
+        baseUrl: 'https://4515-45-243-221-149.ngrok-free.app/api',
         dio: Dio(),
         token: "4|lKpe9uxto1VyXkKs5SMJAo0Cyh7UaSwYaNk02rEbdbc54d23"),
   );

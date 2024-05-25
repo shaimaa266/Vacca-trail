@@ -1,10 +1,12 @@
 import 'package:app_vacca/features/display%20view/custom_widgets/animated%20nav%20bar.dart';
 import 'package:app_vacca/features/display%20view/home/home_screen.dart';
-import 'package:app_vacca/features/doctor%20view/presentation/view/features/shared/doctoer_nav_bar.dart';
+
 import 'package:app_vacca/features/doctor%20view/ui/home/body/home%20page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:permission_handler/permission_handler.dart';
+
+import '../../doctor view/features/shared/doctoer_nav_bar.dart';
 
 class PermissionsDialog extends StatefulWidget {
   @override

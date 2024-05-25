@@ -1,6 +1,3 @@
-
-
-import 'package:app_vacca/features/display%20view/activity_system/presentation/view/first.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../custom_widgets/animated nav bar.dart';
@@ -15,7 +12,7 @@ class ActivityPlaces extends StatefulWidget {
   const ActivityPlaces({Key? key}) : super(key: key);
 
   @override
-  State<ActivityPlaces> createState() =>  _ActivityPlacesState();
+  State<ActivityPlaces> createState() => _ActivityPlacesState();
 }
 
 class _ActivityPlacesState extends State<ActivityPlaces> {
@@ -28,9 +25,9 @@ class _ActivityPlacesState extends State<ActivityPlaces> {
     _pageController = PageController();
 
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-      final activitySystemProvider =
-      Provider.of<ActivityPlacesProvider>(context, listen: false);
-      await activitySystemProvider.fetchAllActivityPlace();
+      final activityPlacesProvider =
+          Provider.of<ActivityPlacesProvider>(context, listen: false);
+      await activityPlacesProvider.fetchAllActivityPlace();
     });
   }
 
@@ -71,7 +68,8 @@ class _ActivityPlacesState extends State<ActivityPlaces> {
                   if (activityPlacesProvider.isLoading) {
                     return const Center(child: CircularProgressIndicator());
                   } else if (activityPlacesProvider.errorMessage != null) {
-                    return Center(child: Text(activityPlacesProvider.errorMessage!));
+                    return Center(
+                        child: Text(activityPlacesProvider.errorMessage!));
                   } else {
                     return PageView.builder(
                       controller: _pageController,
@@ -83,9 +81,9 @@ class _ActivityPlacesState extends State<ActivityPlaces> {
                       },
                       itemBuilder: (context, index) {
                         final activitySystem =
-                        activityPlacesProvider.activityPlaces[index];
-                        return ActivityPlacesView (
-                        activityPlaceId: activitySystem.id,
+                            activityPlacesProvider.activityPlaces[index];
+                        return ActivityPlacesView(
+                          activityPlaceId: activitySystem.id,
                           imagePath: images[0],
                         );
                       },

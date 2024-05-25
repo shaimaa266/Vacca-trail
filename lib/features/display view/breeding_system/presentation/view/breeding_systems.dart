@@ -1,4 +1,4 @@
-import 'package:app_vacca/features/display%20view/breeding_system/presentation/view/page_one.dart';
+import 'package:app_vacca/features/display%20view/breeding_system/presentation/view/breeding system view.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../custom_widgets/animated nav bar.dart';

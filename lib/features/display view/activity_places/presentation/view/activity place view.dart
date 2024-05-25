@@ -1,4 +1,5 @@
 
+import 'package:app_vacca/core/widgets/text font body.dart';
 import 'package:app_vacca/features/display%20view/activity_places/data/models/activity_place_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -59,8 +60,8 @@ class ActivityPlacesView extends StatelessWidget with MyConstants {
                 ),
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(28),
-                  child: Image.asset(
-                    imagePath ,
+                  child: Image.network(
+                    activityPlace.image ,
                     fit: BoxFit.fill,
                   ),
                 ),
@@ -75,29 +76,29 @@ class ActivityPlacesView extends StatelessWidget with MyConstants {
 
                         Row(
                           children: [
-                            getText(text: "Id: ", height: 40),
-                            getText(text: activityPlace.id.toString(), height: 40),
+                             const TextFont(text: "Id: ", height: 40),
+                             TextFont (text: activityPlace.id.toString(), height: 40),
                           ],
                         ),
-                        getText(text: " Place Description:", height: 40),
-                        getText(text: activityPlace.description, height: 80),
-                        getText(text: "Place Goal:", height: 40),
-                        getText(text: activityPlace.goal, height: 40),
-                        getText(text: "Place Capacity:", height: 40),
-                        getText(text: "${activityPlace.capacity}", height: 80),
-                        getText(text: "Existing Cows: ", height: 40),
-                        getText(text: "${activityPlace.cows.length}", height: 40),
+                        const TextFont(text: " Place Description:", height: 40),
+                      TextFont(text: activityPlace.description, height: 80),
+                        const TextFont(text: "Place Goal:", height: 40),
+                        TextFont(text: activityPlace.goal, height: 40),
+                        const TextFont(text: "Place Capacity:", height: 40),
+                        TextFont(text: "${activityPlace.capacity}", height: 80),
+                        const TextFont(text: "Existing Cows: ", height: 40),
+                        TextFont(text: "${activityPlace.cows.length}", height: 40),
 
-                        getText(text: "Created at:", height: 40),
-                        getText(text: activityPlace.createdAt, height: 40),
-                        getText(text: "Updated at:", height: 40),
-                        getText(text: activityPlace.updatedAt, height: 40),
+                        const TextFont(text: "Created at:", height: 40),
+                        TextFont(text: activityPlace.createdAt, height: 40),
+                        const TextFont(text: "Updated at:", height: 40),
+                        TextFont(text: activityPlace.updatedAt, height: 40),
 
-                        getText(text: "Place Location :", height: 40),
+                        const TextFont(text: "Place Location :", height: 40),
                         Row(
                           children: [
-                            getText(text: activityPlace.longitude, height: 40),
-                            getText(text: activityPlace.latitude, height: 40),
+                            TextFont(text: activityPlace.longitude, height: 40),
+                            TextFont(text: activityPlace.latitude, height: 40),
                           ],
                         ),
 
@@ -106,24 +107,24 @@ class ActivityPlacesView extends StatelessWidget with MyConstants {
                             return Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                getText(text: "Cow ID: ${cow.cowId}", height: 40),
-                                getText(text: "Gender: ${cow.gender}", height: 40),
-                                getText(text: "Age: ${cow.age}", height: 40),
-                                getText(text: "Weight: ${cow.weight}", height: 40),
-                                getText(text: "Milk Amount Morning: ${cow.milk_amount_morning}", height: 40),
-                                getText(text: "Milk Amount Afternoon: ${cow.milk_amount_afternoon}", height: 40),
-                                getText(text: "Appearance: ${cow.appearance}", height: 40),
-                                getText(text: "Original Area: ${cow.original_area}", height: 40),
-                                getText(text: "Entrance Date: ${cow.entrance_date}", height: 40),
-                                getText(text: "Location: (${cow.latitude}, ${cow.longitude})", height: 40),
-                                getText(text: "Status: ${cow.cow_status == 1 ? 'Active' : 'Inactive'}", height: 40),
+                                TextFont(text: "Cow ID: ${cow.cowId}", height: 40),
+                                TextFont(text: "Gender: ${cow.gender}", height: 40),
+                                TextFont(text: "Age: ${cow.age}", height: 40),
+                                TextFont(text: "Weight: ${cow.weight}", height: 40),
+                                TextFont(text: "Milk Amount Morning: ${cow.milk_amount_morning}", height: 40),
+                                TextFont(text: "Milk Amount Afternoon: ${cow.milk_amount_afternoon}", height: 40),
+                                TextFont(text: "Appearance: ${cow.appearance}", height: 40),
+                                TextFont(text: "Original Area: ${cow.original_area}", height: 40),
+                                TextFont(text: "Entrance Date: ${cow.entrance_date}", height: 40),
+                                TextFont(text: "Location: (${cow.latitude}, ${cow.longitude})", height: 40),
+                                TextFont(text: "Status: ${cow.cow_status == 1 ? 'Active' : 'Inactive'}", height: 40),
                                 Image.network(cow.image, height: 100, width: 100),
-                                SizedBox(height: 20),
+                                const SizedBox(height: 20),
                               ],
                             );
                           }).toList()
                         else
-                          getText(text: "No cows in this place.", height: 40),
+                          const TextFont(text: "No cows in this place.", height: 40),
                       ],
 
                     ),
@@ -137,19 +138,7 @@ class ActivityPlacesView extends StatelessWidget with MyConstants {
     );
   }
 
-  Widget getText({required String text, required double height}) {
-    return SizedBox(
-      height: height,
-      child: Text(
-        text,
-        style: TextStyle(
-          fontSize: 33.sp,
-          color: const Color(0xff263238),
-          fontWeight: FontWeight.w600,
-        ),
-      ),
-    );
-  }
+
 }
 
 
