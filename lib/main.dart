@@ -61,7 +61,7 @@ class MyApp extends StatelessWidget {
             ChangeNotifierProvider(
                 create: (_) => ActivitySystemsProvider(activitySystemsRepo)),
             ChangeNotifierProvider(
-                create: (_) => ActivityPlacesProvider(activityPlaceRepo)),
+                create: (_) => ActivityPlaceProvider(activityPlaceRepo)),
           ],
           child: MaterialApp(
             debugShowCheckedModeBanner: false,

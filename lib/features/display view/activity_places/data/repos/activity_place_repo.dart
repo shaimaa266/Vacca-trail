@@ -8,7 +8,7 @@ class ActivityPlaceRepo {
 
   Future<List<ActivityPlacesModel>> getAllActivityPlaces() async {
     try {
-      final response = await apiService.get(urlEndPoint: '/activity-places');
+      final response = await apiService.get(urlEndPoint: '/activity_places');
       if (response.statusCode == 200) {
         final List<dynamic> data = response.data['activityPlaces'];
         return data.map((json) => ActivityPlacesModel.fromJson(json)).toList();

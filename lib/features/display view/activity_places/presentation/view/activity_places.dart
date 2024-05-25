@@ -7,7 +7,6 @@ import '../../../custom_widgets/search_bar.dart';
 import '../../../custom_widgets/sort_image.dart';
 import '../control/activity_place_provider.dart';
 import 'activity place view.dart';
-
 class ActivityPlaces extends StatefulWidget {
   const ActivityPlaces({Key? key}) : super(key: key);
 
@@ -26,8 +25,8 @@ class _ActivityPlacesState extends State<ActivityPlaces> {
 
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       final activityPlacesProvider =
-          Provider.of<ActivityPlacesProvider>(context, listen: false);
-      await activityPlacesProvider.fetchAllActivityPlace();
+      Provider.of<ActivityPlaceProvider>(context, listen: false);
+      await activityPlacesProvider.fetchAllActivityPlaces();
     });
   }
 
@@ -36,14 +35,6 @@ class _ActivityPlacesState extends State<ActivityPlaces> {
     _pageController.dispose();
     super.dispose();
   }
-
-  List<String> images = [
-    "assets/images/cow  is eating.png",
-    "assets/images/eating cow.png",
-    "assets/images/cow eating in place.jpg",
-    "assets/images/cow  is eating.png",
-    "assets/images/eating cow.png",
-  ];
 
   @override
   Widget build(BuildContext context) {
@@ -63,7 +54,7 @@ class _ActivityPlacesState extends State<ActivityPlaces> {
               ],
             ),
             Expanded(
-              child: Consumer<ActivityPlacesProvider>(
+              child: Consumer<ActivityPlaceProvider>(
                 builder: (context, activityPlacesProvider, child) {
                   if (activityPlacesProvider.isLoading) {
                     return const Center(child: CircularProgressIndicator());
@@ -81,10 +72,10 @@ class _ActivityPlacesState extends State<ActivityPlaces> {
                       },
                       itemBuilder: (context, index) {
                         final activitySystem =
-                            activityPlacesProvider.activityPlaces[index];
+                        activityPlacesProvider.activityPlaces[index];
                         return ActivityPlacesView(
-                          activityPlaceId: activitySystem.id,
-                          imagePath: images[0],
+                          placeId: activitySystem.id,
+                          imageUrl: activitySystem.image,
                         );
                       },
                     );

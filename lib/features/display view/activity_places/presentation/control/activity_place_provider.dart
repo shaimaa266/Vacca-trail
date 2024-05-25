@@ -3,11 +3,9 @@ import 'package:flutter/material.dart';
 
 import '../../data/repos/activity_place_repo.dart';
 
-
-class ActivityPlacesProvider extends ChangeNotifier {
+class ActivityPlaceProvider extends ChangeNotifier {
   final ActivityPlaceRepo activityPlaceRepo;
-
-  ActivityPlacesProvider(this.activityPlaceRepo);
+  ActivityPlaceProvider(this.activityPlaceRepo);
 
   List<ActivityPlacesModel> activityPlaces = [];
   bool isLoading = false;
@@ -23,7 +21,7 @@ class ActivityPlacesProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> fetchAllActivityPlace() async {
+  Future<void> fetchAllActivityPlaces() async {
     _setLoading(true);
     try {
       activityPlaces = await activityPlaceRepo.getAllActivityPlaces();
@@ -36,3 +34,4 @@ class ActivityPlacesProvider extends ChangeNotifier {
     }
   }
 }
+
