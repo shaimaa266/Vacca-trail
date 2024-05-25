@@ -49,6 +49,7 @@ class _ActivitySystemsState extends State<ActivitySystems> {
 
   @override
   Widget build(BuildContext context) {
+    _currentPage = (_currentPage + 1) % images.length;
     return Scaffold(
       body: BackGreoundImageContainer(
         child: Column(
@@ -85,7 +86,7 @@ class _ActivitySystemsState extends State<ActivitySystems> {
                         activitySystemProvider.activitySystems[index];
                         return ActivitySystemView(
                         activitySystemId: activitySystem.id,
-                          imagePath: images[0],
+                          imagePath: images[_currentPage],
                         );
                       },
                     );

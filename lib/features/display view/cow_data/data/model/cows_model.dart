@@ -17,6 +17,11 @@ class CowModel {
   final String latitude;
   final String longitude;
   final int cow_status;
+  final String created_at;
+  final String updated_at;
+  final String? activity_place;
+  final String? activity_system;
+  final String? breeding_system;
 
   CowModel({
     required this.id,
@@ -37,6 +42,11 @@ class CowModel {
     required this.latitude,
     required this.longitude,
     required this.cow_status,
+    required this.breeding_system,
+    required this.updated_at,
+    required this.created_at,
+     required this.activity_place,
+    required this.activity_system,
   });
 
   factory CowModel.fromJson(Map<String, dynamic> json) {
@@ -59,6 +69,11 @@ class CowModel {
       latitude: json['latitude'],
       longitude: json['longitude'],
       cow_status: json['cow_status'],
+      created_at: json['created_at'],
+      updated_at: json['updated_at'],
+      breeding_system: json['breading_system'],
+      activity_place: json['activity_place'],
+      activity_system: json['activity_system']
     );
   }
 }

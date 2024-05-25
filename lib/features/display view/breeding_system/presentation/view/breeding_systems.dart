@@ -18,6 +18,13 @@ class BreedingSystems extends StatefulWidget {
 class _BreedingSystemsState extends State<BreedingSystems> {
   late PageController _pageController;
   int _currentPage = 0;
+  List<String> images = [
+    "assets/images/cow.jpg",
+    "assets/images/cow eating.png",
+    "assets/images/cow eating in place.jpg",
+    "assets/images/cow  is eating.png",
+    "assets/images/eating cow.png"
+  ];
 
   @override
   void initState() {
@@ -37,16 +44,11 @@ class _BreedingSystemsState extends State<BreedingSystems> {
     super.dispose();
   }
 
-  List<String> images = [
-    "assets/images/cow  is eating.png",
-    "assets/images/eating cow.png",
-    "assets/images/cow eating in place.jpg",
-    "assets/images/cow  is eating.png",
-    "assets/images/eating cow.png",
-  ];
+
 
   @override
   Widget build(BuildContext context) {
+    _currentPage = (_currentPage + 1) % images.length;
     return Scaffold(
       body: BackGreoundImageContainer(
         child: Column(
@@ -83,7 +85,7 @@ class _BreedingSystemsState extends State<BreedingSystems> {
                             breedingProvider.breedingSystems[index];
                         return BreedingSystemView(
                           breedingSystemId: breedingSystem.id,
-                          imagePath: images[0],
+                          imagePath: images[_currentPage],
                         );
                       },
                     );

@@ -1,17 +1,33 @@
-
-
-
+import 'package:app_vacca/features/display%20view/cow_data/presentation/control/cow_provider.dart';
 import 'package:app_vacca/features/display%20view/custom_widgets/animated%20nav%20bar.dart';
 import 'package:app_vacca/features/display%20view/custom_widgets/background_image_container.dart';
 import 'package:app_vacca/features/display%20view/custom_widgets/constants_mixin.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
 
 import 'cow_feature_rows.dart';
 
-class CowFeature extends StatelessWidget with MyConstants {
+class CowFeature extends StatefulWidget {
   CowFeature({Key? key}) : super(key: key);
 
+  @override
+  State<CowFeature> createState() => _CowFeatureState();
+}
+
+class _CowFeatureState extends State<CowFeature> with MyConstants {
+
+  @override
+  void initState() {
+    super.initState();
+
+
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      final cowProvider =
+      Provider.of<CowProvider>(context, listen: false);
+      await cowProvider.fetchAllCows();
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -52,19 +68,32 @@ class CowFeature extends StatelessWidget with MyConstants {
                   ],
                 ),
               ),
-              SizedBox(
-                height: 1100.w,
-                child: ListView.builder(
-                    itemCount: 18,
+              Consumer<CowProvider>(
+                builder: (context, cowProvider, child) => SizedBox(
+                  height: 1210.w,
+                  child: ListView.builder(
+                    itemCount: cowProvider.cows.length,
                     itemBuilder: (BuildContext context, index) {
-                      return SizedBox(height: 140.h, child: CowFeatureRows());
-                    }),
+                      if (cowProvider.isLoading) {
+                        return const Center(child: CircularProgressIndicator());
+                      } else if (cowProvider.errorMessage != null) {
+                        return Center(child: Text(cowProvider.errorMessage!));
+                      } else {
+                        final cows = cowProvider.cows[index];
+
+                        return SizedBox(
+                            height: 140.h,
+                            child: CowFeatureRows(cowId: cows.cowId));
+                      }
+                    },
+                  ),
+                ),
               )
             ],
           ),
         ),
       ),
-      bottomNavigationBar: const  Mynavbar(),
+      bottomNavigationBar: const Mynavbar(),
     );
   }
 }

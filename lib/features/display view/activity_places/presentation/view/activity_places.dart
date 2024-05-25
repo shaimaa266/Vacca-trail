@@ -7,6 +7,7 @@ import '../../../custom_widgets/search_bar.dart';
 import '../../../custom_widgets/sort_image.dart';
 import '../control/activity_place_provider.dart';
 import 'activity place view.dart';
+
 class ActivityPlaces extends StatefulWidget {
   const ActivityPlaces({Key? key}) : super(key: key);
 
@@ -17,6 +18,13 @@ class ActivityPlaces extends StatefulWidget {
 class _ActivityPlacesState extends State<ActivityPlaces> {
   late PageController _pageController;
   int _currentPage = 0;
+  List<String> images = [
+    "assets/images/cow.jpg",
+    "assets/images/cow eating.png",
+    "assets/images/cow eating in place.jpg",
+    "assets/images/cow  is eating.png",
+    "assets/images/eating cow.png"
+  ];
 
   @override
   void initState() {
@@ -25,7 +33,7 @@ class _ActivityPlacesState extends State<ActivityPlaces> {
 
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       final activityPlacesProvider =
-      Provider.of<ActivityPlaceProvider>(context, listen: false);
+          Provider.of<ActivityPlaceProvider>(context, listen: false);
       await activityPlacesProvider.fetchAllActivityPlaces();
     });
   }
@@ -38,6 +46,7 @@ class _ActivityPlacesState extends State<ActivityPlaces> {
 
   @override
   Widget build(BuildContext context) {
+    _currentPage = (_currentPage + 1) % images.length;
     return Scaffold(
       body: BackGreoundImageContainer(
         child: Column(
@@ -72,10 +81,10 @@ class _ActivityPlacesState extends State<ActivityPlaces> {
                       },
                       itemBuilder: (context, index) {
                         final activitySystem =
-                        activityPlacesProvider.activityPlaces[index];
+                            activityPlacesProvider.activityPlaces[index];
                         return ActivityPlacesView(
                           placeId: activitySystem.id,
-                          imageUrl: activitySystem.image,
+                          imageUrl: images[_currentPage],
                         );
                       },
                     );

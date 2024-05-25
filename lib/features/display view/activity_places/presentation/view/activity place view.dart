@@ -11,7 +11,7 @@ import '../control/activity_place_provider.dart';
 
 class ActivityPlacesView extends StatelessWidget with MyConstants {
   final int placeId;
-  final String? imageUrl;
+  final String imageUrl;
 
   ActivityPlacesView({required this.placeId, required this.imageUrl, Key? key})
       : super(key: key);
@@ -29,7 +29,7 @@ class ActivityPlacesView extends StatelessWidget with MyConstants {
         } else {
           final activityPlaces = placeProvider.activityPlaces
               .firstWhere(
-                (system) => system.id == placeId&&system.image==imageUrl,
+                (system) => system.id == placeId,
             orElse: () => ActivityPlacesModel(
               id: 0,
               goal: '',
@@ -65,8 +65,8 @@ class ActivityPlacesView extends StatelessWidget with MyConstants {
                   ),
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(28),
-                    child: Image.network(
-                      imageUrl!,
+                    child: Image.asset(
+                     imageUrl,
                       fit: BoxFit.fill,
                     ),
                   ),

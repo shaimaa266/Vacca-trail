@@ -1,3 +1,4 @@
+import 'package:app_vacca/features/display%20view/cow_data/presentation/view/cow_feature.dart';
 import 'package:app_vacca/features/display%20view/custom_widgets/constants_mixin.dart';
 import 'package:app_vacca/features/display%20view/home/file.dart';
 import 'package:app_vacca/features/doctor%20view/presentation/manage/state%20managment/providerHelper.dart';
@@ -17,7 +18,7 @@ class Mynavbar extends StatefulWidget {
 }
 
 class _MynavbarState extends State<Mynavbar> with MyConstants {
-  List<Widget> paths = [HomePage(), EmptyTreatment(), File()];
+  List<Widget> paths = [HomePage(), CowFeature(), File()];
   @override
   Widget build(BuildContext context) {
     return Consumer<ProviderHelper>(

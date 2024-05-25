@@ -5,6 +5,8 @@ import 'package:app_vacca/features/display%20view/activity_system/data/repo/acti
 import 'package:app_vacca/features/display%20view/activity_system/presentation/control/activity_system_provider.dart';
 import 'package:app_vacca/features/display%20view/breeding_system/data/repos/breedingRepo.dart';
 import 'package:app_vacca/features/display%20view/breeding_system/presentation/manage/breeding_provider.dart';
+import 'package:app_vacca/features/display%20view/cow_data/data/repo/cow_repo.dart';
+import 'package:app_vacca/features/display%20view/cow_data/presentation/control/cow_provider.dart';
 import 'package:app_vacca/features/display%20view/permission/permission_file.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -41,6 +43,10 @@ class MyApp extends StatelessWidget {
         dio: Dio(),
         token: "4|lKpe9uxto1VyXkKs5SMJAo0Cyh7UaSwYaNk02rEbdbc54d23"),
   );
+  CowRepo cowRepo = CowRepo(ApiService(
+      token: '4|lKpe9uxto1VyXkKs5SMJAo0Cyh7UaSwYaNk02rEbdbc54d23',
+      dio: Dio(),
+      baseUrl: 'https://4515-45-243-221-149.ngrok-free.app/api'));
   @override
   Widget build(BuildContext context) {
     dio.interceptors.add(LogInterceptor(responseBody: true, requestBody: true));
@@ -62,6 +68,7 @@ class MyApp extends StatelessWidget {
                 create: (_) => ActivitySystemsProvider(activitySystemsRepo)),
             ChangeNotifierProvider(
                 create: (_) => ActivityPlaceProvider(activityPlaceRepo)),
+            ChangeNotifierProvider(create: (_)=>CowProvider(cowRepo)),
           ],
           child: MaterialApp(
             debugShowCheckedModeBanner: false,
