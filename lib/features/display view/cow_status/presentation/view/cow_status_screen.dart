@@ -48,13 +48,13 @@ class _CowStatusState extends State<CowStatus> with MyConstants {
                   children: [
                     TitleRow(textTitle: "Cow Status"),
                     SearchBarCustom(
-                      w: 555,
+                      w: 640,
                       h: 50,
                       keyboardType: TextInputType.text,
                       hintText: "Search...",
                     ),
                     SizedBox(
-                      height: 850.h,
+                      height: 690.h,
                       child: ListView.builder(
                           itemCount: cowProvider.cows.length,
                           itemBuilder: (BuildContext context, index) {

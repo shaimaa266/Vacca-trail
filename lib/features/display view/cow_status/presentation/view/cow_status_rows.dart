@@ -1,15 +1,27 @@
-import 'package:app_vacca/features/display%20view/cow_data/presentation/control/cow_provider.dart';
+import 'package:app_vacca/core/widgets/text%20font%20body.dart';
 import 'package:app_vacca/features/display%20view/custom_widgets/constants_mixin.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:provider/provider.dart';
 
 import '../../../cow_data/data/model/cows_model.dart';
 
 class CowStatusRows extends StatelessWidget with MyConstants {
-  final CowModel cow; // Pass the CowModel object directly
+  final CowModel cow;
 
   CowStatusRows({Key? key, required this.cow}) : super(key: key);
+  Widget getText(String text) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 6.0,bottom: 6.0),
+      child: Text(
+        text,
+        style: TextStyle(
+            fontWeight: FontWeight.w700,
+            fontSize: 44.sp,
+            fontFamily: 'Urbanist',
+            color: titleColor),
+      ),
+    );
+  }
 
   void _showBottomSheet(BuildContext context, CowModel cow) {
     showModalBottomSheet<void>(
@@ -19,46 +31,33 @@ class CowStatusRows extends StatelessWidget with MyConstants {
       context: context,
       builder: (BuildContext context) {
         return FractionallySizedBox(
-          heightFactor: 0.5,
-          widthFactor: 0.95,
+          heightFactor: 0.8,
+          widthFactor: 1,
           child: Column(
             children: [
-              Text(
-                "Cow ID: ${cow.cowId}",
-                style: TextStyle(
-                    fontWeight: FontWeight.w500,
-                    fontSize: 33.sp,
-                    color: titleColor),
-              ),
+              getText('Id: ${cow.cowId}'),
+              getText(" Age : ${cow.age}"),
               cow.cow_status == 0
                   ? Text(
-                "Not Normal",
-                style: TextStyle(
-                    fontWeight: FontWeight.w700,
-                    fontSize: 44.sp,
-                    color: Colors.red),
-              )
+                      "Not Normal",
+                      style: TextStyle(
+                          fontWeight: FontWeight.w700,
+                          fontSize: 44.sp,
+                          color: Colors.red),
+                    )
                   : Text(
-                "Normal",
-                style: TextStyle(
-                    fontWeight: FontWeight.w700,
-                    fontSize: 44.sp,
-                    color: baseColor),
-              ),
-              Text(
-                "Activity system: ${cow.activitysystem_id}",
-                style: TextStyle(
-                    fontWeight: FontWeight.w500,
-                    fontSize: 22,
-                    color: titleColor),
-              ),
-              Text(
-                "Activity place: ${cow.activityplace_id}",
-                style: TextStyle(
-                    fontWeight: FontWeight.w500,
-                    fontSize: 33.sp,
-                    color: titleColor),
-              ),
+                      "Normal ",
+                      style: TextStyle(
+                          fontWeight: FontWeight.w700,
+                          fontSize: 44.sp,
+                          fontFamily: 'Urbanist',
+                          color: baseColor),
+                    ),
+              getText('Breeding System: ${cow.breadingsystem_id}'),
+              getText('Activity system: ${cow.activitysystem_id}'),
+              getText("Activity place: ${cow.activityplace_id}"),
+              getText('Area : ${cow.original_area}'),
+              getText('Weight: ${cow.weight}'),
             ],
           ),
         );
@@ -69,7 +68,7 @@ class CowStatusRows extends StatelessWidget with MyConstants {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(left: 12, right: 12, bottom: 12),
+      padding: const EdgeInsets.only(left: 12, right: 12, bottom: 22),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -81,23 +80,24 @@ class CowStatusRows extends StatelessWidget with MyConstants {
                 Padding(
                   padding: const EdgeInsets.only(right: 20.0, left: 20),
                   child: Container(
-                    width: 160.w,
-                    height: 100.h,
+                    width: 180.w,
+                    height: 110.h,
                     decoration: BoxDecoration(
                       color: Color(0xffFEFEFE),
-                      borderRadius: BorderRadius.circular(10),
+                      borderRadius: BorderRadius.circular(16),
                       boxShadow: [
                         BoxShadow(
-                          color: Colors.grey.withOpacity(0.15),
+                          color: Colors.grey.withOpacity(0.10),
                           blurRadius: 8,
                           spreadRadius: 6,
                           offset: const Offset(0, 0),
                         ),
                       ],
                     ),
-                    child: cow.cow_status == 0
-                        ? Image.asset("assets/images/cow_abnormal.png")
-                        : Image.asset("assets/images/cow_normal.png"),
+                    child: Image.network(
+                      cow.image,
+                      fit: BoxFit.fill,
+                    ),
                   ),
                 ),
                 Padding(
@@ -111,8 +111,7 @@ class CowStatusRows extends StatelessWidget with MyConstants {
                           )),
                       Text(
                         cow.cowId,
-                        style: TextStyle(
-                            fontSize: 33.sp, color: titleColor),
+                        style: TextStyle(fontSize: 33.sp, color: titleColor),
                       )
                     ],
                   ),
@@ -133,10 +132,9 @@ class CowStatusRows extends StatelessWidget with MyConstants {
               ],
             ),
           ),
-          SizedBox(height: 50.h),
+
         ],
       ),
     );
   }
 }
-
