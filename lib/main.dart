@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
 
   BreedingRepo breedingRepo = BreedingRepo(
     ApiService(
-        baseUrl: 'https://4515-45-243-221-149.ngrok-free.app/api',
+        baseUrl: 'https://ca56-45-243-252-150.ngrok-free.app/api',
         dio: Dio(),
         token: "4|lKpe9uxto1VyXkKs5SMJAo0Cyh7UaSwYaNk02rEbdbc54d23"),
   );
@@ -35,18 +35,18 @@ class MyApp extends StatelessWidget {
     ApiService(
         dio: Dio(),
         token: "4|lKpe9uxto1VyXkKs5SMJAo0Cyh7UaSwYaNk02rEbdbc54d23",
-        baseUrl: "https://4515-45-243-221-149.ngrok-free.app/api"),
+        baseUrl: "https://ca56-45-243-252-150.ngrok-free.app/api"),
   );
   ActivityPlaceRepo activityPlaceRepo = ActivityPlaceRepo(
     ApiService(
-        baseUrl: 'https://4515-45-243-221-149.ngrok-free.app/api',
+        baseUrl: 'https://ca56-45-243-252-150.ngrok-free.app/api',
         dio: Dio(),
         token: "4|lKpe9uxto1VyXkKs5SMJAo0Cyh7UaSwYaNk02rEbdbc54d23"),
   );
   CowRepo cowRepo = CowRepo(ApiService(
       token: '4|lKpe9uxto1VyXkKs5SMJAo0Cyh7UaSwYaNk02rEbdbc54d23',
       dio: Dio(),
-      baseUrl: 'https://4515-45-243-221-149.ngrok-free.app/api'));
+      baseUrl: 'https://ca56-45-243-252-150.ngrok-free.app/api'));
   @override
   Widget build(BuildContext context) {
     dio.interceptors.add(LogInterceptor(responseBody: true, requestBody: true));

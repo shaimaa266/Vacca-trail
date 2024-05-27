@@ -1,15 +1,20 @@
 
 
+import 'package:app_vacca/features/display%20view/cow_data/data/model/cows_model.dart';
+import 'package:app_vacca/features/display%20view/cow_data/presentation/control/cow_provider.dart';
 import 'package:app_vacca/features/display%20view/custom_widgets/animated%20nav%20bar.dart';
 import 'package:app_vacca/features/display%20view/custom_widgets/background_image_container.dart';
 import 'package:app_vacca/features/display%20view/custom_widgets/constants_mixin.dart';
 import 'package:app_vacca/features/display%20view/custom_widgets/first_row_title.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
 
 class CowNormal extends StatelessWidget with MyConstants {
-  CowNormal({Key? key}) : super(key: key);
-
+  CowNormal({Key? key, required this.cowId, required this.cowStatus, this.image}) : super(key: key);
+final String cowId;
+final int cowStatus;
+final String? image;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,11 +32,11 @@ class CowNormal extends StatelessWidget with MyConstants {
                 child: Row(
                   children: [
                     SizedBox(
-                      width: 250.w,
+                      width: 270.w,
                       height: 230.h,
                       child: CircleAvatar(
                         backgroundImage:
-                            AssetImage("assets/images/cow eating.png"),
+                     NetworkImage(image!)
                       ),
                     ),
                     Padding(
@@ -43,26 +48,28 @@ class CowNormal extends StatelessWidget with MyConstants {
                             "Cow ID",
                             style: TextStyle(
                                 fontSize: 44.sp,
-                                fontWeight: FontWeight.w400,
+                                fontFamily: 'Urbaniat',
+                                fontWeight: FontWeight.w600,
                                 color: titleColor),
                           ),
                           Text(
-                            "003",
+                            cowId,
                             style: TextStyle(
                                 fontSize: 36.sp,
-                                fontWeight: FontWeight.w400,
+                                fontFamily: 'Urbaniat',
+                                fontWeight: FontWeight.w600,
                                 color: titleColor),
                           ),
                           Container(
-                            width: 160.w,
+                            width: 220.w,
                             height: 73.h,
                             decoration: BoxDecoration(
-                                color: containerBorderColor,
+                                color:cowStatus==1? containerBorderColor:Colors.red,
                                 borderRadius: BorderRadius.circular(10),
                                 border: Border.all(color: baseColor, width: 2)),
                             child: Center(
                                 child: Text(
-                              " Normal",
+                            cowStatus==0?"Ubnormal":  " Normal",
                               style: TextStyle(
                                   fontSize: 33.sp,
                                   fontWeight: FontWeight.w400,
@@ -76,20 +83,189 @@ class CowNormal extends StatelessWidget with MyConstants {
                 ),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.only(
-                  top: 30, left: 22, bottom: 16, right: 16),
-              child: SizedBox(
-                height: 460.h,
-                child: Text(
-                  "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Adipiscing vitae proin sagittis nisl. Quis enim lobortis scelerisque fermentum dui faucibus in ornare quam.tis nisl.  incididunt ut labore et dolore magna aliqua fermentum dui .Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed de fermentum.",
-                  style: TextStyle(
-                      color: titleColor,
-                      fontSize: 35.sp,
-                      fontWeight: FontWeight.w700),
-                ),
-              ),
-            ),
+            Consumer<CowProvider>(
+              builder: ( context,cowProvider , child) {
+                if (cowProvider.isLoading) {
+                  return const Center(child: CircularProgressIndicator());
+                } else if (cowProvider.errorMessage != null) {
+                  return Center(
+                    child: Text(cowProvider.errorMessage!),
+                  );
+                } else {
+                  final cows = cowProvider.cows.firstWhere(
+                          (element) => element.cowId == cowId,
+                      orElse: () =>
+                          CowModel(
+                              id: 0,
+                              cowId: '',
+                              activityplace_id: 0,
+                              activitysystem_id: 0,
+                              breadingsystem_id: 0,
+                              purpose_id: 0,
+                              original_area: '',
+                              appearance: '',
+                              image: '',
+                              gender: '',
+                              entrance_date: '',
+                              age: 0,
+                              weight: '',
+                              milk_amount_morning: '',
+                              milk_amount_afternoon: '',
+                              latitude: '',
+                              longitude: '',
+                              cow_status: 0,
+                              breeding_system: '',
+                              updated_at: '',
+                              created_at: '',
+                              activity_place: '',
+                              activity_system: ''));
+
+                  if (cows.id == 0) {
+                    return Center(
+                      child: Text('No Cows as $cowId not found'),
+                    );
+                  }
+
+                  return Padding(
+                    padding: const EdgeInsets.only(
+                        top: 30, left: 22, bottom: 16, right: 16),
+                    child: SizedBox(
+                      height: 470.h,
+                      child: ListView(
+                      children: [
+                        Text(
+                         "Cow Appearance: ${cows.appearance}"
+                          , style: TextStyle(
+                            color: titleColor,
+                            fontSize: 35.sp,
+                            fontWeight: FontWeight.w700),
+                        ),
+                        Text(
+                          "Cow Weight: ${cows.weight}"
+                          , style: TextStyle(
+                            color: titleColor,
+                            fontSize: 35.sp,
+                            fontWeight: FontWeight.w700),
+                        ),
+                        Text(
+                          "Purpose id: ${cows.purpose_id}"
+                          , style: TextStyle(
+                            color: titleColor,
+                            fontSize: 35.sp,
+                            fontWeight: FontWeight.w700),
+                        ),
+                        Text(
+                          "Cow Gender: ${cows.gender}"
+                          , style: TextStyle(
+                            color: titleColor,
+                            fontSize: 35.sp,
+                            fontWeight: FontWeight.w700),
+                        ),
+                        Text(
+                          "Entrance Date: ${cows.entrance_date}"
+                          , style: TextStyle(
+                            color: titleColor,
+                            fontSize: 35.sp,
+                            fontWeight: FontWeight.w700),
+                        ),
+                        Text(
+                          "Cow Age: ${cows.age}"
+                          , style: TextStyle(
+                            color: titleColor,
+                            fontSize: 35.sp,
+                            fontWeight: FontWeight.w700),
+                        ) ,Text(
+                          "Activity system id : ${cows.activitysystem_id}"
+                          , style: TextStyle(
+                            color: titleColor,
+                            fontSize: 35.sp,
+                            fontWeight: FontWeight.w700),
+                        ),
+                        Text(
+                          "Activity System name : ${cows.activity_system}"
+                          , style: TextStyle(
+                            color: titleColor,
+                            fontSize: 35.sp,
+                            fontWeight: FontWeight.w700),
+                        ),
+                        Text(
+                          "Activity place id: ${cows.activityplace_id}"
+                          , style: TextStyle(
+                            color: titleColor,
+                            fontSize: 35.sp,
+                            fontWeight: FontWeight.w700),
+                        ),
+                        Text(
+                          "Activity Place name : ${cows.activity_place}"
+                          , style: TextStyle(
+                            color: titleColor,
+                            fontSize: 35.sp,
+                            fontWeight: FontWeight.w700),
+                        ),
+                        Text(
+                          "Breeding System id : ${cows.breadingsystem_id}"
+                          , style: TextStyle(
+                            color: titleColor,
+                            fontSize: 35.sp,
+                            fontWeight: FontWeight.w700),
+                        ),
+                        Text(
+                          "Breeding  System name : ${cows.breeding_system}"
+                          , style: TextStyle(
+                            color: titleColor,
+                            fontSize: 35.sp,
+                            fontWeight: FontWeight.w700),
+                        ),
+
+                        Text(
+                          "Cow Weight: ${cows.weight}"
+                          , style: TextStyle(
+                            color: titleColor,
+                            fontSize: 35.sp,
+                            fontWeight: FontWeight.w700),
+                        ),
+                        Text(
+                          "Day Milk Amount : ${cows.milk_amount_morning}"
+                          , style: TextStyle(
+                            color: titleColor,
+                            fontSize: 35.sp,
+                            fontWeight: FontWeight.w700),
+                        ),
+                        Text(
+                          "Night Milk Amount: ${cows.milk_amount_afternoon}"
+                          , style: TextStyle(
+                            color: titleColor,
+                            fontSize: 35.sp,
+                            fontWeight: FontWeight.w700),
+                        ),
+                        Text(
+                          "Original Area: ${cows.original_area}"
+                          , style: TextStyle(
+                            color: titleColor,
+                            fontSize: 35.sp,
+                            fontWeight: FontWeight.w700),
+                        ),
+                        Text(
+                          "Cow Longitude : ${cows.longitude}"
+                          , style: TextStyle(
+                            color: titleColor,
+                            fontSize: 35.sp,
+                            fontWeight: FontWeight.w700),
+                        ),
+                        Text(
+                          "Cow Latitude: ${cows.latitude}"
+                          , style: TextStyle(
+                            color: titleColor,
+                            fontSize: 35.sp,
+                            fontWeight: FontWeight.w700),
+                        ),
+
+                      ]
+                      ),
+                    ),
+                  );
+                }
+              },),
           ],
         ),
       ),

@@ -21,12 +21,7 @@ class CowFeatureRows extends StatelessWidget with MyConstants {
     return Padding(
       padding: const EdgeInsets.all(12.0),
       child: Consumer<ProviderHelper>(
-        builder: (context, providerHelper, child) => InkWell(
-          onTap: () {
-            Navigator.push(
-                context, MaterialPageRoute(builder: (context) => CowNormal()));
-          },
-          child: Consumer<CowProvider>(
+        builder: (context, providerHelper, child) => Consumer<CowProvider>(
             builder: (context, cowProvider, child) {
               if (cowProvider.isLoading) {
                 return const Center(child: CircularProgressIndicator());
@@ -68,48 +63,53 @@ class CowFeatureRows extends StatelessWidget with MyConstants {
                   );
                 }
 
-                return Row(
-                  children: [
-                    SizedBox(
-                      width: 200.w,
-                      height: 100.h,
-                      child: CircleAvatar(
-                        backgroundColor: containerColor,
-                        backgroundImage:
-                            NetworkImage(cows.image),
+                return  InkWell(
+                  onTap: () {
+                    Navigator.push(
+                        context, MaterialPageRoute(builder: (context) => CowNormal(cowId: cows.cowId, cowStatus: cows.cow_status,image: cows.image,)));},
+                  child: Row(
+                    children: [
+                      SizedBox(
+                        width: 200.w,
+                        height: 100.h,
+                        child: CircleAvatar(
+                          backgroundColor: containerColor,
+                          backgroundImage:
+                              NetworkImage(cows.image),
+                        ),
                       ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 4.0, right: 16.0),
-                      child: Text(
-                        "Cow ID",
-                        style: TextStyle(
-                            color: titleColor,
-                            fontSize: 44.sp,
-                            fontFamily: 'Urbanist',
-                            fontStyle: FontStyle.italic,
-                            fontWeight: FontWeight.w700),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 4.0, right: 16.0),
+                        child: Text(
+                          "Cow ID",
+                          style: TextStyle(
+                              color: titleColor,
+                              fontSize: 44.sp,
+                              fontFamily: 'Urbanist',
+                              fontStyle: FontStyle.italic,
+                              fontWeight: FontWeight.w700),
+                        ),
                       ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 33, right: 16),
-                      child: Text(
-                        cows.cowId,
-                        style: TextStyle(
-                            color: titleColor,
-                            fontSize: 40.sp,
-                            fontFamily: 'Urbanist',
-                            fontStyle: FontStyle.italic,
-                            fontWeight: FontWeight.w700),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 33, right: 16),
+                        child: Text(
+                          cows.cowId,
+                          style: TextStyle(
+                              color: titleColor,
+                              fontSize: 40.sp,
+                              fontFamily: 'Urbanist',
+                              fontStyle: FontStyle.italic,
+                              fontWeight: FontWeight.w700),
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 );
               }
             },
           ),
         ),
-      ),
+
     );
   }
 }
