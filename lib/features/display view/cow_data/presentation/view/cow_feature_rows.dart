@@ -71,11 +71,10 @@ class CowFeatureRows extends StatelessWidget with MyConstants {
                     SizedBox(
                       width: 200.w,
                       height: 100.h,
-                      child: CircleAvatar(
-                        backgroundColor: containerColor,
-                        backgroundImage:
-                        NetworkImage(cows.image),
-                      ),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(10),
+                        child: Image.network(cows.image),
+                      )
                     ),
                     Padding(
                       padding: const EdgeInsets.only(left: 4.0, right: 16.0),

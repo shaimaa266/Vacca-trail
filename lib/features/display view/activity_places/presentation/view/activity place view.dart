@@ -78,23 +78,19 @@ class ActivityPlacesView extends StatelessWidget with MyConstants {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Row(
-                          children: [
-                            const TextFont(text: "Id: ", height: 40),
-                            TextFont(text: activityPlaces.id.toString(), height: 40),
-                          ],
-                        ),
-                        const TextFont(text: "System Goal:", height: 40),
-                        TextFont(text: activityPlaces.goal, height: 80),
-                        const TextFont(text: "description:", height: 40),
-                        TextFont(text: activityPlaces.description, height: 80),
-                        const TextFont(text: "Number of cows: ", height: 40),
-                        TextFont(text: "${activityPlaces.cows.length}", height: 40),
 
-                        const TextFont(text: "Created at:", height: 40),
-                        TextFont(text: activityPlaces.createdAt, height: 40),
-                        const TextFont(text: "Updated at:", height: 40),
-                        TextFont(text: activityPlaces.updatedAt, height: 40),
+                        TextFont(text: "Id: ${activityPlaces.id}", height: 30),
+                        const TextFont(text: "System Goal:", height: 30),
+                        TextFont(text: activityPlaces.goal, height: 80),
+                        const TextFont(text: "description:", height: 30),
+                        TextFont(text: activityPlaces.description, height: 80),
+                      TextFont(text: "latitude:  ${activityPlaces.latitude}", height: 30),
+
+                        TextFont(text: "longitude:  ${activityPlaces.longitude}", height: 30),
+
+                      TextFont(text: "Number of cows: ${activityPlaces.cows.length} ", height: 40),
+
+
                         if (activityPlaces.cows.isNotEmpty)
                           ...activityPlaces.cows.map((cow) {
                             return Column(
