@@ -1,4 +1,4 @@
-import 'package:app_vacca/features/display%20view/cow_data/cow_normal.dart';
+import 'package:app_vacca/features/display%20view/cow_data/cow_profile.dart';
 import 'package:app_vacca/features/display%20view/cow_data/data/model/cows_model.dart';
 import 'package:app_vacca/features/display%20view/cow_data/presentation/control/cow_provider.dart';
 import 'package:app_vacca/features/display%20view/custom_widgets/constants_mixin.dart';

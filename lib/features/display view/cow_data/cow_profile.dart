@@ -29,12 +29,12 @@ class CowNormal extends StatelessWidget with MyConstants {
             Padding(
               padding: const EdgeInsets.only(right: 22, left: 16, top: 22),
               child: SizedBox(
-                height: 190.h,
+                height: 170.h,
                 child: Row(
                   children: [
                     SizedBox(
                       width: 270.w,
-                      height: 230.h,
+                      height: 200.h,
                       child: CircleAvatar(
                           backgroundImage:
                           NetworkImage(image!)
@@ -63,7 +63,7 @@ class CowNormal extends StatelessWidget with MyConstants {
                           ),
                           Container(
                             width: 220.w,
-                            height: 73.h,
+                            height: 72.h,
                             decoration: BoxDecoration(
                                 color:cowStatus==1? containerBorderColor:Colors.red,
                                 borderRadius: BorderRadius.circular(10),
@@ -130,7 +130,7 @@ class CowNormal extends StatelessWidget with MyConstants {
                     padding: const EdgeInsets.only(
                         top: 30, left: 22, bottom: 16, right: 16),
                     child: SizedBox(
-                      height: 470.h,
+                      height: 477.h,
                       child: ListView(
                           children: [
                             Text(
