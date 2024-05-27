@@ -1,6 +1,6 @@
 import 'package:app_vacca/features/display%20view/activity_system/presentation/view/activity_systems.dart';
 import 'package:app_vacca/features/display%20view/breeding_system/presentation/view/breeding_systems.dart';
-import 'package:app_vacca/features/display%20view/cow_status/cow_status_screen.dart';
+
 import 'package:app_vacca/features/display%20view/custom_widgets/constants_mixin.dart';
 import 'package:app_vacca/features/doctor%20view/presentation/manage/state%20managment/providerHelper.dart';
 import 'package:flutter/material.dart';
@@ -10,6 +10,7 @@ import 'package:provider/provider.dart';
 
 import '../activity_places/presentation/view/activity_places.dart';
 import '../breeding_system/presentation/manage/breeding_provider.dart';
+import '../cow_status/presentation/view/cow_status_screen.dart';
 
 class FeatureContainer extends StatelessWidget with MyConstants {
   FeatureContainer({Key? key}) : super(key: key);

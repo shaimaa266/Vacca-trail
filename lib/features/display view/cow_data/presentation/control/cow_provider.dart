@@ -4,11 +4,13 @@ import 'package:flutter/material.dart';
 
 import '../../data/model/cows_model.dart';
 
+
+
 class CowProvider extends ChangeNotifier {
   final CowRepo cowRepo;
   int id = 0;
 
- CowProvider(this.cowRepo);
+  CowProvider(this.cowRepo);
 
   List<CowModel> cows = [];
   bool isLoading = false;
@@ -32,7 +34,7 @@ class CowProvider extends ChangeNotifier {
   Future<void> fetchAllCows() async {
     _setLoading(true);
     try {
-    cows = await cowRepo.getAllCows();
+      cows = await cowRepo.getAllCows();
       _setError(null);
     } catch (e) {
       _setError(e.toString());
@@ -42,7 +44,6 @@ class CowProvider extends ChangeNotifier {
     }
   }
 }
-
 
 
 

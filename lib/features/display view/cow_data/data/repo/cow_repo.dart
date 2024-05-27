@@ -4,7 +4,7 @@ import 'package:app_vacca/features/display%20view/cow_data/data/model/cows_model
 class CowRepo {
   final ApiService apiService;
 
-CowRepo(this.apiService);
+  CowRepo(this.apiService);
 
   Future<List<CowModel>> getAllCows() async {
     try {

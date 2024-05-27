@@ -1,7 +1,4 @@
 
-
-import 'package:app_vacca/features/display%20view/activity_system/presentation/view/activity_systems.dart';
-import 'package:app_vacca/features/display%20view/cow_status/cow_status_screen.dart';
 import 'package:app_vacca/features/display%20view/custom_widgets/constants_mixin.dart';
 import 'package:app_vacca/features/doctor%20view/presentation/manage/state%20managment/providerHelper.dart';
 
@@ -9,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../display view/cow_status/presentation/view/cow_status_screen.dart';
 import '../../../features/activity place/doctor activity place.dart';
 import '../../../features/activity system/doctor activity sys.dart';
 import '../../../features/breeding system/doctor breeding.dart';

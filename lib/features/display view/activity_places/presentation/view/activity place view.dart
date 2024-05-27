@@ -55,7 +55,7 @@ class ActivityPlacesView extends StatelessWidget with MyConstants {
 
           return Column(
             children: [
-              if (imageUrl != null)
+              if (imageUrl.isNotEmpty)
                 Container(
                   width: 600.w,
                   height: 190.h,
