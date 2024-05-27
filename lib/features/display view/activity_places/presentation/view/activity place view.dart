@@ -1,4 +1,3 @@
-
 import 'package:app_vacca/core/widgets/text font body.dart';
 import 'package:app_vacca/features/display%20view/activity_places/data/models/activity_place_model.dart';
 import 'package:flutter/material.dart';
@@ -27,9 +26,8 @@ class ActivityPlacesView extends StatelessWidget with MyConstants {
             child: Text(placeProvider.errorMessage!),
           );
         } else {
-          final activityPlaces = placeProvider.activityPlaces
-              .firstWhere(
-                (system) => system.id == placeId,
+          final activityPlaces = placeProvider.activityPlaces.firstWhere(
+            (system) => system.id == placeId,
             orElse: () => ActivityPlacesModel(
               id: 0,
               goal: '',
@@ -66,7 +64,7 @@ class ActivityPlacesView extends StatelessWidget with MyConstants {
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(28),
                     child: Image.asset(
-                     imageUrl,
+                      imageUrl,
                       fit: BoxFit.fill,
                     ),
                   ),
@@ -78,19 +76,23 @@ class ActivityPlacesView extends StatelessWidget with MyConstants {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-
                         TextFont(text: "Id: ${activityPlaces.id}", height: 30),
                         const TextFont(text: "System Goal:", height: 30),
                         TextFont(text: activityPlaces.goal, height: 80),
                         const TextFont(text: "description:", height: 30),
                         TextFont(text: activityPlaces.description, height: 80),
-                      TextFont(text: "latitude:  ${activityPlaces.latitude}", height: 30),
-
-                        TextFont(text: "longitude:  ${activityPlaces.longitude}", height: 30),
-
-                      TextFont(text: "Number of cows: ${activityPlaces.cows.length} ", height: 40),
-
-
+                        TextFont(
+                            text: "latitude:  ${activityPlaces.latitude}",
+                            height: 30),
+                        TextFont(
+                            text: "longitude:  ${activityPlaces.longitude}",
+                            height: 30),
+                        TextFont(
+                            height: 30, text: ' Type :${activityPlaces.type}'),
+                        TextFont(
+                            text:
+                                "Number of cows: ${activityPlaces.cows.length} ",
+                            height: 40),
                         if (activityPlaces.cows.isNotEmpty)
                           ...activityPlaces.cows.map((cow) {
                             return Column(
@@ -100,15 +102,16 @@ class ActivityPlacesView extends StatelessWidget with MyConstants {
                                     text: "Cow ID: ${cow.cowId}", height: 40),
                                 TextFont(
                                     text: "Gender: ${cow.gender}", height: 40),
-                                TextFont(
-                                    text: "Age: ${cow.age}", height: 40),
+                                TextFont(text: "Age: ${cow.age}", height: 40),
                                 TextFont(
                                     text: "Weight: ${cow.weight}", height: 40),
                                 TextFont(
-                                    text: "Milk Amount Morning: ${cow.milk_amount_morning}",
+                                    text:
+                                        "Milk Amount Morning: ${cow.milk_amount_morning}",
                                     height: 40),
                                 TextFont(
-                                    text: "Milk Amount Afternoon: ${cow.milk_amount_afternoon}",
+                                    text:
+                                        "Milk Amount Afternoon: ${cow.milk_amount_afternoon}",
                                     height: 40),
                                 TextFont(
                                     text: "Appearance: ${cow.appearance}",
@@ -120,10 +123,12 @@ class ActivityPlacesView extends StatelessWidget with MyConstants {
                                     text: "Entrance Date: ${cow.entrance_date}",
                                     height: 40),
                                 TextFont(
-                                    text: "Location: (${cow.latitude}, ${cow.longitude})",
+                                    text:
+                                        "Location: (${cow.latitude}, ${cow.longitude})",
                                     height: 40),
                                 TextFont(
-                                    text: "Status: ${cow.cow_status == 1 ? 'Active' : 'Inactive'}",
+                                    text:
+                                        "Status: ${cow.cow_status == 1 ? 'Active' : 'Inactive'}",
                                     height: 40),
                                 Image.network(cow.image,
                                     height: 100, width: 100),
@@ -133,7 +138,7 @@ class ActivityPlacesView extends StatelessWidget with MyConstants {
                           }).toList()
                         else
                           const TextFont(
-                              text: "No cows in this breeding system.",
+                              text: "No cows in this place.",
                               height: 40),
                       ],
                     ),
@@ -147,4 +152,3 @@ class ActivityPlacesView extends StatelessWidget with MyConstants {
     );
   }
 }
-
