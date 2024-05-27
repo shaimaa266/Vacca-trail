@@ -128,7 +128,7 @@ class ActivityPlacesView extends StatelessWidget with MyConstants {
                                     height: 40),
                                 TextFont(
                                     text:
-                                        "Status: ${cow.cow_status == 1 ? 'Active' : 'Inactive'}",
+                                        "Status: ${cow.cow_status == 1 ? 'Inactive ' : 'Active'}",
                                     height: 40),
                                 Image.network(cow.image,
                                     height: 100, width: 100),
