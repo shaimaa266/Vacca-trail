@@ -81,8 +81,8 @@ class FeatureContainer extends StatelessWidget with MyConstants {
                     }
                   },
                   child: Container(
-                    width: 177.w,
-                    height: 103.h,
+                    width: 197.w,
+                    height: 113.h,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
                       color: providerHelper.selectedIndex == index

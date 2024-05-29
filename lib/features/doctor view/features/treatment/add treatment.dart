@@ -4,7 +4,7 @@ import 'package:app_vacca/features/display%20view/custom_widgets/first_row_title
 import 'package:app_vacca/features/doctor%20view/features/treatment/table_treatment.dart';
 import 'package:flutter/material.dart';
 import '../shared/custom_sys_field.dart';
-import '../shared/doctoer_nav_bar.dart';
+import '../shared/doctor_nav_bar.dart';
 import '../shared/note_button.dart';
 import 'all treatment.dart';
 class AddTreatment extends StatefulWidget {

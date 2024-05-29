@@ -1,24 +1,24 @@
 class CowModel {
-  final int id;
-  final String cowId;
-  final int activityplace_id;
-  final int activitysystem_id;
-  final int breadingsystem_id;
-  final int purpose_id;
-  final String original_area;
-  final String appearance;
-  final String image;
-  final String gender;
-  final String entrance_date;
-  final int age;
-  final String weight;
-  final String milk_amount_morning;
-  final String milk_amount_afternoon;
-  final String latitude;
-  final String longitude;
-  final int cow_status;
-  final String created_at;
-  final String updated_at;
+  final int? id;
+  final String? cowId;
+  final int? activityplace_id;
+  final int? activitysystem_id;
+  final int? breadingsystem_id;
+  final int? purpose_id;
+  final String? original_area;
+  final String? appearance;
+  final String? image;
+  final String? gender;
+  final String? entrance_date;
+  final int? age;
+  final String? weight;
+  final String? milk_amount_morning;
+  final String? milk_amount_afternoon;
+  final String? latitude;
+  final String? longitude;
+  final int? cow_status;
+  final String? created_at;
+  final String? updated_at;
 
 
   CowModel({

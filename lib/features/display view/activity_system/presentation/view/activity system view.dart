@@ -136,7 +136,7 @@ class ActivitySystemView extends StatelessWidget with MyConstants {
                                     text:
                                         "Status: ${cow.cow_status == 1 ? 'Active' : 'Inactive'}",
                                     height: 40),
-                                Image.network(cow.image,
+                                Image.network(cow.image==''?'':cow.image!,
                                     height: 100, width: 100),
                                 const SizedBox(height: 20),
                               ],

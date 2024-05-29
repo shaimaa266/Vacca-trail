@@ -83,7 +83,7 @@ class CowStatusRows extends StatelessWidget with MyConstants {
                     width: 180.w,
                     height: 110.h,
                     decoration: BoxDecoration(
-                      color: Color(0xffFEFEFE),
+
                       borderRadius: BorderRadius.circular(16),
                       boxShadow: [
                         BoxShadow(
@@ -94,10 +94,10 @@ class CowStatusRows extends StatelessWidget with MyConstants {
                         ),
                       ],
                     ),
-                    child: Image.network(
-                      cow.image,
-                      fit: BoxFit.fill,
-                    ),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(10),
+                    child:  Image.network(cow.image!,fit: BoxFit.cover,),
+                    )
                   ),
                 ),
                 Padding(
@@ -110,7 +110,7 @@ class CowStatusRows extends StatelessWidget with MyConstants {
                             color: titleColor,
                           )),
                       Text(
-                        cow.cowId,
+                        cow.cowId!,
                         style: TextStyle(fontSize: 33.sp, color: titleColor),
                       )
                     ],

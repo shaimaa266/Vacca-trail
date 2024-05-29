@@ -44,8 +44,6 @@ class _BreedingSystemsState extends State<BreedingSystems> {
     super.dispose();
   }
 
-
-
   @override
   Widget build(BuildContext context) {
     _currentPage = (_currentPage + 1) % images.length;
@@ -64,35 +62,34 @@ class _BreedingSystemsState extends State<BreedingSystems> {
                 const SortIcon(),
               ],
             ),
-            Expanded(
-              child: Consumer<BreedingProvider>(
+            Expanded(child: Consumer<BreedingProvider>(
                 builder: (context, breedingProvider, child) {
-                  if (breedingProvider.isLoading) {
-                    return const Center(child: CircularProgressIndicator());
-                  } else if (breedingProvider.errorMessage != null) {
-                    return Center(child: Text(breedingProvider.errorMessage!));
-                  } else {
-                    return PageView.builder(
-                      controller: _pageController,
-                      itemCount: breedingProvider.breedingSystems.length,
-                      onPageChanged: (index) {
-                        setState(() {
-                          _currentPage = index;
-                        });
-                      },
-                      itemBuilder: (context, index) {
-                        final breedingSystem =
-                            breedingProvider.breedingSystems[index];
+              if (breedingProvider.isLoading) {
+                return const Center(child: CircularProgressIndicator());
+              } else if (breedingProvider.errorMessage != null) {
+                return Center(child: Text(breedingProvider.errorMessage!));
+              } else {
+                return PageView.builder(
+                    controller: _pageController,
+                    itemCount: breedingProvider.breedingSystems.length,
+                    onPageChanged: (index) {
+                      setState(() {
+                        _currentPage = index;
+                      });
+                    },
+                    itemBuilder: (context, index) {
+                      final breedingSystem =
+                          breedingProvider.breedingSystems[index];
+
+                      {
                         return BreedingSystemView(
                           breedingSystemId: breedingSystem.id,
                           imagePath: images[_currentPage],
                         );
-                      },
-                    );
-                  }
-                },
-              ),
-            ),
+                      }
+                    });
+              }
+            }))
           ],
         ),
       ),

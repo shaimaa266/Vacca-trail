@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../shared/custom_floating_button.dart';
-import '../shared/doctoer_nav_bar.dart';
+import '../shared/doctor_nav_bar.dart';
 import 'add treatment.dart';
 import 'all treatment.dart';
 

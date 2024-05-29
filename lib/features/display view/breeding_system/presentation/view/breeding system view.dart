@@ -90,13 +90,13 @@ class BreedingSystemView extends StatelessWidget with MyConstants {
                         const TextFont(text: "description:", height: 40),
                         TextFont(text: breeding.description, height: 80),
                         const TextFont(text: "Existing Cows: ", height: 40),
-                        TextFont(text: "${breeding.cows.length}", height: 40),
+                        TextFont(text: "${breeding.cows!.length}", height: 40),
                         const TextFont(text: "Created at:", height: 40),
                         TextFont(text: breeding.created_at, height: 40),
                         const TextFont(text: "Updated at:", height: 40),
                         TextFont(text: breeding.updated_at, height: 40),
-                        if (breeding.cows.isNotEmpty)
-                          ...breeding.cows.map((cow) {
+                        if (breeding.cows!.isNotEmpty)
+                          ...breeding.cows!.map((cow) {
                             return Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
@@ -132,7 +132,7 @@ class BreedingSystemView extends StatelessWidget with MyConstants {
                                     text:
                                         "Status: ${cow.cow_status == 1 ? 'Active' : 'Inactive'}",
                                     height: 40),
-                                Image.network(cow.image,
+                                Image.network(cow.image==''?'':cow.image!,
                                     height: 100, width: 100),
                                 const SizedBox(height: 20),
                               ],

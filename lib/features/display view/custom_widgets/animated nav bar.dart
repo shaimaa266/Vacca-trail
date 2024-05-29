@@ -2,13 +2,14 @@ import 'package:app_vacca/features/display%20view/cow_data/presentation/view/cow
 import 'package:app_vacca/features/display%20view/custom_widgets/constants_mixin.dart';
 import 'package:app_vacca/features/display%20view/home/file.dart';
 import 'package:app_vacca/features/doctor%20view/presentation/manage/state%20managment/providerHelper.dart';
-import 'package:app_vacca/features/doctor%20view/ui/home/body/home%20page.dart';
+
 import 'package:curved_labeled_navigation_bar/curved_navigation_bar.dart';
 import 'package:curved_labeled_navigation_bar/curved_navigation_bar_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
-import '../../doctor view/features/treatment/treatment.dart';
+
+import '../home/home_screen.dart';
 
 class Mynavbar extends StatefulWidget {
   const Mynavbar({super.key});
@@ -18,7 +19,7 @@ class Mynavbar extends StatefulWidget {
 }
 
 class _MynavbarState extends State<Mynavbar> with MyConstants {
-  List<Widget> paths = [HomePage(), CowFeature(), File()];
+  List<Widget> paths = [Home(), CowFeature(), File()];
   @override
   Widget build(BuildContext context) {
     return Consumer<ProviderHelper>(
@@ -53,10 +54,10 @@ class _MynavbarState extends State<Mynavbar> with MyConstants {
                     MaterialPageRoute(
                         builder: (_) => paths[providerHelper.currentIndex]));
               },
-              animationDuration: Duration(milliseconds: 300),
+              animationDuration:  const Duration(milliseconds: 300),
               animationCurve: Curves.easeInOut,
-              backgroundColor: Color(0xffFEFEFE),
-              color: backgroundColor,
+              backgroundColor: backgroundColor,
+              color:  const Color(0xffFEFEFE),
               height: 50.h,
             ));
   }

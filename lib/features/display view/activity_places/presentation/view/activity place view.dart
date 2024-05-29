@@ -53,7 +53,7 @@ class ActivityPlacesView extends StatelessWidget with MyConstants {
 
           return Column(
             children: [
-              if (imageUrl.isNotEmpty)
+
                 Container(
                   width: 600.w,
                   height: 190.h,
@@ -63,8 +63,8 @@ class ActivityPlacesView extends StatelessWidget with MyConstants {
                   ),
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(28),
-                    child: Image.asset(
-                      imageUrl,
+                    child: Image.network(
+                     activityPlaces.image!,
                       fit: BoxFit.fill,
                     ),
                   ),
@@ -130,7 +130,7 @@ class ActivityPlacesView extends StatelessWidget with MyConstants {
                                     text:
                                         "Status: ${cow.cow_status == 1 ? 'Inactive ' : 'Active'}",
                                     height: 40),
-                                Image.network(cow.image,
+                                Image.network(cow.image==''?'':cow.image!,
                                     height: 100, width: 100),
                                 const SizedBox(height: 20),
                               ],

@@ -83,7 +83,7 @@ class _CowFeatureState extends State<CowFeature> with MyConstants {
 
                         return SizedBox(
                             height: 140.h,
-                            child: CowFeatureRows(cowId: cows.cowId));
+                            child: CowFeatureRows(cowId: cows.cowId!));
                       }
                     },
                   ),

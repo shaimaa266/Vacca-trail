@@ -3,18 +3,16 @@ import 'package:app_vacca/features/display%20view/cow_data/data/model/cows_model
 import 'package:app_vacca/features/display%20view/cow_data/presentation/control/cow_provider.dart';
 import 'package:app_vacca/features/display%20view/custom_widgets/constants_mixin.dart';
 import 'package:app_vacca/features/doctor%20view/presentation/manage/state%20managment/providerHelper.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
 class CowFeatureRows extends StatelessWidget with MyConstants {
   CowFeatureRows({super.key, required this.cowId});
 
-
-
-
   final String cowId;
-
 
   @override
   Widget build(BuildContext context) {
@@ -30,31 +28,30 @@ class CowFeatureRows extends StatelessWidget with MyConstants {
                 child: Text(cowProvider.errorMessage!),
               );
             } else {
-              final cows = cowProvider.cows.firstWhere(
-                      (element) => element.cowId == cowId,
-                  orElse: () => CowModel(
-                      id: 0,
-                      cowId: '',
-                      activityplace_id: 0,
-                      activitysystem_id: 0,
-                      breadingsystem_id: 0,
-                      purpose_id: 0,
-                      original_area: '',
-                      appearance: '',
-                      image: '',
-                      gender: '',
-                      entrance_date: '',
-                      age: 0,
-                      weight: '',
-                      milk_amount_morning: '',
-                      milk_amount_afternoon: '',
-                      latitude: '',
-                      longitude: '',
-                      cow_status: 0,
-
-                      updated_at: '',
-                      created_at: '',
-                    ));
+              final cows = cowProvider.cows
+                  .firstWhere((element) => element.cowId == cowId,
+                      orElse: () => CowModel(
+                            id: 0,
+                            cowId: '',
+                            activityplace_id: 0,
+                            activitysystem_id: 0,
+                            breadingsystem_id: 0,
+                            purpose_id: 0,
+                            original_area: '',
+                            appearance: '',
+                            image: '',
+                            gender: '',
+                            entrance_date: '',
+                            age: 0,
+                            weight: '',
+                            milk_amount_morning: '',
+                            milk_amount_afternoon: '',
+                            latitude: '',
+                            longitude: '',
+                            cow_status: 0,
+                            updated_at: '',
+                            created_at: '',
+                          ));
 
               if (cows.id == 0) {
                 return Center(
@@ -62,24 +59,29 @@ class CowFeatureRows extends StatelessWidget with MyConstants {
                 );
               }
 
-              return  InkWell(
+              return InkWell(
                 onTap: () {
                   Navigator.push(
-                      context, MaterialPageRoute(builder: (context) => CowNormal(cowId: cows.cowId, cowStatus: cows.cow_status,image: cows.image,)));},
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => CowNormal(
+                                cowId: cows.cowId!,
+                                cowStatus: cows.cow_status!,
+                                image: cows.image,
+                              )));
+                },
                 child: Row(
                   children: [
                     SizedBox(
-                      width: 200.w,
-                      height: 100.h,
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(10),
-                        child: Image.network(cows.image),
-                      )
-                    ),
+
+                        child: CircleAvatar(
+                          radius: 60,
+                          backgroundImage: NetworkImage(cows.image!),
+                        ),),
                     Padding(
                       padding: const EdgeInsets.only(left: 4.0, right: 16.0),
                       child: Text(
-                        "Cow ID",
+                        "  Cow ID",
                         style: TextStyle(
                             color: titleColor,
                             fontSize: 44.sp,
@@ -91,7 +93,7 @@ class CowFeatureRows extends StatelessWidget with MyConstants {
                     Padding(
                       padding: const EdgeInsets.only(left: 33, right: 16),
                       child: Text(
-                        cows.cowId,
+                        cows.cowId!,
                         style: TextStyle(
                             color: titleColor,
                             fontSize: 40.sp,
@@ -107,7 +109,6 @@ class CowFeatureRows extends StatelessWidget with MyConstants {
           },
         ),
       ),
-
     );
   }
 }

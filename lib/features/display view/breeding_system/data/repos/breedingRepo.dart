@@ -10,11 +10,13 @@ class BreedingRepo {
       final response = await apiService.get(urlEndPoint: '/doc-breeding-systems');
       if (response.statusCode == 200) {
         final List<dynamic> data = response.data['breadingSystems'];
+       // print("${response.data}");
         return data.map((json) => BreedingModel.fromJson(json)).toList();
       } else {
         throw Exception('API request failed with status code: ${response.statusCode}');
       }
-    } catch (e) {
+    } catch (e,stack) {
+     // print(stack);
       print(e.toString());
       rethrow;
     }

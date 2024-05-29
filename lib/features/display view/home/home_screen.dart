@@ -15,17 +15,18 @@ class Home extends StatelessWidget with MyConstants {
           child: Column(
             children: [
               Padding(
-                padding: const EdgeInsets.only(top: 57, bottom: 30),
+                padding: const EdgeInsets.only(top: 70, bottom: 40),
                 child: Center(
                     child: Text(
                   "Home",
                   style: TextStyle(
                       color: titleColor,
-                      fontWeight: FontWeight.w400,
-                      fontSize: 55.sp),
+                      fontFamily: 'Urbanist',
+                      fontWeight: FontWeight.w900,
+                      fontSize: 60.sp),
                 )),
               ),
-              SizedBox(height: 650.h, child: FeatureContainer()),
+              SizedBox(height: 600.h, child: FeatureContainer()),
             ],
           ),
         ),

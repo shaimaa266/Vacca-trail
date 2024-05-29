@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../shared/custom_sys_field.dart';
-import '../../../shared/doctoer_nav_bar.dart';
+import '../../../shared/doctor_nav_bar.dart';
 import '../../../shared/note_button.dart';
 import '../manage/notes_provider.dart';
 import 'note_container.dart';

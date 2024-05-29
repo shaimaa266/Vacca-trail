@@ -8,7 +8,7 @@ class BreedingModel {
   final String created_at;
   final String updated_at;
   final int cows_count;
-  final List<CowModel> cows;
+  final List<CowModel>? cows;
 
   BreedingModel({
     required this.id,

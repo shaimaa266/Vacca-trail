@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../shared/custom_floating_button.dart';
-import '../../../shared/doctoer_nav_bar.dart';
+import '../../../shared/doctor_nav_bar.dart';
 import '../manage/notes_provider.dart';
 import 'add_note.dart';
 

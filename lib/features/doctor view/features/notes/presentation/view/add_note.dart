@@ -6,7 +6,7 @@ import 'package:app_vacca/features/doctor%20view/features/notes/presentation/vie
 import 'package:flutter/material.dart';
 
 import '../../../shared/custom_sys_field.dart';
-import '../../../shared/doctoer_nav_bar.dart';
+import '../../../shared/doctor_nav_bar.dart';
 import '../../../shared/note_button.dart';
 import '../../../shared/title.dart';
 import 'add_photo.dart';
