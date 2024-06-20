@@ -14,6 +14,7 @@ import 'create system/add system.dart';
 class BreedingDoctorPage extends StatelessWidget {
   BreedingDoctorPage({super.key});
 final dynamic route=AddBreedSystem();
+  final TextEditingController controller=TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,7 +31,10 @@ final dynamic route=AddBreedSystem();
                 const SizedBox(
                   height: 15,
                 ),
-                SearchBarCustom(
+                SearchBarCustom(controller: controller,
+
+                    onTap: (){},
+                    onPressedSearch: (){},
                     w:555,h:50,keyboardType: TextInputType.text, hintText: "Search..."),
                 BreedingContainer(),
               ],

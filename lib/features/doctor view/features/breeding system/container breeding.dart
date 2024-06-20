@@ -32,7 +32,7 @@ class BreedingContainer extends StatelessWidget {
       index++;
     }
     return SizedBox(
-      height: 645.h,
+      height: 665.h,
       child: GridView.builder(
         gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
           maxCrossAxisExtent: 290,
@@ -44,8 +44,8 @@ class BreedingContainer extends StatelessWidget {
         itemBuilder: (BuildContext context, int index) => Padding(
           padding: const EdgeInsets.only(bottom: 9, left: 12, right: 12),
           child: Container(
-            width: 250,
-            height: 370,
+            width: 265,
+            height: 430,
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(13),
@@ -70,13 +70,13 @@ class BreedingContainer extends StatelessWidget {
                 ),
                 Text(
                   "Breeding Name",
-                  style: TextStyle(fontSize: 22.sp, color: Colors.blueGrey),
+                  style: TextStyle(fontSize: 24.sp, color: Colors.blueGrey,fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(
                   height: 2,
                 ),
                 Text(
-                  "Lorem ipsum dolor sit amet, consecrate disciplining Ad consecrate disciplining Ad",
+                  "Lorem ipsum dolor sit amet,Lorem ipsum ,",
                   style: TextStyle(
                       fontSize: 14.sp,
                       color: Colors.grey[600],
@@ -88,7 +88,7 @@ class BreedingContainer extends StatelessWidget {
                 Center(
                   child: Container(
                     width: 245.w,
-                    height: 22,
+                    height: 30,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(15),
                         color: const Color(0xff44885C)),
@@ -96,7 +96,7 @@ class BreedingContainer extends StatelessWidget {
                       child: const Text(
                         "view more",
                         style:
-                            TextStyle(color: Color(0xffEAEEEC), fontSize: 13),
+                            TextStyle(color: Color(0xffEAEEEC), fontSize: 17,fontWeight: FontWeight.w700),
                       ),
                       onPressed: () {
                         Navigator.push(context, MaterialPageRoute(builder: (_)=>ViewBreedSystem(),),);

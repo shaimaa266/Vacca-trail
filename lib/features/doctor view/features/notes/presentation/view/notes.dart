@@ -16,6 +16,7 @@ class EmptyNotes extends StatelessWidget {
   EmptyNotes({super.key});
   bool isEmpty = false;
   final dynamic route = AddNote();
+  final TextEditingController controller=TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,6 +28,9 @@ class EmptyNotes extends StatelessWidget {
               Row(
                 children: [
                   SearchBarCustom(
+                    controller: controller,
+                    onTap: (){},
+                    onPressedSearch: (){},
                     w: 555,
                     h: 50,
                     keyboardType: TextInputType.text,

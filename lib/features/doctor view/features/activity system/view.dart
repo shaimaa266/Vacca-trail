@@ -1,10 +1,10 @@
 import 'package:app_vacca/features/display%20view/custom_widgets/animated%20nav%20bar.dart';
 import 'package:app_vacca/features/display%20view/custom_widgets/background_image_container.dart';
+import 'package:app_vacca/features/doctor%20view/features/activity%20system/edit.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../activity place/edit place.dart';
 import '../shared/button_customized.dart';
 import '../shared/title.dart';
 
@@ -16,7 +16,7 @@ class ViewActSystem extends StatefulWidget {
 }
 
 class _ViewSystemState extends State<ViewActSystem> {
-  final dynamic editSystemRoute = EditPlace();
+  final dynamic editSystemRoute = EditActSystem();
 
   @override
   Widget build(BuildContext context) {
@@ -279,7 +279,13 @@ class _ViewSystemState extends State<ViewActSystem> {
                   ),
                 ),
                 AddButton(
-                  route: editSystemRoute,
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (_) => editSystemRoute,),
+                    );
+                  },
+
                   text: "edit the system",
                 ),
               ],

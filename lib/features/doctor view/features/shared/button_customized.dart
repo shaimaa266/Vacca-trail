@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class AddButton extends StatelessWidget {
-  const AddButton({super.key, required this.text,required this.route});
+  const AddButton({super.key, required this.text,required this.onPressed});
   final String text;
-  final dynamic route;
+ final Function ()onPressed;
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
@@ -26,9 +26,7 @@ class AddButton extends StatelessWidget {
         ))
 
       ),
-      onPressed: () {
-        Navigator.of(context).push(MaterialPageRoute(builder: (context)=>route),);
-      },
+      onPressed: onPressed,
       child: Text(
         text,
         style: TextStyle(

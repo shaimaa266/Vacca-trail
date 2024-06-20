@@ -1,6 +1,6 @@
-
 import 'package:app_vacca/features/display%20view/custom_widgets/animated%20nav%20bar.dart';
 import 'package:app_vacca/features/display%20view/custom_widgets/background_image_container.dart';
+import 'package:app_vacca/features/doctor%20view/features/activity%20system/view.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -35,7 +35,7 @@ class _EditSystemState extends State<EditActSystem> {
         child: SingleChildScrollView(
           child: Padding(
             padding:
-            const EdgeInsets.only(top: 50, bottom: 16, left: 16, right: 16),
+                const EdgeInsets.only(top: 50, bottom: 16, left: 16, right: 16),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
@@ -48,7 +48,7 @@ class _EditSystemState extends State<EditActSystem> {
                   child: CustomSysField(
                     withBorder: true,
                     isWhite: true,
-                    colorHex:  const Color(0xff263238),
+                    colorHex: const Color(0xff263238),
                     height: 60,
                     width: 580,
                     readOnly: false,
@@ -66,7 +66,7 @@ class _EditSystemState extends State<EditActSystem> {
                   child: CustomSysField(
                     withBorder: true,
                     isWhite: true,
-                    colorHex:  const Color(0xff263238),
+                    colorHex: const Color(0xff263238),
                     height: 60,
                     width: 580,
                     readOnly: false,
@@ -84,7 +84,7 @@ class _EditSystemState extends State<EditActSystem> {
                   child: CustomSysField(
                     withBorder: true,
                     isWhite: true,
-                    colorHex:  const Color(0xff263238),
+                    colorHex: const Color(0xff263238),
                     height: 60,
                     width: 580,
                     readOnly: false,
@@ -103,7 +103,7 @@ class _EditSystemState extends State<EditActSystem> {
                     withBorder: true,
                     isWhite: true,
                     height: 140,
-                    colorHex:  const Color(0xff263238),
+                    colorHex: const Color(0xff263238),
                     width: 580,
                     readOnly: false,
                     keyboardType: TextInputType.text,
@@ -119,7 +119,7 @@ class _EditSystemState extends State<EditActSystem> {
                   withBorder: true,
                   isWhite: true,
                   height: 50,
-                  colorHex:  const Color(0xff263238),
+                  colorHex: const Color(0xff263238),
                   width: 580,
                   readOnly: false,
                   keyboardType: TextInputType.text,
@@ -127,23 +127,23 @@ class _EditSystemState extends State<EditActSystem> {
                   controller: applyDuaController,
                   text: "Apply on(number of cows) ",
                 ),
-
                 Padding(
-                  padding: const EdgeInsets.only(top: 22,left: 8,right: 8,bottom: 16),
+                  padding: const EdgeInsets.only(
+                      top: 22, left: 8, right: 8, bottom: 16),
                   child: Container(
                     width: 350,
                     height: 45,
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(10),
-                      border:
-                      Border.all(color: const Color(0xff89A492), width: 1.2),
+                      border: Border.all(
+                          color: const Color(0xff89A492), width: 1.2),
                     ),
                     child: DropdownButton(
-                      focusColor:   const Color(0xff44885C),
-                      hint: const  Padding(
-                        padding:  EdgeInsets.all(8.0),
-                        child:  Text(
+                      focusColor: const Color(0xff44885C),
+                      hint: const Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: Text(
                           "Applied on ",
                           style: TextStyle(
                               fontWeight: FontWeight.normal,
@@ -153,12 +153,12 @@ class _EditSystemState extends State<EditActSystem> {
                       ),
                       isExpanded: true,
                       iconSize: 40.0,
-                      style:  const TextStyle(
-                        color:  Color(0xff44885C),
+                      style: const TextStyle(
+                        color: Color(0xff44885C),
                       ),
                       items:
-                      ['000', '001', '002', '003', '004', '005', '006'].map(
-                            (val) {
+                          ['000', '001', '002', '003', '004', '005', '006'].map(
+                        (val) {
                           return DropdownMenuItem<String>(
                             value: val,
                             child: Text(val),
@@ -167,14 +167,56 @@ class _EditSystemState extends State<EditActSystem> {
                       ).toList(),
                       onChanged: (val) {
                         setState(
-                              () {},
+                          () {},
                         );
                       },
                     ),
                   ),
                 ),
-                 AddButton(
-                  route: ActivitySysDoctorPage(),
+                AddButton(
+                  onPressed: () {
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: const Center(child: Text('Are you sure?')),
+                          content: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              ElevatedButton(
+                                onPressed: () {
+                                  // request done ...
+                                  Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (_) => ViewActSystem(),
+                                    ),
+                                  );
+                                },
+                                child: const Text(
+                                  'Yes',
+                                  style: TextStyle(color: Colors.red),
+                                ),
+                              ),
+                              const SizedBox(
+                                width: 20,
+                              ),
+                              ElevatedButton(
+                                onPressed: () {
+                                  Navigator.of(context)
+                                      .pop(); // Close the dialog
+                                },
+                                child: const Text(
+                                  'No',
+                                  style: TextStyle(color: Colors.green),
+                                ),
+                              ),
+                            ],
+                          ),
+                        );
+                      },
+                    );
+                  },
                   text: "Save",
                 ),
               ],

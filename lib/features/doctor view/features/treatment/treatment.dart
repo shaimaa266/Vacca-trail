@@ -13,6 +13,7 @@ import 'all treatment.dart';
 class EmptyTreatment extends StatelessWidget {
   EmptyTreatment({super.key});
   bool isEmpty = false;
+  final TextEditingController controller=TextEditingController();
   final dynamic route = AddTreatment();
   @override
   Widget build(BuildContext context) {
@@ -24,6 +25,9 @@ class EmptyTreatment extends StatelessWidget {
             children: [
               TitleRow(textTitle: "   Treatment"),
               SearchBarCustom(
+                controller: controller,
+                onTap: (){},
+                onPressedSearch: (){},
                 w: 635,
                 h: 50,
                 keyboardType: TextInputType.text,

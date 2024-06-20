@@ -1,7 +1,7 @@
 import 'package:app_vacca/features/display%20view/cow_data/presentation/view/cow_feature.dart';
 import 'package:app_vacca/features/display%20view/custom_widgets/constants_mixin.dart';
 import 'package:app_vacca/features/display%20view/home/file.dart';
-import 'package:app_vacca/features/doctor%20view/presentation/manage/state%20managment/providerHelper.dart';
+
 
 import 'package:curved_labeled_navigation_bar/curved_navigation_bar.dart';
 import 'package:curved_labeled_navigation_bar/curved_navigation_bar_item.dart';
@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
+import '../../doctor view/data/manage/state managment/providerHelper.dart';
 import '../home/home_screen.dart';
 
 class Mynavbar extends StatefulWidget {

@@ -22,7 +22,7 @@ class NoteContainer extends StatelessWidget {
         border: value
             ? const Border(
                 left: BorderSide(
-                  color: Color(
+                  color:  Color(
                     0xff44885C,
                   ),
                   width: 20,

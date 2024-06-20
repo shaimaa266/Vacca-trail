@@ -2,12 +2,13 @@ import 'package:app_vacca/features/display%20view/activity_system/presentation/v
 import 'package:app_vacca/features/display%20view/breeding_system/presentation/view/breeding_systems.dart';
 
 import 'package:app_vacca/features/display%20view/custom_widgets/constants_mixin.dart';
-import 'package:app_vacca/features/doctor%20view/presentation/manage/state%20managment/providerHelper.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:provider/provider.dart';
 
+import '../../doctor view/data/manage/state managment/providerHelper.dart';
 import '../activity_places/presentation/view/activity_places.dart';
 import '../breeding_system/presentation/manage/breeding_provider.dart';
 import '../cow_status/presentation/view/cow_status_screen.dart';
@@ -37,7 +38,7 @@ class FeatureContainer extends StatelessWidget with MyConstants {
     const BreedingSystems(),
     const ActivityPlaces(),
     CowStatus(),
-    const  ActivitySystems(),
+    const ActivitySystems(),
     CowStatus(),
   ];
 
@@ -81,7 +82,7 @@ class FeatureContainer extends StatelessWidget with MyConstants {
                     }
                   },
                   child: Container(
-                    width: 197.w,
+                    width: 200.w,
                     height: 113.h,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
@@ -110,7 +111,11 @@ class FeatureContainer extends StatelessWidget with MyConstants {
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
                     titles[index],
-                    style: TextStyle(color: titleColor, fontSize: 26.sp),
+                    style: TextStyle(
+                        color: titleColor,
+                        fontFamily: 'Urbanist',
+                        fontSize: 30.sp,
+                        fontWeight: FontWeight.w900),
                   ),
                 ),
               ],

@@ -2,9 +2,7 @@ import 'package:app_vacca/core/widgets/text font body.dart';
 import 'package:app_vacca/features/display%20view/activity_places/data/models/activity_place_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
 import '../../../custom_widgets/constants_mixin.dart';
 import '../control/activity_place_provider.dart';
 
@@ -12,8 +10,8 @@ class ActivityPlacesView extends StatelessWidget with MyConstants {
   final int placeId;
   final String imageUrl;
 
-  ActivityPlacesView({required this.placeId, required this.imageUrl, Key? key})
-      : super(key: key);
+  ActivityPlacesView(
+      {required this.placeId, required this.imageUrl, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -26,10 +24,11 @@ class ActivityPlacesView extends StatelessWidget with MyConstants {
             child: Text(placeProvider.errorMessage!),
           );
         } else {
-          final activityPlaces = placeProvider.activityPlaces.firstWhere(
+          final activityPlaces = placeProvider.allActivityPlaces.firstWhere(
             (system) => system.id == placeId,
             orElse: () => ActivityPlacesModel(
               id: 0,
+              name: '',
               goal: '',
               description: '',
               cows: [],
@@ -51,101 +50,74 @@ class ActivityPlacesView extends StatelessWidget with MyConstants {
             );
           }
 
-          return Column(
-            children: [
-
-                Container(
-                  width: 600.w,
-                  height: 190.h,
-                  decoration: BoxDecoration(
-                    color: containerColor,
-                    borderRadius: BorderRadius.circular(28),
-                  ),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(28),
-                    child: Image.network(
-                     activityPlaces.image!,
-                      fit: BoxFit.fill,
+          return Expanded(
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      width: 600.w,
+                      height: 190.h,
+                      decoration: BoxDecoration(
+                        color: containerColor,
+                        borderRadius: BorderRadius.circular(28),
+                      ),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(28),
+                        child: Image.network(
+                          activityPlaces.image!,
+                          fit: BoxFit.fill,
+                        ),
+                      ),
                     ),
-                  ),
-                ),
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: SingleChildScrollView(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                    TextFont(text: "Id: ${activityPlaces.id}", height: 30,isDark: true,),
+                    TextFont(height: 30,isDark: true, text: 'name : ${activityPlaces.name}'),
+                    TextFont(
+                        height: 30,isDark: true,
+                        text: 'Place Capacity : ${activityPlaces.capacity}'),
+                    TextFont(
+                        height: 30,isDark: true,
+                        text: 'Place Type  :${activityPlaces.type}'),
+                    const          TextFont(text: "System Goal:", height: 30,isDark: false,),
+                    TextFont(text: activityPlaces.goal!, height: 80,isDark: true,),
+                    const TextFont(text: "description:", height: 30,isDark: false,),
+                    TextFont(text: activityPlaces.description!, height: 80,isDark: true,),
+                    const TextFont(text: "Place location :", height: 30,isDark: false,),
+                    Row(
                       children: [
-                        TextFont(text: "Id: ${activityPlaces.id}", height: 30),
-                        const TextFont(text: "System Goal:", height: 30),
-                        TextFont(text: activityPlaces.goal, height: 80),
-                        const TextFont(text: "description:", height: 30),
-                        TextFont(text: activityPlaces.description, height: 80),
                         TextFont(
                             text: "latitude:  ${activityPlaces.latitude}",
-                            height: 30),
+                            height: 30,isDark: true,),
                         TextFont(
                             text: "longitude:  ${activityPlaces.longitude}",
-                            height: 30),
-                        TextFont(
-                            height: 30, text: ' Type :${activityPlaces.type}'),
-                        TextFont(
-                            text:
-                                "Number of cows: ${activityPlaces.cows.length} ",
-                            height: 40),
-                        if (activityPlaces.cows.isNotEmpty)
-                          ...activityPlaces.cows.map((cow) {
-                            return Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                TextFont(
-                                    text: "Cow ID: ${cow.cowId}", height: 40),
-                                TextFont(
-                                    text: "Gender: ${cow.gender}", height: 40),
-                                TextFont(text: "Age: ${cow.age}", height: 40),
-                                TextFont(
-                                    text: "Weight: ${cow.weight}", height: 40),
-                                TextFont(
-                                    text:
-                                        "Milk Amount Morning: ${cow.milk_amount_morning}",
-                                    height: 40),
-                                TextFont(
-                                    text:
-                                        "Milk Amount Afternoon: ${cow.milk_amount_afternoon}",
-                                    height: 40),
-                                TextFont(
-                                    text: "Appearance: ${cow.appearance}",
-                                    height: 40),
-                                TextFont(
-                                    text: "Original Area: ${cow.original_area}",
-                                    height: 40),
-                                TextFont(
-                                    text: "Entrance Date: ${cow.entrance_date}",
-                                    height: 40),
-                                TextFont(
-                                    text:
-                                        "Location: (${cow.latitude}, ${cow.longitude})",
-                                    height: 40),
-                                TextFont(
-                                    text:
-                                        "Status: ${cow.cow_status == 1 ? 'Inactive ' : 'Active'}",
-                                    height: 40),
-                                Image.network(cow.image==''?'':cow.image!,
-                                    height: 100, width: 100),
-                                const SizedBox(height: 20),
-                              ],
-                            );
-                          }).toList()
-                        else
-                          const TextFont(
-                              text: "No cows in this place.",
-                              height: 40),
+                            height: 30,isDark: true,),
                       ],
                     ),
-                  ),
+                    TextFont(
+                        text:
+                            "Applied on : ${activityPlaces.cows!.length} cows ",
+                        height: 30,isDark: true,),
+
+                    if (activityPlaces.cows!.isNotEmpty)
+                      DropdownButton<String>(
+                        items: activityPlaces.cows!.map((cow) {
+                          return DropdownMenuItem<String>(
+                            value: cow.cowId.toString(),
+                            child: Text("Cow ID: ${cow.cowId}"),
+                          );
+                        }).toList(),
+                        onChanged: (val) {},
+                        hint: const Text('Applied on ',style: TextStyle(fontWeight: FontWeight.bold,color: Colors.black45,fontSize: 29),),
+                      )
+                    else
+                      const TextFont(
+                          text: "No cows in this place.", height: 40,isDark: true,),
+                  ],
                 ),
               ),
-            ],
+            ),
           );
         }
       },

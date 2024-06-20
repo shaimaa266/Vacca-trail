@@ -176,7 +176,13 @@ class _AddSystemState extends State<AddActSystem> {
                   ),
                 ),
                  AddButton(
-                  route: ActivitySysDoctorPage(),
+                   onPressed: () {
+                     Navigator.push(
+                       context,
+                       MaterialPageRoute(builder: (_) =>ActivitySysDoctorPage(),),
+                     );
+                   },
+
                   text: "add a custom system",
                 ),
               ],

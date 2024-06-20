@@ -24,7 +24,7 @@ class BreedingModel {
 
   factory BreedingModel.fromJson(Map<String, dynamic> json) {
     var cowsList = json['cows'] as List;
-    List<CowModel> cows = cowsList.map((i) => CowModel.fromJson(i)).toList();
+    List<CowModel>? cows = cowsList.map((i) => CowModel.fromJson(i)).toList();
 
     return BreedingModel(
       id: json['id'],

@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class SortIcon extends StatelessWidget {
-  const SortIcon({super.key});
-
+  SortIcon({required this.onPressed,super.key});
+Function()onPressed;
   @override
   Widget build(BuildContext context) {
     return  IconButton(

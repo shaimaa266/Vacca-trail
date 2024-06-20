@@ -176,7 +176,13 @@ class _AddSystemState extends State<AddBreedSystem> {
                   ),
                 ),
                AddButton(
-                  route: BreedingDoctorPage(),
+                 onPressed: () {
+                   Navigator.push(
+                     context,
+                     MaterialPageRoute(builder: (_) => BreedingDoctorPage(),),
+                   );
+                 },
+
                   text: "add a custom system",
                 ),
               ],

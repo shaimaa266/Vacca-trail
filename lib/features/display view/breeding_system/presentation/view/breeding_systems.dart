@@ -1,99 +1,165 @@
 import 'package:app_vacca/features/display%20view/breeding_system/presentation/view/breeding system view.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
+
 import '../../../custom_widgets/animated nav bar.dart';
 import '../../../custom_widgets/background_image_container.dart';
 import '../../../custom_widgets/first_row_title.dart';
 import '../../../custom_widgets/search_bar.dart';
-import '../../../custom_widgets/sort_image.dart';
 import '../manage/breeding_provider.dart';
+class BreedingSystems extends StatelessWidget {
+  final int? initialBreedingSystemId;
 
-class BreedingSystems extends StatefulWidget {
-  const BreedingSystems({Key? key}) : super(key: key);
+  const BreedingSystems({super.key, this.initialBreedingSystemId});
 
-  @override
-  State<BreedingSystems> createState() => _BreedingSystemsState();
-}
+  Future<void> fetchInitialData(BuildContext context) async {
+    final breedingProvider =
+    Provider.of<BreedingProvider>(context, listen: false);
+    await breedingProvider.fetchAllBreedingSystems();
 
-class _BreedingSystemsState extends State<BreedingSystems> {
-  late PageController _pageController;
-  int _currentPage = 0;
-  List<String> images = [
-    "assets/images/cow.jpg",
-    "assets/images/cow eating.png",
-    "assets/images/cow eating in place.jpg",
-    "assets/images/cow  is eating.png",
-    "assets/images/eating cow.png"
-  ];
-
-  @override
-  void initState() {
-    super.initState();
-    _pageController = PageController();
-
-    WidgetsBinding.instance.addPostFrameCallback((_) async {
-      final breedingProvider =
-          Provider.of<BreedingProvider>(context, listen: false);
-      await breedingProvider.fetchAllBreedingSystems();
-    });
-  }
-
-  @override
-  void dispose() {
-    _pageController.dispose();
-    super.dispose();
+    if (initialBreedingSystemId != null) {
+      final initialIndex = breedingProvider.breedingSystems.indexWhere(
+              (system) => system.id == initialBreedingSystemId);
+      if (initialIndex != -1) {
+        breedingProvider.setCurrentPage(initialIndex);
+      }
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    _currentPage = (_currentPage + 1) % images.length;
     return Scaffold(
       body: BackGreoundImageContainer(
-        child: Column(
-          children: [
-            TitleRow(textTitle: "Breeding Systems"),
-            Row(
-              children: [
-                SearchBarCustom(
-                    w: 555,
-                    h: 50,
-                    keyboardType: TextInputType.text,
-                    hintText: "Search..."),
-                const SortIcon(),
-              ],
-            ),
-            Expanded(child: Consumer<BreedingProvider>(
+        child: FutureBuilder<void>(
+          future: fetchInitialData(context),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return Center(
+                child: SpinKitFoldingCube(
+                  color: Colors.green.shade700,
+                  size: 70,
+                ),
+              );
+            } else if (snapshot.hasError) {
+              return Center(
+                child: Text('Error: ${snapshot.error}'),
+              );
+            } else {
+              return Consumer<BreedingProvider>(
                 builder: (context, breedingProvider, child) {
-              if (breedingProvider.isLoading) {
-                return const Center(child: CircularProgressIndicator());
-              } else if (breedingProvider.errorMessage != null) {
-                return Center(child: Text(breedingProvider.errorMessage!));
-              } else {
-                return PageView.builder(
-                    controller: _pageController,
-                    itemCount: breedingProvider.breedingSystems.length,
-                    onPageChanged: (index) {
-                      setState(() {
-                        _currentPage = index;
-                      });
-                    },
-                    itemBuilder: (context, index) {
-                      final breedingSystem =
-                          breedingProvider.breedingSystems[index];
-
-                      {
-                        return BreedingSystemView(
-                          breedingSystemId: breedingSystem.id,
-                          imagePath: images[_currentPage],
-                        );
-                      }
-                    });
-              }
-            }))
-          ],
+                  if (breedingProvider.errorMessage != null) {
+                    return Center(
+                      child: Text(breedingProvider.errorMessage!),
+                    );
+                  } else {
+                    return Column(
+                      children: [
+                        TitleRow(textTitle: "Breeding Systems"),
+                        Row(
+                          children: [
+                            SearchBarCustom(
+                              controller: breedingProvider.searchController,
+                              onTap: () => breedingProvider.applySearch(),
+                              onPressedSearch: () {},
+                              w: 555,
+                              h: 50,
+                              keyboardType: TextInputType.text,
+                              hintText: "Search by name...",
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: PopupMenuButton<int>(
+                                icon: Image.asset('assets/images/sort icon.png'),
+                                onCanceled: () {
+                                  breedingProvider.clearFilters();
+                                },
+                                onSelected: (int value) {
+                                  if (value == 1 || value == 0) {
+                                    breedingProvider.applyFilter(value);
+                                  } else {
+                                    breedingProvider.clearFilters();
+                                  }
+                                },
+                                itemBuilder: (BuildContext context) {
+                                  return [
+                                    PopupMenuItem<int>(
+                                      value: 0,
+                                      child: Row(
+                                        children: [
+                                          TextButton(
+                                            onPressed: () {
+                                              breedingProvider
+                                                  .applyStatusFilter(0);
+                                            },
+                                            child: const Text('Normal'),
+                                          ),
+                                          IconButton(
+                                            onPressed: () {
+                                              breedingProvider.clearFilters();
+                                            },
+                                            icon: const Icon(Icons.remove),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    PopupMenuItem<int>(
+                                      value: 1,
+                                      child: Row(
+                                        children: [
+                                          TextButton(
+                                            onPressed: () {
+                                              breedingProvider
+                                                  .applyStatusFilter(1);
+                                            },
+                                            child: const Text('Abnormal'),
+                                          ),
+                                          IconButton(
+                                            onPressed: () {
+                                              breedingProvider.clearFilters();
+                                            },
+                                            icon: const Icon(Icons.remove),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ];
+                                },
+                              ),
+                            ),
+                          ],
+                        ),
+                        Expanded(
+                          child: PageView.builder(
+                            controller: breedingProvider.pageController,
+                            itemCount: breedingProvider.breedingSystems.length,
+                            onPageChanged: (index) {
+                              breedingProvider.setCurrentPage(index);
+                              breedingProvider.applyFilter(null);
+                            },
+                            itemBuilder: (context, index) {
+                              final breedingSystem =
+                              breedingProvider.breedingSystems[index];
+                              return BreedingSystemView(
+                                breedingSystemId: breedingSystem.id,
+                                imagePath: breedingProvider.images[
+                                breedingProvider.currentPage],
+                              );
+                            },
+                          ),
+                        ),
+                      ],
+                    );
+                  }
+                },
+              );
+            }
+          },
         ),
       ),
       bottomNavigationBar: const Mynavbar(),
     );
   }
 }
+
+

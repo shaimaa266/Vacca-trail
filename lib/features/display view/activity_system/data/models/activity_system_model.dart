@@ -9,7 +9,7 @@ class ActivitySystemModel {
   final String created_at;
   final String updated_at;
   final int cows_count;
-  final List<CowModel> cows;
+  final List<CowModel>? cows;
 
   ActivitySystemModel({
     required this.id,
@@ -25,7 +25,7 @@ class ActivitySystemModel {
 
   factory ActivitySystemModel.fromJson(Map<String, dynamic> json) {
     var cowsList = json['cows'] as List;
-    List<CowModel> cows = cowsList.map((i) => CowModel.fromJson(i)).toList();
+    List<CowModel>? cows = cowsList.map((i) => CowModel.fromJson(i)).toList();
 
     return ActivitySystemModel(
       id: json['id'],

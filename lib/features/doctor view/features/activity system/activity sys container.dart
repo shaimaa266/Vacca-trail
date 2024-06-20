@@ -27,7 +27,7 @@ class ActivitySysContainer extends StatelessWidget {
       index++;
     }
     return SizedBox(
-      height: 645.h,
+      height: 665.h,
       child: GridView.builder(
         gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
           maxCrossAxisExtent: 290,
@@ -39,8 +39,8 @@ class ActivitySysContainer extends StatelessWidget {
         itemBuilder: (BuildContext context, int index) => Padding(
           padding: const EdgeInsets.only(bottom: 9, left: 12, right: 12),
           child: Container(
-            width: 250,
-            height: 370,
+            width: 260,
+            height: 380,
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(13),
@@ -64,14 +64,14 @@ class ActivitySysContainer extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  "Breeding Name",
+                  "Systenm Name",
                   style: TextStyle(fontSize: 22.sp, color: Colors.blueGrey),
                 ),
                 const SizedBox(
                   height: 2,
                 ),
                 Text(
-                  "Lorem ipsum dolor sit amet, consecrate disciplining Ad consecrate disciplining Ad",
+                  "Lorem ipsum dolor nsecrate disciplining Ad",
                   style: TextStyle(
                       fontSize: 14.sp,
                       color: Colors.grey[600],
@@ -91,7 +91,7 @@ class ActivitySysContainer extends StatelessWidget {
                       child: const Text(
                         "view more",
                         style:
-                            TextStyle(color: Color(0xffEAEEEC), fontSize: 13),
+                            TextStyle(color: Color(0xffEAEEEC), fontSize: 16,fontWeight: FontWeight.w900),
                       ),
                       onPressed: () {
                         Navigator.push(

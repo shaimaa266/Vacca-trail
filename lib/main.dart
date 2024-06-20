@@ -13,7 +13,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:dio/dio.dart';
 
-import 'features/doctor view/presentation/manage/state managment/providerHelper.dart';
+import 'features/doctor view/data/manage/state managment/providerHelper.dart';
+
 
 void main() {
   runApp(MyApp());
@@ -22,31 +23,31 @@ void main() {
 class MyApp extends StatelessWidget {
   MyApp({super.key});
   final dio = Dio();
-  //hala token ="15|S1hVLMGgJ73ZOwRVCQPlSSG5vA3p2PtR9PpGWnge39d34a81 ,19|wfWb1xudjoFQ9SwVDQXoIOr465WhtnvEHlRE7k20750b2639"  lian1@gmail.com; 123456
-  //shaza token ="4|lKpe9uxto1VyXkKs5SMJAo0Cyh7UaSwYaNk02rEbdbc54d23'; shaimaa@gamil.com 12345
 
+// shaza's token=3|MbCbORYgrxBkLrgeMG7KebpPftLEagyuGLnAXDjK140a448b;
+  //hala's token=2|uOm8bShoz0L3Qdw8xDFQO4pdvtErFTGKJx7QgEjRd065c239;
   BreedingRepo breedingRepo = BreedingRepo(
     ApiService(
-        baseUrl: 'https://8e9a-156-197-160-120.ngrok-free.app/api',
+        baseUrl: 'https://2527-45-243-154-131.ngrok-free.app/api',
         dio: Dio(),
-        token: "19|wfWb1xudjoFQ9SwVDQXoIOr465WhtnvEHlRE7k20750b2639"),
+        token: "4|ZjRTddpB2HCdNLKkoxPxmuY9Jhv4NtTvBPZqK2uMc98d73ff"),
   );
   ActivitySystemsRepo activitySystemsRepo = ActivitySystemsRepo(
     ApiService(
         dio: Dio(),
-        token: "19|wfWb1xudjoFQ9SwVDQXoIOr465WhtnvEHlRE7k20750b2639",
-        baseUrl: "https://8e9a-156-197-160-120.ngrok-free.app/api"),
+        token: "4|ZjRTddpB2HCdNLKkoxPxmuY9Jhv4NtTvBPZqK2uMc98d73ff",
+        baseUrl: "https://2527-45-243-154-131.ngrok-free.app/api"),
   );
   ActivityPlaceRepo activityPlaceRepo = ActivityPlaceRepo(
     ApiService(
-        baseUrl: 'https://8e9a-156-197-160-120.ngrok-free.app/api',
+        baseUrl: 'https://2527-45-243-154-131.ngrok-free.app/api',
         dio: Dio(),
-        token: "19|wfWb1xudjoFQ9SwVDQXoIOr465WhtnvEHlRE7k20750b2639"),
+        token: "4|ZjRTddpB2HCdNLKkoxPxmuY9Jhv4NtTvBPZqK2uMc98d73ff"),
   );
   CowRepo cowRepo = CowRepo(ApiService(
-      token: '19|wfWb1xudjoFQ9SwVDQXoIOr465WhtnvEHlRE7k20750b2639',
+      token: '4|ZjRTddpB2HCdNLKkoxPxmuY9Jhv4NtTvBPZqK2uMc98d73ff',
       dio: Dio(),
-      baseUrl: 'https://8e9a-156-197-160-120.ngrok-free.app/api'));
+      baseUrl: 'https://2527-45-243-154-131.ngrok-free.app/api'));
   @override
   Widget build(BuildContext context) {
     dio.interceptors.add(LogInterceptor(responseBody: true, requestBody: true));
@@ -65,10 +66,10 @@ class MyApp extends StatelessWidget {
               create: (_) => BreedingProvider(breedingRepo),
             ),
             ChangeNotifierProvider(
-                create: (_) => ActivitySystemsProvider(activitySystemsRepo)),
+                create: (_) => ActivitySystemsProvider(activitySystemsRepo),),
             ChangeNotifierProvider(
-                create: (_) => ActivityPlaceProvider(activityPlaceRepo)),
-            ChangeNotifierProvider(create: (_)=>CowProvider(cowRepo)),
+                create: (_) => ActivityPlaceProvider(activityPlaceRepo),),
+            ChangeNotifierProvider(create: (_)=>CowProvider(cowRepo),),
           ],
           child: MaterialApp(
             debugShowCheckedModeBanner: false,

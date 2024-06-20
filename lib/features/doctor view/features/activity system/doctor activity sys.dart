@@ -12,6 +12,7 @@ import 'add.dart';
 class ActivitySysDoctorPage extends StatelessWidget {
   ActivitySysDoctorPage({super.key});
   final dynamic route = AddActSystem();
+  final TextEditingController controller =TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,6 +30,9 @@ class ActivitySysDoctorPage extends StatelessWidget {
                   height: 15,
                 ),
                 SearchBarCustom(
+                  controller: controller,
+                    onTap: (){},
+                    onPressedSearch: (){},
                     w:555,h:50, keyboardType: TextInputType.text, hintText: "Search..."),
                 ActivitySysContainer(),
               ],

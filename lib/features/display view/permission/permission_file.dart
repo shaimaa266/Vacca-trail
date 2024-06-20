@@ -184,6 +184,6 @@ Widget CustomIcon({required IconData icon}) {
 Widget CustomText({required String text}) {
   return Text(
     text,
-    style: TextStyle(color: Color(0xff263238), fontSize: 25.sp),
+    style: TextStyle(color: const Color(0xff263238), fontSize: 25.sp),
   );
 }

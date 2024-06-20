@@ -31,8 +31,8 @@ class CustomSysField extends StatelessWidget {
       height: height.h,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
-        border: withBorder?Border.all(color: const Color(0xff89A492),width: 1,):null,
-        color: isWhite ? const Color(0xffFEFDFE) : const Color(0xffCDDDD3),
+        border: withBorder?Border.all(color:const  Color(0xff89A492).withOpacity(1),width: 1,):null,
+        color: isWhite ? const Color(0xffFEFDFE) : const Color(0xffCDDDD3).withAlpha(43),
       ),
       child: Padding(
         padding: const EdgeInsets.only(top: 8, right: 8, left: 8),

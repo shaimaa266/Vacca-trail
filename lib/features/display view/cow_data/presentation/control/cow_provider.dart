@@ -4,44 +4,55 @@ import 'package:flutter/material.dart';
 
 import '../../data/model/cows_model.dart';
 
-
-
-class CowProvider extends ChangeNotifier {
+class CowProvider with ChangeNotifier {
   final CowRepo cowRepo;
-  int id = 0;
 
   CowProvider(this.cowRepo);
+  final TextEditingController controller = TextEditingController();
+  List<CowModel> _cows = [];
+  bool _isLoading = false;
+  String? _errorMessage;
 
-  List<CowModel> cows = [];
-  bool isLoading = false;
-  String? errorMessage;
+  List<CowModel> get cows => _cows;
+  bool get isLoading => _isLoading;
+  String? get errorMessage => _errorMessage;
 
-  void _setLoading(bool value) {
-    isLoading = value;
+  Future<void> fetchCows(String query, int? status, double? minRange, double? maxRange) async {
+    _isLoading = true;
+    _errorMessage = null;
     notifyListeners();
-  }
-
-  void _setError(String? message) {
-    errorMessage = message;
-    notifyListeners();
-  }
-  void getIncreament(){
-    for(int i=0;i<6;i++){
-      id++;
+    try {
+      if (query.isNotEmpty) {
+        _cows = await cowRepo.searchCows(query);
+      } else if (status != null) {
+        _cows = await cowRepo.getFilteredCowsByStatus(status);
+      } else if (minRange != null && maxRange != null) {
+        _cows = await cowRepo.getFilteredCowsByAge(minRange, maxRange);
+      } else {
+        _cows = await cowRepo.getAllCows();
+      }
+    } catch (e) {
+      _errorMessage = e.toString();
+    } finally {
+      _isLoading = false;
+      notifyListeners();
     }
   }
 
   Future<void> fetchAllCows() async {
-    _setLoading(true);
-    try {
-      cows = await cowRepo.getAllCows();
-      _setError(null);
-    } catch (e) {
-      _setError(e.toString());
-      print(e);
-    } finally {
-      _setLoading(false);
-    }
+    await fetchCows('', null, null, null);
+  }
+
+  Future<void> fetchFilteredCows(int status) async {
+    await fetchCows('', status, null, null);
+  }
+
+  Future<void> fetchFilteredCowsByAge(double minRange, double maxRange) async {
+    await fetchCows('', null, minRange, maxRange);
+  }
+
+  Future<void> searchCows(String query) async {
+    await fetchCows(query, null, null, null);
   }
 }
 

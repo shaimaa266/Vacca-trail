@@ -1,6 +1,7 @@
-
 import 'package:app_vacca/features/display%20view/custom_widgets/animated%20nav%20bar.dart';
 import 'package:app_vacca/features/display%20view/custom_widgets/background_image_container.dart';
+import 'package:app_vacca/features/doctor%20view/features/breeding%20system/create%20system/add%20system.dart';
+import 'package:app_vacca/features/doctor%20view/features/breeding%20system/view%20system/view_system.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -48,7 +49,7 @@ class _EditSystemState extends State<EditBreedSystem> {
                   child: CustomSysField(
                     withBorder: true,
                     isWhite: true,
-                    colorHex:  const Color(0xff263238),
+                    colorHex: const Color(0xff263238),
                     height: 50,
                     width: 580,
                     readOnly: false,
@@ -66,7 +67,7 @@ class _EditSystemState extends State<EditBreedSystem> {
                   child: CustomSysField(
                     withBorder: true,
                     isWhite: true,
-                    colorHex:  const Color(0xff263238),
+                    colorHex: const Color(0xff263238),
                     height: 50,
                     width: 580,
                     readOnly: false,
@@ -83,7 +84,7 @@ class _EditSystemState extends State<EditBreedSystem> {
                   padding: const EdgeInsets.all(4.0),
                   child: CustomSysField(
                     withBorder: true,
-                    colorHex:  const Color(0xff263238),
+                    colorHex: const Color(0xff263238),
                     height: 60,
                     width: 580,
                     isWhite: true,
@@ -102,7 +103,7 @@ class _EditSystemState extends State<EditBreedSystem> {
                   child: CustomSysField(
                     withBorder: true,
                     isWhite: true,
-                    colorHex:  const Color(0xff263238),
+                    colorHex: const Color(0xff263238),
                     height: 140,
                     width: 580,
                     readOnly: false,
@@ -118,7 +119,7 @@ class _EditSystemState extends State<EditBreedSystem> {
                 CustomSysField(
                   withBorder: false,
                   isWhite: true,
-                  colorHex:  const Color(0xff263238),
+                  colorHex: const Color(0xff263238),
                   height: 50,
                   width: 580,
                   readOnly: false,
@@ -127,23 +128,23 @@ class _EditSystemState extends State<EditBreedSystem> {
                   controller: applyDuaController,
                   text: "Apply on(number of cows) ",
                 ),
-
                 Padding(
-                  padding: const EdgeInsets.only(top: 22,left: 8,right: 8,bottom: 16),
+                  padding: const EdgeInsets.only(
+                      top: 22, left: 8, right: 8, bottom: 16),
                   child: Container(
                     width: 350,
                     height: 45,
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(10),
-                      border:
-                          Border.all(color: const Color(0xff89A492), width: 1.2),
+                      border: Border.all(
+                          color: const Color(0xff89A492), width: 1.2),
                     ),
                     child: DropdownButton(
-                      focusColor:   const Color(0xff44885C),
-                      hint: const  Padding(
-                        padding:  EdgeInsets.all(8.0),
-                        child:  Text(
+                      focusColor: const Color(0xff44885C),
+                      hint: const Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: Text(
                           "Applied on ",
                           style: TextStyle(
                               fontWeight: FontWeight.normal,
@@ -153,8 +154,8 @@ class _EditSystemState extends State<EditBreedSystem> {
                       ),
                       isExpanded: true,
                       iconSize: 40.0,
-                      style:  const TextStyle(
-                        color:  Color(0xff44885C),
+                      style: const TextStyle(
+                        color: Color(0xff44885C),
                       ),
                       items:
                           ['000', '001', '002', '003', '004', '005', '006'].map(
@@ -173,9 +174,53 @@ class _EditSystemState extends State<EditBreedSystem> {
                     ),
                   ),
                 ),
-                const SizedBox(width: 30,),
-                 AddButton(
-                  route:  BreedingDoctorPage(),
+                const SizedBox(
+                  width: 30,
+                ),
+                AddButton(
+                  onPressed: () {
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title:const   Center(child: Text('Are you sure?')),
+                          content: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              ElevatedButton(
+                                onPressed: () {
+                                  // request done ...
+                                  Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (_) => ViewBreedSystem(),
+                                    ),
+                                  );
+                                },
+                                child: const Text(
+                                  'Yes',
+                                  style: TextStyle(color: Colors.red),
+                                ),
+                              ),
+                              const SizedBox(
+                                width: 20,
+                              ),
+                              ElevatedButton(
+                                onPressed: () {
+                                  Navigator.of(context).pop(); // Close the dialog
+                                },
+                                child: const Text(
+                                  'No',
+                                  style: TextStyle(color: Colors.green),
+                                ),
+                              ),
+                            ],
+                          ),
+                        );
+                      },
+                    );
+                  },
+
                   text: "Save",
                 ),
               ],

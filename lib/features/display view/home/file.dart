@@ -1,6 +1,5 @@
-
-
 import 'package:app_vacca/features/display%20view/custom_widgets/animated%20nav%20bar.dart';
+import 'package:app_vacca/features/display%20view/custom_widgets/background_image_container.dart';
 import 'package:flutter/material.dart';
 
 class File extends StatelessWidget {
@@ -9,8 +8,10 @@ class File extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body:
-      Center(child:  Text("setting "),),
+      body: BackGreoundImageContainer(
+          child: const Center(
+        child:  Text("setting "),
+      )),
       bottomNavigationBar: const Mynavbar(),
     );
   }

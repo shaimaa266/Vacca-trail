@@ -1,7 +1,6 @@
 import 'package:app_vacca/features/display%20view/custom_widgets/animated%20nav%20bar.dart';
 import 'package:app_vacca/features/display%20view/custom_widgets/background_image_container.dart';
 
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -278,7 +277,12 @@ class _ViewSystemState extends State<ViewBreedSystem> {
                   ),
                 ),
                 AddButton(
-                  route: editSystemRoute,
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (_) => editSystemRoute),
+                    );
+                  },
                   text: "edit the system",
                 ),
               ],
