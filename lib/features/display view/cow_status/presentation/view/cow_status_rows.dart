@@ -45,121 +45,133 @@ class CowStatusRows extends StatelessWidget with MyConstants {
                 getText(" Age : ${cow.age}"),
                 cow.cow_status == 0
                     ? Text(
-                  " status: Not Normal",
-                  style: TextStyle(
-                      fontWeight: FontWeight.w700,
-                      fontSize: 36.sp,
-                      color: Colors.red),
-                )
+                        " status: Not Normal",
+                        style: TextStyle(
+                            fontWeight: FontWeight.w700,
+                            fontSize: 36.sp,
+                            color: Colors.red),
+                      )
                     : Text(
-                  " status: Normal ",
-                  style: TextStyle(
-                      fontWeight: FontWeight.w700,
-                      fontSize: 36.sp,
-                      fontFamily: 'Urbanist',
-                      color: baseColor),
-                ),
+                        " status: Normal ",
+                        style: TextStyle(
+                            fontWeight: FontWeight.w700,
+                            fontSize: 36.sp,
+                            fontFamily: 'Urbanist',
+                            color: baseColor),
+                      ),
                 cow.isPregnant == 1
                     ? Text(
-                  " Pregnancy status: Pregnant",
-                  style: TextStyle(
-                      fontWeight: FontWeight.w700,
-                      fontSize: 36.sp,
-                      color: Colors.red),
-                )
+                        " Pregnancy status: Pregnant",
+                        style: TextStyle(
+                            fontWeight: FontWeight.w700,
+                            fontSize: 36.sp,
+                            color: Colors.red),
+                      )
                     : Text(
-                  "Pregnancy status: Not pregnant ",
-                  style: TextStyle(
-                      fontWeight: FontWeight.w700,
-                      fontSize: 36.sp,
-                      fontFamily: 'Urbanist',
-                      color: baseColor),
-                ),
+                        "Pregnancy status: Not pregnant ",
+                        style: TextStyle(
+                            fontWeight: FontWeight.w700,
+                            fontSize: 36.sp,
+                            fontFamily: 'Urbanist',
+                            color: baseColor),
+                      ),
                 getText('Area : ${cow.original_area}'),
                 getText('Weight: ${cow.weight}'),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    TextButton(
-                      onPressed: () {
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                            builder: (_) => ActivityPlaces(
-                              initialPlaceId: cow.activityplace_id,
-                            ),
-                          ),
-                        );
-                      },
-                      child: Text(
-                        "Activity place id: ${cow.activityplace_id}",
+                InkWell(
+                  onTap: () {
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => BreedingSystems(
+                          initialBreedingSystemId: cow.breadingsystem_id,
+                        ),
+                      ),
+                    );
+                  },
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Breeding System id:   ${cow.breadingsystem_id}             ",
                         style: TextStyle(
-                            decorationThickness: 3,
+                            decorationThickness: 4,
                             decorationColor: Colors.blueGrey,
                             fontWeight: FontWeight.w700,
                             fontSize: 36.sp,
-                            decoration: TextDecoration.underline,
                             fontFamily: 'Urbanist',
-                            color: baseColor),
+                            color: titleColor),
                       ),
-                    ),
-                  ],
+                      Icon(
+                        Icons.arrow_forward_ios,
+                        size: 25,
+                        color: titleColor,
+                      ),
+                    ],
+                  ),
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    TextButton(
-                      onPressed: () {
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                            builder: (_) => ActivitySystems(
-                              initialSystemId: cow.activitysystem_id,
-                            ),
-                          ),
-                        );
-                      },
-                      child: Text(
-                        "Activity System id: ${cow.activitysystem_id}",
+                InkWell(
+                  onTap: () {
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => ActivitySystems(
+                          initialSystemId: cow.activitysystem_id,
+                        ),
+                      ),
+                    );
+                  },
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Activity System id:   ${cow.activitysystem_id}             ",
                         style: TextStyle(
-                            decorationThickness: 3,
+                            decorationThickness: 4,
                             decorationColor: Colors.blueGrey,
                             fontWeight: FontWeight.w700,
                             fontSize: 36.sp,
-                            decoration: TextDecoration.underline,
                             fontFamily: 'Urbanist',
-                            color: baseColor),
+                            color: titleColor),
                       ),
-                    ),
-                  ],
+                      Icon(
+                        Icons.arrow_forward_ios,
+                        size: 25,
+                        color: titleColor,
+                      ),
+                    ],
+                  ),
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    TextButton(
-                      onPressed: () {
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                            builder: (_) => BreedingSystems(
-                              initialBreedingSystemId: cow.breadingsystem_id,
-                            ),
-                          ),
-                        );
-                      },
-                      child: Text(
-                        "Breeding system id: ${cow.breadingsystem_id}",
+                InkWell(
+                  onTap: () {
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => ActivityPlaces(
+                          initialPlaceId: cow.activityplace_id,
+                        ),
+                      ),
+                    );
+                  },
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Existing place id:   ${cow.activityplace_id}             ",
                         style: TextStyle(
-                            decorationThickness: 3,
+                            decorationThickness: 4,
                             decorationColor: Colors.blueGrey,
                             fontWeight: FontWeight.w700,
                             fontSize: 36.sp,
-                            decoration: TextDecoration.underline,
                             fontFamily: 'Urbanist',
-                            color: baseColor),
+                            color: titleColor),
                       ),
-                    ),
-                  ],
+                      Icon(
+                        Icons.arrow_forward_ios,
+                        size: 25,
+                        color: titleColor,
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),
@@ -199,10 +211,12 @@ class CowStatusRows extends StatelessWidget with MyConstants {
                       ),
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(16),
-                        child: cow.image!=''?Image.network(
-                          cow.image!,
-                          fit: BoxFit.cover,
-                        ):Image.asset("assets/images/cow eating.png"),
+                        child: cow.image != ''
+                            ? Image.network(
+                                cow.image!,
+                                fit: BoxFit.cover,
+                              )
+                            : Image.asset("assets/images/cow eating.png"),
                       )),
                 ),
                 Padding(
