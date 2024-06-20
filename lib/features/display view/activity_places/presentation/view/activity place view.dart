@@ -88,32 +88,38 @@ class ActivityPlacesView extends StatelessWidget with MyConstants {
                     Row(
                       children: [
                         TextFont(
-                            text: "latitude:  ${activityPlaces.latitude}",
+                            text: "latitude:  ${activityPlaces.latitude}  ,",
                             height: 30,isDark: true,),
                         TextFont(
-                            text: "longitude:  ${activityPlaces.longitude}",
+                            text: "  longitude:  ${activityPlaces.longitude}",
                             height: 30,isDark: true,),
                       ],
                     ),
-                    TextFont(
-                        text:
-                            "Applied on : ${activityPlaces.cows!.length} cows ",
-                        height: 30,isDark: true,),
+                    Row(
+                      children: [
 
-                    if (activityPlaces.cows!.isNotEmpty)
-                      DropdownButton<String>(
-                        items: activityPlaces.cows!.map((cow) {
-                          return DropdownMenuItem<String>(
-                            value: cow.cowId.toString(),
-                            child: Text("Cow ID: ${cow.cowId}"),
-                          );
-                        }).toList(),
-                        onChanged: (val) {},
-                        hint: const Text('Applied on ',style: TextStyle(fontWeight: FontWeight.bold,color: Colors.black45,fontSize: 29),),
-                      )
-                    else
-                      const TextFont(
-                          text: "No cows in this place.", height: 40,isDark: true,),
+                        if (activityPlaces.cows!.isNotEmpty)
+                          DropdownButton<String>(
+                            focusColor:Colors.grey[300],
+                            items: activityPlaces.cows!.map((cow) {
+                              return DropdownMenuItem<String>(
+                                value: cow.cowId.toString(),
+                                child: Center(child: Text("Cow ID: ${cow.cowId}")),
+                              );
+                            }).toList(),
+                            onChanged: (val) {},
+                            hint:   TextFont(
+                              text:
+                              "Applied on : ${activityPlaces.cows!.length} cows        ",
+                              height: 30,isDark: true,) ,
+                          )
+                        else
+                          const TextFont(
+                            text: "No cows in this place.", height: 40,isDark: true,),
+                      ],
+                    ),
+
+
                   ],
                 ),
               ),

@@ -132,28 +132,29 @@ class BreedingSystemView extends StatelessWidget with MyConstants {
                         height: 80,
                         isDark: true,
                       ),
-                      TextFont(
-                        text: " applied on ${breeding.cows!.length} cows",
-                        isDark: true,
-                        height: 40,
+                      Row(
+                        children: [
+
+                          if (breeding.cows!.isNotEmpty)
+                            DropdownButton<String>(
+                              focusColor:Colors.grey[300],
+                              items: breeding.cows!.map((cow) {
+                                return DropdownMenuItem<String>(
+                                  value: cow.cowId.toString(),
+                                  child: Center(child: Text("Cow ID: ${cow.cowId}")),
+                                );
+                              }).toList(),
+                              onChanged: (val) {},
+                              hint:   TextFont(
+                                text:
+                                "Applied on : ${breeding.cows!.length} cows        ",
+                                height: 30,isDark: true,) ,
+                            )
+                          else
+                            const TextFont(
+                              text: "No cows in this place.", height: 40,isDark: true,),
+                        ],
                       ),
-                      if (breeding.cows!.isNotEmpty)
-                        DropdownButton<String>(
-                          items: breeding.cows!.map((cow) {
-                            return DropdownMenuItem<String>(
-                              value: cow.cowId.toString(),
-                              child: Text("Cow ID: ${cow.cowId}"),
-                            );
-                          }).toList(),
-                          onChanged: (val) {},
-                          hint: const Text('Applied on '),
-                        )
-                      else
-                        const TextFont(
-                          text: "No cows in this breeding system.",
-                          isDark: true,
-                          height: 40,
-                        ),
                     ],
                   ),
                 ),

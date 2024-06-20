@@ -134,28 +134,29 @@ class ActivitySystemView extends StatelessWidget with MyConstants {
                         height: 80,
                         isDark: true,
                       ),
-                      TextFont(
-                        text: "Applied on : ${activitySystem.cows!.length} cows",
-                        isDark: true,
-                        height: 40,
+                      Row(
+                        children: [
+
+                          if (activitySystem.cows!.isNotEmpty)
+                            DropdownButton<String>(
+                              focusColor:Colors.grey[300],
+                              items: activitySystem.cows!.map((cow) {
+                                return DropdownMenuItem<String>(
+                                  value: cow.cowId.toString(),
+                                  child: Center(child: Text("Cow ID: ${cow.cowId}")),
+                                );
+                              }).toList(),
+                              onChanged: (val) {},
+                              hint:   TextFont(
+                                text:
+                                "Applied on : ${activitySystem.cows!.length} cows        ",
+                                height: 30,isDark: true,) ,
+                            )
+                          else
+                            const TextFont(
+                              text: "No cows in this place.", height: 40,isDark: true,),
+                        ],
                       ),
-                      if (activitySystem.cows!.isNotEmpty)
-                        DropdownButton<String>(
-                          items: activitySystem.cows!.map((cow) {
-                            return DropdownMenuItem<String>(
-                              value: cow.cowId.toString(),
-                              child: Text("Cow ID: ${cow.cowId}"),
-                            );
-                          }).toList(),
-                          onChanged: (val) {},
-                          hint: const Text('Applied on '),
-                        )
-                      else
-                        const TextFont(
-                          text: "No cows with this activity system.",
-                          height: 40,
-                          isDark: true,
-                        ),
                     ],
                   ),
                 ),
