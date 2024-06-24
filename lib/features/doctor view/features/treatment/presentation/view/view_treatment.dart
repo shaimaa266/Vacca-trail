@@ -1,12 +1,12 @@
-import 'package:app_vacca/features/display%20view/custom_widgets/background_image_container.dart';
-import 'package:app_vacca/features/display%20view/custom_widgets/first_row_title.dart';
+import 'package:app_vacca/core/widgets/background_image_container.dart';
+import 'package:app_vacca/core/widgets/first_row_title.dart';
 
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../shared/doctor_nav_bar.dart';
-import '../shared/note_button.dart';
+import '../../../shared/doctor_nav_bar.dart';
+import '../../../shared/note_button.dart';
 import 'edit treatment.dart';
 
 class TreatmentReview extends StatelessWidget {

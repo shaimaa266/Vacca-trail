@@ -1,20 +1,22 @@
 
-import 'package:app_vacca/features/display%20view/custom_widgets/background_image_container.dart';
-import 'package:app_vacca/features/display%20view/custom_widgets/first_row_title.dart';
-import 'package:app_vacca/features/doctor%20view/features/treatment/table_treatment.dart';
+import 'package:app_vacca/features/doctor%20view/features/treatment/presentation/view/widgets/table_treatment.dart';
+import 'package:app_vacca/features/doctor%20view/features/treatment/presentation/view/treatment.dart';
 import 'package:flutter/material.dart';
-import '../shared/custom_sys_field.dart';
-import '../shared/doctor_nav_bar.dart';
-import '../shared/note_button.dart';
-import 'all treatment.dart';
-class AddTreatment extends StatefulWidget {
-  AddTreatment({super.key});
+
+import '../../../../../../core/widgets/background_image_container.dart';
+import '../../../../../../core/widgets/first_row_title.dart';
+import '../../../shared/custom_sys_field.dart';
+import '../../../shared/doctor_nav_bar.dart';
+import '../../../shared/note_button.dart';
+
+class EditTreatment extends StatefulWidget {
+  EditTreatment({super.key});
 
   @override
-  State<AddTreatment> createState() => _AddTreatmentState();
+  State<EditTreatment> createState() => _EditTreatmentState();
 }
 
-class _AddTreatmentState extends State<AddTreatment> {
+class _EditTreatmentState extends State<EditTreatment> {
   final TextEditingController noteNameController = TextEditingController();
 
   final TextEditingController diseasesController = TextEditingController();
@@ -115,9 +117,9 @@ class _AddTreatmentState extends State<AddTreatment> {
                 ),
                 Padding(
                   padding: const EdgeInsets.all(12.0),
-                  child:TreatmentTable(isAdd: true,),
+                  child:TreatmentTable(isAdd: false,),
                 ),
-               const  Padding(
+                const  Padding(
                   padding:  EdgeInsets.all(4.0),
 
                   child: Text("1 February 2024 at 1:23 PM"),
@@ -125,7 +127,7 @@ class _AddTreatmentState extends State<AddTreatment> {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: NoteButton(text: "save",onPressed: (){
-                    Navigator.push(context, MaterialPageRoute(builder: (_)=>AllTreatments(),),);
+                    Navigator.push(context, MaterialPageRoute(builder: (_)=>EmptyTreatment(),),);
                   },),
                 )
               ],

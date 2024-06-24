@@ -1,6 +1,6 @@
 
 import 'package:app_vacca/features/display%20view/custom_widgets/animated%20nav%20bar.dart';
-import 'package:app_vacca/features/display%20view/custom_widgets/background_image_container.dart';
+import 'package:app_vacca/core/widgets/background_image_container.dart';
 import 'package:app_vacca/features/display%20view/custom_widgets/constants_mixin.dart';
 
 import 'package:flutter/material.dart';

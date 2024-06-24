@@ -1,28 +1,48 @@
 import 'package:app_vacca/features/display%20view/activity_places/presentation/control/activity_place_provider.dart';
 import 'package:app_vacca/features/display%20view/custom_widgets/animated%20nav%20bar.dart';
-import 'package:app_vacca/features/display%20view/custom_widgets/background_image_container.dart';
+import 'package:app_vacca/core/widgets/background_image_container.dart';
 import 'package:app_vacca/features/doctor%20view/features/activity%20place/view/view%20place.dart';
+import 'package:app_vacca/features/doctor%20view/features/shared/containerRowInfo.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
+import '../../../../../core/widgets/text font body.dart';
 import '../../../../display view/activity_places/data/models/activity_place_model.dart';
+import '../../../../display view/custom_widgets/constants_mixin.dart';
+import '../../../../../core/widgets/first_row_title.dart';
 import '../../shared/button_customized.dart';
 import '../../shared/custom_sys_field.dart';
-import '../../shared/title.dart';
 
-class EditPlace extends StatefulWidget {
-  EditPlace({super.key,  required this.initialPlaceId});
-  final int initialPlaceId;
+class EditPlace extends StatelessWidget with MyConstants {
+  final int placeId;
 
-  @override
-  State<EditPlace> createState() => _EditSystemState();
-}
+  EditPlace({super.key, required this.placeId});
 
-class _EditSystemState extends State<EditPlace> {
-
-  String? selectedCowId;
-  int? placeId;
+  Future<ActivityPlacesModel?> fetchActivityPlace(BuildContext context) async {
+    final placeProvider =
+        Provider.of<ActivityPlaceProvider>(context, listen: false);
+    await placeProvider.fetchAllActivityPlaces();
+    return placeProvider.allActivityPlaces.firstWhere(
+      (system) => system.id == placeId,
+      orElse: () => ActivityPlacesModel(
+        id: 0,
+        name: '',
+        goal: '',
+        description: '',
+        cows: [],
+        image: '',
+        activitySystemId: 0,
+        updatedAt: '',
+        createdAt: '',
+        type: '',
+        capacity: 0,
+        cowCount: 0,
+        latitude: null,
+        longitude: null,
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,251 +50,213 @@ class _EditSystemState extends State<EditPlace> {
       body: BackGreoundImageContainer(
         child: SingleChildScrollView(
           child: Padding(
-            padding:
-                const EdgeInsets.only(top: 50, bottom: 16, left: 16, right: 16),
-            child: Consumer<ActivityPlaceProvider>(
-              builder: (context, placeProvider, child) {
-                if (placeProvider.isLoading) {
+            padding: const EdgeInsets.only(top: 40, left: 16, right: 16),
+            child: FutureBuilder<ActivityPlacesModel?>(
+              future: fetchActivityPlace(context),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
                   return Center(
                     child: SpinKitHourGlass(
                       color: Colors.green.shade700,
                     ),
                   );
-                } else if (placeProvider.errorMessage != null) {
+                } else if (snapshot.hasError) {
                   return Center(
-                    child: Text(placeProvider.errorMessage!),
+                    child: Text('Error: ${snapshot.error}'),
+                  );
+                } else if (!snapshot.hasData || snapshot.data!.id == 0) {
+                  return Center(
+                    child: Text('place with ID $placeId not found'),
                   );
                 } else {
-                  final activityPlaces =
-                      placeProvider.allActivityPlaces.firstWhere(
-                    (system) => system.id == placeId,
-                    orElse: () => ActivityPlacesModel(
-                      id: 0,
-                      name: '',
-                      goal: '',
-                      description: '',
-                      cows: [],
-                      image: '',
-                      activitySystemId: 0,
-                      updatedAt: '',
-                      createdAt: '',
-                      type: '',
-                      capacity: 0,
-                      cowCount: 0,
-                      latitude: null,
-                      longitude: null,
-                    ),
-                  );
+                  return Consumer<ActivityPlaceProvider>(
+                      builder: (context, placeProvider, child) {
+                    if (placeProvider.isLoading) {
+                      return const Center(child: CircularProgressIndicator());
+                    } else if (placeProvider.errorMessage != null) {
+                      return Center(
+                        child: Text(placeProvider.errorMessage!),
+                      );
+                    } else {
+                      final activityPlaces =
+                          placeProvider.allActivityPlaces.firstWhere(
+                        (system) => system.id == placeId,
+                        orElse: () => ActivityPlacesModel(
+                          id: 0,
+                          name: '',
+                          goal: '',
+                          description: '',
+                          cows: [],
+                          image: '',
+                          activitySystemId: 0,
+                          updatedAt: '',
+                          createdAt: '',
+                          type: '',
+                          capacity: 0,
+                          cowCount: 0,
+                          latitude: null,
+                          longitude: null,
+                        ),
+                      );
 
-                  if (activityPlaces.id == 0) {
-                    return Center(
-                      child: Text('Breeding system with ID $placeId not found'),
-                    );
-                  }
-
-                  return Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      const MyTitle(text: "Edit a Place"),
-                      SizedBox(height: 20.h),
-                      Padding(
-                        padding: const EdgeInsets.all(4.0),
-                        child: CustomSysField(
-                          withBorder: true,
-                          isWhite: true,
-                          colorHex: const Color(0xff263238),
-                          height: 50,
-                          width: 580,
-                          readOnly: false,
-                          keyboardType: TextInputType.text,
-                          maxLines: 2,
-                          controller: placeProvider.nameSysController,
-                          text: activityPlaces.name!,
-                        ),
-                      ),
-                      SizedBox(height: 20.h),
-                      Padding(
-                        padding: const EdgeInsets.all(4.0),
-                        child: CustomSysField(
-                          withBorder: true,
-                          isWhite: true,
-                          colorHex: const Color(0xff263238),
-                          height: 100,
-                          width: 580,
-                          readOnly: false,
-                          keyboardType: TextInputType.text,
-                          maxLines: 20,
-                          controller: placeProvider.purposeSysController,
-                          text: activityPlaces.goal!,
-                        ),
-                      ),
-                      SizedBox(height: 20.h),
-                      Padding(
-                        padding: const EdgeInsets.all(4.0),
-                        child: CustomSysField(
-                          withBorder: true,
-                          isWhite: true,
-                          colorHex: const Color(0xff263238),
-                          height: 140,
-                          width: 580,
-                          readOnly: false,
-                          keyboardType: TextInputType.text,
-                          maxLines: 20,
-                          controller: placeProvider.sysInfoController,
-                          text: activityPlaces.description!,
-                        ),
-                      ),
-                      SizedBox(height: 10.h),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Container(
-                          width: 340,
-                          height: 40,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            border: Border.all(
-                                color: const Color(0xff89A492), width: 1),
-                            color: Colors.white,
-                          ),
+                      if (activityPlaces.id == 0) {
+                        return Center(
                           child: Text(
-                            " Capacity of place ${activityPlaces.capacity} cows ",
-                            style: TextStyle(
-                              color: const Color(0xff777E82),
-                              fontWeight: FontWeight.w500,
-                              fontSize: 31.sp,
-                            ),
-                          ),
-                        ),
-                      ),
-                      SizedBox(height: 10.h),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Center(
-                          child: Container(
-                            width: 340,
-                            height: 35,
+                              'Breeding system with ID $placeId not found'),
+                        );
+                      }
+                      return Column(
+                        children: [
+                          TitleRow(textTitle: "Edit Place Info"),
+                          SizedBox(height: 10.h),
+                          CustomSysField(
+                              controller: placeProvider.nameSysController,
+                              maxLines: 1,
+                              keyboardType: TextInputType.text,
+                              readOnly: false,
+                              text: activityPlaces.name!,
+                              height: 50,
+                              isWhite: true,
+                              width: 300,
+                              withBorder: true,
+                              colorHex: titleColor),
+                          CustomSysField(
+                              controller: placeProvider.purposeSysController,
+                              maxLines: 30,
+                              keyboardType: TextInputType.text,
+                              readOnly: false,
+                              text: activityPlaces.goal!,
+                              height: 80,
+                              isWhite: true,
+                              width: 300,
+                              withBorder: true,
+                              colorHex: titleColor),
+                          CustomSysField(
+                              controller: placeProvider.sysInfoController,
+                              maxLines: 30,
+                              keyboardType: TextInputType.text,
+                              readOnly: false,
+                              text: activityPlaces.description!,
+                              height: 80,
+                              isWhite: true,
+                              width: 300,
+                              withBorder: true,
+                              colorHex: titleColor),
+                          CustomSysField(
+                              controller: placeProvider.typeController,
+                              maxLines: 1,
+                              keyboardType: TextInputType.text,
+                              readOnly: false,
+                              text: activityPlaces.type!,
+                              height: 50,
+                              isWhite: true,
+                              width: 300,
+                              withBorder: true,
+                              colorHex: titleColor),
+                          //activity system name...
+                          containerRowInfo(
+                              cText: 'Capacity of the place',
+                              dataText: '${activityPlaces.capacity}'),
+                          containerRowInfo(
+                              cText: 'actual cow count ',
+                              dataText: '${activityPlaces.cowCount}'),
+
+                          Container(
+                            width: 300,
+                            height: 50,
                             decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(9),
-                              border: Border.all(
-                                  color: const Color(0xff89A492), width: 1),
-                              color: Colors.white,
+                              color: containerColor,
+                              borderRadius: BorderRadius.circular(10),
+                              border: Border.all(color: containerBorderColor),
                             ),
-                            child: Text(
-                              " Number of actual cows in place  ${activityPlaces.cowCount} cows ",
-                              style: TextStyle(
-                                color: const Color(0xff777E82),
-                                fontWeight: FontWeight.w500,
-                                fontSize: 29.sp,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                      SizedBox(height: 20.h),
-                      CustomSysField(
-                        withBorder: true,
-                        isWhite: true,
-                        height: 50,
-                        width: 580,
-                        readOnly: false,
-                        colorHex: const Color(0xff263238),
-                        keyboardType: TextInputType.text,
-                        maxLines: 1,
-                        controller: placeProvider.applyDuaController,
-                        text: "Apply on (${activityPlaces.cows!.length} cows) ",
-                      ),
-                      SizedBox(height: 20.h),
-                      Padding(
-                        padding: const EdgeInsets.only(
-                            top: 8, left: 8, right: 8, bottom: 16),
-                        child: Container(
-                          width: 340,
-                          height: 45,
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(10),
-                            border: Border.all(
-                                color: const Color(0xff89A492), width: 1.2),
-                          ),
-                          child: DropdownButton<String>(
-                            focusColor: const Color(0xff44885C),
-                            hint: const Padding(
-                              padding: EdgeInsets.all(8.0),
-                              child: Text(
-                                "Applied on ",
-                                style: TextStyle(
-                                  fontWeight: FontWeight.normal,
-                                  fontSize: 20,
-                                  color: Colors.black,
-                                ),
-                              ),
-                            ),
-                            isExpanded: true,
-                            iconSize: 40.0,
-                            style: const TextStyle(color: Color(0xff44885C)),
-                            value: selectedCowId,
-                            items: activityPlaces.cows!.map((cow) {
-                              return DropdownMenuItem<String>(
-                                value: cow.cowId,
-                                child: Text("Cow ID: ${cow.cowId}"),
-                              );
-                            }).toList(),
-                            onChanged: (val) {
-                              setState(() {
-                                selectedCowId = val;
-                              });
-                            },
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 20),
-                      AddButton(
-                        onPressed: () {
-                          showDialog(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return AlertDialog(
-                                title:
-                                    const Center(child: Text('Are you sure?')),
-                                content: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    ElevatedButton(
-                                      onPressed: () {
-                                        // request done ...
-                                        Navigator.pushReplacement(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (_) => ViewPlace(),
-                                          ),
-                                        );
-                                      },
-                                      child: const Text(
-                                        'Yes',
-                                        style: TextStyle(color: Colors.red),
-                                      ),
+                            child: Row(
+                              children: [
+                                if (activityPlaces.cows!.isNotEmpty)
+                                  DropdownButton<String>(
+                                    focusColor: Colors.grey[300],
+                                    items: activityPlaces.cows!.map((cow) {
+                                      return DropdownMenuItem<String>(
+                                        value: cow.cowId.toString(),
+                                        child: Center(
+                                            child: Row(
+                                          children: [
+                                            Text("Cow ID: ${cow.cowId}"),
+                                            const SizedBox(
+                                              width: 35,
+                                            ),
+                                            CircleAvatar(
+                                              radius: 3,
+                                              backgroundColor:
+                                                  cow.cow_status == 0
+                                                      ? const Color(0xff185C30)
+                                                      : Colors.red,
+                                            ),
+                                          ],
+                                        )),
+                                      );
+                                    }).toList(),
+                                    onChanged: (val) {},
+                                    hint: const TextFont(
+                                      text: "Applied on :        ",
+                                      height: 30,
+                                      isDark: true,
                                     ),
-                                    const SizedBox(width: 20),
-                                    ElevatedButton(
-                                      onPressed: () {
-                                        Navigator.of(context)
-                                            .pop(); // Close the dialog
-                                      },
-                                      child: const Text(
-                                        'No',
-                                        style: TextStyle(color: Colors.green),
+                                  )
+                                else
+                                  const TextFont(
+                                    text: "No cows in this place.",
+                                    height: 40,
+                                    isDark: true,
+                                  ),
+                              ],
+                            ),
+                          ),
+                          AddButton(text: 'Save', onPressed: () {
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                  title:const   Center(child: Text('Are you sure?')),
+                                  content: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      ElevatedButton(
+                                        onPressed: () {
+                                    placeProvider.changePlaceInfo(activityPlaces.id);
+                                          Navigator.pushReplacement(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (_) =>  ViewPlace(placeId: placeId,),
+                                            ),
+                                          );
+                                        },
+                                        child: const Text(
+                                          'Yes',
+                                          style: TextStyle(color: Colors.red),
+                                        ),
                                       ),
-                                    ),
-                                  ],
-                                ),
-                              );
-                            },
-                          );
-                        },
-                        text: "Save",
-                      ),
-                    ],
-                  );
+                                      const SizedBox(
+                                        width: 20,
+                                      ),
+                                      ElevatedButton(
+                                        onPressed: () {
+                                          Navigator.of(context).pop(); // Close the dialog
+                                        },
+                                        child: const Text(
+                                          'No',
+                                          style: TextStyle(color: Colors.green),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                );
+                              },
+                            );
+                          }),
+                        ],
+                      );
+                    }
+                  });
                 }
               },
             ),

@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../shared/custom_sys_field.dart';
+import '../../../../shared/custom_sys_field.dart';
 
 class TreatmentTable extends StatelessWidget {
   TreatmentTable({super.key,required this.isAdd});

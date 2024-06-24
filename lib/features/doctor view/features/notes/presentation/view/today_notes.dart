@@ -1,64 +1,62 @@
-
+import 'package:app_vacca/features/doctor%20view/features/notes/data/model/notes_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
-
 import '../manage/notes_provider.dart';
 import 'edit_notes.dart';
-import 'note_container.dart';
-
+import 'widgets/note_container.dart';
 class TodayNotes extends StatelessWidget {
-  const TodayNotes({super.key});
+  const TodayNotes({super.key, required this.note});
+  final NoteModel note;
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-        itemCount: 5,
-        scrollDirection: Axis.vertical,
-        itemBuilder: (BuildContext context, int index) => InkWell(
-          onTap: () {
-            Navigator.push(context, MaterialPageRoute(builder: (_)=>EditNote(),),);
-          },
+    return InkWell(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (_) => EditNote(note: note), // Pass the note here
+          ),
+        );
+      },
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: NoteContainer(
+          value: true,
+          h: 80.h,
+          w: 650.w,
           child: Padding(
             padding: const EdgeInsets.all(8.0),
-            child: ChangeNotifierProvider(
-              create: (context)=>NotesProvider(),
-              child: NoteContainer(
-                value: true,
-                h: 80.h,
-                w: 650.w,
-
-                child:  Padding(
-                  padding: const  EdgeInsets.all(8.0),
-                  child: Consumer(
-                    builder: (context,notesProvider,child)=>
-                     Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                  /* notesProvider.noteNameController.text,*/
-                          " ASDFGHJK",
-
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 28.sp),
-                        ),
-                        Text(
-                          /* notesProvider.noteDescController.text,*/
-                          "asdfghjkle4rfygjhkjlsedfcgjk",
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style:
-                          TextStyle(fontWeight: FontWeight.normal, fontSize: 22.sp),
-                        )
-                      ],
-                    ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  note.noteId,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 28.sp,
                   ),
                 ),
-              ),
+                Text(
+                  note.body,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    fontWeight: FontWeight.normal,
+                    fontSize: 22.sp,
+                  ),
+                ),
+              ],
             ),
           ),
-        )
+        ),
+      ),
     );
   }
 }
+
+

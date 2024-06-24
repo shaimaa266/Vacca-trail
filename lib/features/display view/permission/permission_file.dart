@@ -12,7 +12,7 @@ class PermissionsDialog extends StatefulWidget {
 }
 
 class _PermissionsDialogState extends State<PermissionsDialog> {
-  bool isDoctor = false;
+  bool isDoctor = true;
 
   void _showFirstDialog() async {
     showDialog(

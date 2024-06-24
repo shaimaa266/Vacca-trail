@@ -42,41 +42,74 @@ class CowStatusRows extends StatelessWidget with MyConstants {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 getText('Id: ${cow.cowId}'),
+                getSpace(),
                 getText(" Age : ${cow.age}"),
-                cow.cow_status == 0
-                    ? Text(
-                        " status: Not Normal",
+                getSpace(),
+                SizedBox(
+                  height: 30,
+                  child: Row(
+                    children: [
+                      Text(
+                        " status: ",
+                        style: TextStyle(
+                            fontWeight: FontWeight.w700,
+                            fontSize: 36.sp,
+                            color: Colors.black),
+                      ),
+                      cow.cow_status == 0
+                          ? Text(
+                        "  Not Normal",
                         style: TextStyle(
                             fontWeight: FontWeight.w700,
                             fontSize: 36.sp,
                             color: Colors.red),
                       )
-                    : Text(
-                        " status: Normal ",
+                          : Text(
+                        "  Normal ",
                         style: TextStyle(
                             fontWeight: FontWeight.w700,
                             fontSize: 36.sp,
                             fontFamily: 'Urbanist',
                             color: baseColor),
                       ),
-                cow.isPregnant == 1
-                    ? Text(
-                        " Pregnancy status: Pregnant",
-                        style: TextStyle(
-                            fontWeight: FontWeight.w700,
-                            fontSize: 36.sp,
-                            color: Colors.red),
-                      )
-                    : Text(
-                        "Pregnancy status: Not pregnant ",
-                        style: TextStyle(
-                            fontWeight: FontWeight.w700,
-                            fontSize: 36.sp,
-                            fontFamily: 'Urbanist',
-                            color: baseColor),
-                      ),
+                    ],
+                  ),
+                ),
+
+                getSpace(),
+                Row(
+                  children: [
+                    Text(
+                      " Pregnancy status:",
+                      style: TextStyle(
+                          fontWeight: FontWeight.w700,
+                          fontSize: 36.sp,
+                          color: Colors.black),
+                    ),
+                    cow.isPregnant == 1
+                        ? Text(
+                      " Pregnant",
+                      style: TextStyle(
+                          fontWeight: FontWeight.w700,
+                          fontSize: 36.sp,
+                          color: Colors.red),
+                    )
+                        : Text(
+                      " Not pregnant ",
+                      style: TextStyle(
+                          fontWeight: FontWeight.w700,
+                          fontSize: 36.sp,
+                          fontFamily: 'Urbanist',
+                          color: baseColor),
+                    ),
+                  ],
+                ),
+
+                getSpace(),
                 getText('Area : ${cow.original_area}'),
+                getSpace(),
                 getText('Weight: ${cow.weight}'),
+                getSpace(),
                 InkWell(
                   onTap: () {
                     Navigator.pushReplacement(
@@ -109,6 +142,7 @@ class CowStatusRows extends StatelessWidget with MyConstants {
                     ],
                   ),
                 ),
+                getSpace(),
                 InkWell(
                   onTap: () {
                     Navigator.pushReplacement(
@@ -141,6 +175,7 @@ class CowStatusRows extends StatelessWidget with MyConstants {
                     ],
                   ),
                 ),
+                getSpace(),
                 InkWell(
                   onTap: () {
                     Navigator.pushReplacement(
@@ -173,6 +208,7 @@ class CowStatusRows extends StatelessWidget with MyConstants {
                     ],
                   ),
                 ),
+
               ],
             ),
           ),
@@ -253,6 +289,13 @@ class CowStatusRows extends StatelessWidget with MyConstants {
           ),
         ],
       ),
+    );
+  }
+  Widget getSpace(){
+    return Container(
+      width: 150,
+      height: 1,
+      color: Colors.grey[400],
     );
   }
 }

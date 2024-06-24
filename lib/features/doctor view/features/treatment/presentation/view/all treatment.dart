@@ -1,5 +1,5 @@
 
-import 'package:app_vacca/features/doctor%20view/features/treatment/today_treatment.dart';
+import 'package:app_vacca/features/doctor%20view/features/treatment/presentation/view/today_treatment.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 

@@ -1,140 +1,182 @@
 import 'package:app_vacca/features/display%20view/custom_widgets/animated%20nav%20bar.dart';
-import 'package:app_vacca/features/display%20view/custom_widgets/background_image_container.dart';
-import 'package:app_vacca/features/display%20view/custom_widgets/search_bar.dart';
+import 'package:app_vacca/core/widgets/background_image_container.dart';
+import 'package:app_vacca/core/widgets/search_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
-import '../../../../display view/activity_places/data/models/activity_place_model.dart';
 import '../../../../display view/activity_places/presentation/control/activity_place_provider.dart';
-import '../../shared/title.dart';
+import '../../../../../core/widgets/first_row_title.dart';
 import 'activityPlace container.dart';
-
-class ActivityPlaceDoctorPage extends StatelessWidget {
+class DoctorActivityPlaces extends StatelessWidget {
   final int? initialPlaceId;
-  ActivityPlaceDoctorPage({super.key, this.initialPlaceId});
 
-  final TextEditingController controller = TextEditingController();
-  int? selectedSystemId;
-  int? selectedCowStatus;
-  String? placeType;
+  const DoctorActivityPlaces({super.key, this.initialPlaceId});
+
+  Future<void> fetchInitialData(BuildContext context) async {
+    final activityPlacesProvider = Provider.of<ActivityPlaceProvider>(context, listen: false);
+    await activityPlacesProvider.fetchAllActivityPlaces();
+
+    if (initialPlaceId != null) {
+      final initialIndex = activityPlacesProvider.filteredPlaces.indexWhere(
+            (place) => place.id == initialPlaceId,
+      );
+      if (initialIndex != -1) {
+        activityPlacesProvider.setCurrentPage(initialIndex);
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: BackGreoundImageContainer(
-        child: SingleChildScrollView(
-          child: FutureBuilder(
-            future: Provider.of<ActivityPlaceProvider>(context, listen: false).fetchAllActivityPlaces(),
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return const Center(child: CircularProgressIndicator());
-              } else if (snapshot.hasError) {
-                return Center(
-                  child: Text('Error: ${snapshot.error}'),
-                );
-              } else if (!snapshot.hasData) {
-                return const Center(
-                  child: Text('No activity places found.'),
-                );
-              } else {
-                final activityPlacesProvider = Provider.of<ActivityPlaceProvider>(context, listen: false);
-                final activityPlaces = activityPlacesProvider.allActivityPlaces.firstWhere(
-                      (system) => system.id == initialPlaceId,
-                  orElse: () => ActivityPlacesModel(
-                    id: 0,
-                    name: '',
-                    goal: '',
-                    description: '',
-                    cows: [],
-                    image: '',
-                    activitySystemId: 0,
-                    updatedAt: '',
-                    createdAt: '',
-                    type: '',
-                    capacity: 0,
-                    cowCount: 0,
-                    latitude: null,
-                    longitude: null,
-                  ),
-                );
-
-                if (activityPlaces.id == 0) {
-                  return Center(
-                    child: Text('No place with id: $initialPlaceId'),
-                  );
-                }
-                return Padding(
-                  padding: const EdgeInsets.only(
-                    top: 36.0,
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const MyTitle(text: "Activity Place"),
-                      const SizedBox(height: 15),
-                      SearchBarCustom(
-                        controller: controller,
-                        onTap: () {},
-                        onPressedSearch: () {
-                          applySearch(context);
-                        },
-                        w: 555,
-                        h: 50,
-                        keyboardType: TextInputType.text,
-                        hintText: "Search...",
-                      ),
-                      ActivityPlaceContainer(
-                        placeId: activityPlaces.id,
-                        imageUrl: activityPlaces.image ?? '',
-                      ),
-                    ],
-                  ),
-                );
-              }
-            },
-          ),
+        child: FutureBuilder<void>(
+          future: fetchInitialData(context),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return Center(
+                child: SpinKitHourGlass(
+                  color: Colors.green.shade700,
+                ),
+              );
+            } else if (snapshot.hasError) {
+              return Center(
+                child: Text('Error: ${snapshot.error}'),
+              );
+            } else {
+              return Consumer<ActivityPlaceProvider>(
+                builder: (context, activityPlacesProvider, child) {
+                  if (activityPlacesProvider.errorMessage != null) {
+                    return Center(
+                      child: Text(activityPlacesProvider.errorMessage!),
+                    );
+                  } else if (activityPlacesProvider.filteredPlaces.isEmpty) {
+                    return Center(
+                      child: Text('No activity places found'),
+                    );
+                  } else {
+                    final currentIndex = activityPlacesProvider.currentPage;
+                    final activityPlace = activityPlacesProvider.filteredPlaces[currentIndex];
+                    return Column(
+                      children: [
+                        TitleRow(textTitle: "Activity Places"),
+                        Row(
+                          children: [
+                            SearchBarCustom(
+                              controller: activityPlacesProvider.searchController,
+                              onTap: () => activityPlacesProvider.searchByType(
+                                activityPlacesProvider.searchController.text,
+                              ),
+                              onPressedSearch: () {},
+                              w: 555,
+                              h: 50,
+                              keyboardType: TextInputType.text,
+                              hintText: "Search by place name ...",
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: PopupMenuButton<int>(
+                                child: Image.asset('assets/images/sort icon.png'),
+                                onSelected: (int value) {
+                                  if (value == 0 || value == 1) {
+                                    activityPlacesProvider.applyStatusFilter(value, activityPlace.id);
+                                  } else {
+                                    activityPlacesProvider.clearFilters();
+                                  }
+                                },
+                                itemBuilder: (BuildContext context) {
+                                  return [
+                                    PopupMenuItem<int>(
+                                      value: 0,
+                                      child: Row(
+                                        children: [
+                                          TextButton(
+                                            onPressed: () {
+                                              activityPlacesProvider.applyStatusFilter(0, activityPlace.id);
+                                            },
+                                            child: const Text('only Normal cows '),
+                                          ),
+                                          IconButton(
+                                            onPressed: () {
+                                              activityPlacesProvider.clearFilters();
+                                            },
+                                            icon: const Icon(
+                                              Icons.minimize,
+                                              size: 30,
+                                              color: Colors.white,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    PopupMenuItem<int>(
+                                      value: 1,
+                                      child: Row(
+                                        children: [
+                                          TextButton(
+                                            onPressed: () {
+                                              activityPlacesProvider.applyStatusFilter(1, activityPlace.id);
+                                            },
+                                            child: const Text(' only Abnormal cows'),
+                                          ),
+                                          IconButton(
+                                            onPressed: () {
+                                              activityPlacesProvider.clearFilters();
+                                            },
+                                            icon: const Icon(
+                                              Icons.remove_circle_outlined,
+                                              size: 30,
+                                              color: Colors.white,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    PopupMenuItem<int>(
+                                      value: 2,
+                                      child: Row(
+                                        children: [
+                                          const Text(
+                                            'By Type',
+                                            style: TextStyle(fontSize: 18),
+                                          ),
+                                          IconButton(
+                                            onPressed: () {
+                                              activityPlacesProvider.clearFilters();
+                                            },
+                                            icon: const Icon(
+                                              Icons.remove_circle_outlined,
+                                              size: 30,
+                                              color: Colors.white,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ];
+                                },
+                              ),
+                            )
+                          ],
+                        ),
+                        ActivityPlaceContainer(
+                          placeId: 1,
+                        imagePath: activityPlacesProvider.images[currentIndex],
+                        ),
+                      ],
+                    );
+                  }
+                },
+              );
+            }
+          },
         ),
       ),
       bottomNavigationBar: const Mynavbar(),
     );
   }
-
-  void applySearch(BuildContext context) {
-    final query = controller.text;
-    final activityPlacesProvider = Provider.of<ActivityPlaceProvider>(context, listen: false);
-    if (query.isNotEmpty) {
-      activityPlacesProvider.applySearch();
-    } else {
-      activityPlacesProvider.fetchAllActivityPlaces();
-    }
-  }
-
-  void applyStatusFilter(BuildContext context) {
-    final activityPlacesProvider = Provider.of<ActivityPlaceProvider>(context, listen: false);
-    if (selectedSystemId != null && selectedCowStatus != null) {
-      activityPlacesProvider.applyStatusFilter(selectedSystemId!);
-    } else if (selectedCowStatus != null) {
-      activityPlacesProvider.applyStatusFilter(selectedCowStatus!);
-    } else {
-      activityPlacesProvider.fetchAllActivityPlaces();
-    }
-  }
-
-  void applyTypeFilter(BuildContext context) {
-    final activityPlacesProvider = Provider.of<ActivityPlaceProvider>(context, listen: false);
-    if (placeType != null && selectedSystemId != null) {
-      activityPlacesProvider.applyTypeFilter(placeType!);
-    } else {
-      activityPlacesProvider.fetchAllActivityPlaces();
-    }
-  }
-
-  void clearFilters(BuildContext context) {
-    selectedSystemId = null;
-    selectedCowStatus = null;
-    placeType = null;
-    controller.clear();
-
-    final activityPlacesProvider = Provider.of<ActivityPlaceProvider>(context, listen: false);
-    activityPlacesProvider.fetchAllActivityPlaces();
-  }
 }
+
+
+
+

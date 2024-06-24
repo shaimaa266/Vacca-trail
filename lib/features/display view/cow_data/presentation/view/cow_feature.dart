@@ -1,6 +1,6 @@
 import 'package:app_vacca/features/display%20view/cow_data/presentation/control/cow_provider.dart';
 import 'package:app_vacca/features/display%20view/custom_widgets/animated%20nav%20bar.dart';
-import 'package:app_vacca/features/display%20view/custom_widgets/background_image_container.dart';
+import 'package:app_vacca/core/widgets/background_image_container.dart';
 import 'package:app_vacca/features/display%20view/custom_widgets/constants_mixin.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -88,41 +88,41 @@ class CowFeature extends StatelessWidget with MyConstants {
                                 onCanceled: () {
                                   clearFilters(cowProvider);
                                 },
-                                onSelected: (int value) {},
-                                itemBuilder: (BuildContext context) {
-                                  return [
-                                    PopupMenuItem<int>(
-                                      value: 1,
-                                      child: Row(
-                                        children: [
-                                          TextButton(
-                                            onPressed: () {
-                                              applyAgeFilter(3, 6, cowProvider);
-                                            },
-                                            child: const Text(
-                                              'by cow Age',
-                                              style: TextStyle(
-                                                color: Colors.black,
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 18,
-                                              ),
-                                            ),
-                                          ),
-                                          IconButton(
-                                            onPressed: () {
-                                              clearFilters(cowProvider);
-                                            },
-                                            icon: const Icon(
-                                              Icons.minimize,
-                                              color: Colors.black,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ];
+                                onSelected: (int value) {
+                                  if (value == 1) {
+                                    applyAgeFilter(3, 6, cowProvider);
+                                  }
                                 },
+                                itemBuilder: (BuildContext context) => [
+                                  PopupMenuItem<int>(
+                                    value: 1,
+                                    child: Row(
+                                      children: [
+                                        TextButton(
+                                          onPressed: () => applyAgeFilter(3, 6, cowProvider),  // Use arrow function for conciseness
+                                          child: const Text(
+                                            'by cow Age',
+                                            style: TextStyle(
+                                              color: Colors.black,
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 18,
+                                            ),
+                                          ),
+                                        ),
+                                        IconButton(
+                                          onPressed: () => clearFilters(cowProvider),  // Use arrow function for conciseness
+                                          icon: const Icon(
+                                            Icons.minimize,
+                                            color: Colors.black,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+
+                                ],
                               ),
+
                             ],
                           ),
                         ),

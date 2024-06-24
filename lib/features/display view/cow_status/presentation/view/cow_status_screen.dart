@@ -1,11 +1,11 @@
-import 'package:app_vacca/features/display%20view/custom_widgets/background_image_container.dart';
+import 'package:app_vacca/core/widgets/background_image_container.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../cow_data/data/model/cows_model.dart';
 import '../../../cow_data/presentation/control/cow_provider.dart';
 import '../../../custom_widgets/animated nav bar.dart';
-import '../../../custom_widgets/first_row_title.dart';
-import '../../../custom_widgets/search_bar.dart';
+import '../../../../../core/widgets/first_row_title.dart';
+import '../../../../../core/widgets/search_bar.dart';
 import 'cow_status_rows.dart';
 
 class CowStatus extends StatelessWidget {

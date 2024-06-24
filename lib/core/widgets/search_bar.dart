@@ -31,7 +31,7 @@ class SearchBarCustom extends StatelessWidget with MyConstants {
             decoration: BoxDecoration(
                 color: containerColor,
                 borderRadius: BorderRadius.circular(9),
-                border: Border.all(color: Colors.grey[500]!, width: .75),
+                border: Border.all(color: Colors.grey[500]!, width: 1.5),
                 boxShadow: [
                   BoxShadow(
                     color: Colors.grey.withOpacity(0.3),

@@ -1,9 +1,9 @@
 
-import 'package:app_vacca/features/doctor%20view/features/treatment/view_treatment.dart';
+import 'package:app_vacca/features/doctor%20view/features/treatment/presentation/view/view_treatment.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../notes/presentation/view/note_container.dart';
+import '../../../notes/presentation/view/widgets/note_container.dart';
 
 class  TodayTreatment extends StatelessWidget {
   const  TodayTreatment({super.key});

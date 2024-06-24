@@ -19,9 +19,6 @@ class ComponentContainer extends StatelessWidget with MyConstants {
     "assets/images/breeding system.png",
     "assets/images/activity places.png",
     "assets/images/activity system.png",
-
-
-
   ];
 
   List<String> titles = [
@@ -36,7 +33,7 @@ class ComponentContainer extends StatelessWidget with MyConstants {
   List<Widget> routesList = [
     CowStatus(),
     BreedingDoctorPage(),
-     ActivityPlaceDoctorPage(),
+    const DoctorActivityPlaces(),
     ActivitySysDoctorPage(),
 
   ];

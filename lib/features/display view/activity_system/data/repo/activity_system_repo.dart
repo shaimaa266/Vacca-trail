@@ -25,7 +25,7 @@ class ActivitySystemsRepo {
   Future<List<CowModel>> getFilteredCows(int systemId, int status) async {
     try {
       final response = await apiService.get(
-          urlEndPoint: '/doc-activity-systems/$systemId/filter?status=$status'
+          urlEndPoint: '/doc-activity-system/$systemId/filter?status=$status'
       );
       if (response.statusCode == 200) {
         final List<dynamic> data = response.data[''];
@@ -43,9 +43,9 @@ class ActivitySystemsRepo {
   Future<List<ActivitySystemModel>> searchActivitySystems(String query) async {
     try {
       final response = await apiService.get(
-          urlEndPoint: '/doc-activity-systems/search?name=$query');
+          urlEndPoint: '/doc-activity-system/search?name=$query');
       if (response.statusCode == 200) {
-        final List<dynamic> data = response.data['activitySystems'];
+        final List<dynamic> data = response.data['activitySystem'];
         return data.map((json) => ActivitySystemModel.fromJson(json)).toList();
       } else if (response.statusCode == 404) {
 

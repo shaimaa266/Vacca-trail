@@ -1,11 +1,9 @@
 import 'package:app_vacca/features/display%20view/custom_widgets/animated%20nav%20bar.dart';
-import 'package:app_vacca/features/display%20view/custom_widgets/background_image_container.dart';
-
+import 'package:app_vacca/core/widgets/background_image_container.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
+import '../../../../../core/widgets/first_row_title.dart';
 import '../../shared/button_customized.dart';
-import '../../shared/title.dart';
 import '../edit system/edit system.dart';
 
 class ViewBreedSystem extends StatefulWidget {
@@ -27,8 +25,7 @@ class _ViewSystemState extends State<ViewBreedSystem> {
             padding: const EdgeInsets.only(top: 40, left: 16, right: 16),
             child: Column(
               children: [
-                const MyTitle(
-                    text: /*nameSysController.text,*/ " System Name "),
+                TitleRow(textTitle: " system  name"),
                 SizedBox(
                   height: 10.h,
                 ),

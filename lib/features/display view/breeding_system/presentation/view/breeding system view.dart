@@ -78,12 +78,12 @@ class BreedingSystemView extends StatelessWidget with MyConstants {
                         children: [
                           const TextFont(
                             text: "Name : ",
-                            height: 40,
+                            height: 30,
                             isDark: false,
                           ),
                           TextFont(
                             text: breeding.name,
-                            height: 40,
+                            height: 30,
                             isDark: true,
                           ),
                         ],
@@ -92,19 +92,19 @@ class BreedingSystemView extends StatelessWidget with MyConstants {
                         children: [
                           const TextFont(
                             text: "Id: ",
-                            height: 40,
+                            height: 30,
                             isDark: false,
                           ),
                           TextFont(
                             text: breeding.id.toString(),
-                            height: 40,
+                            height: 30,
                             isDark: true,
                           ),
                         ],
                       ),
                       const TextFont(
                         text: "Cause of Creation:",
-                        height: 40,
+                        height: 30,
                         isDark: false,
                       ),
                       TextFont(
@@ -114,7 +114,7 @@ class BreedingSystemView extends StatelessWidget with MyConstants {
                       ),
                       const TextFont(
                         text: "System Goal:",
-                        height: 40,
+                        height: 30,
                         isDark: false,
                       ),
                       TextFont(
@@ -124,7 +124,7 @@ class BreedingSystemView extends StatelessWidget with MyConstants {
                       ),
                       const TextFont(
                         text: "description:",
-                        height: 40,
+                        height: 30,
                         isDark: false,
                       ),
                       TextFont(
@@ -141,7 +141,18 @@ class BreedingSystemView extends StatelessWidget with MyConstants {
                               items: breeding.cows!.map((cow) {
                                 return DropdownMenuItem<String>(
                                   value: cow.cowId.toString(),
-                                  child: Center(child: Text("Cow ID: ${cow.cowId}")),
+                                  child: Center(child: Row(
+                                    children: [
+                                      Text("Cow ID: ${cow.cowId}"),
+                                      const SizedBox(width: 35,),
+                                      CircleAvatar(
+                                        radius: 3,
+                                        backgroundColor: cow.cow_status == 0
+                                            ? baseColor
+                                            : Colors.red,
+                                      )
+                                    ],
+                                  )),
                                 );
                               }).toList(),
                               onChanged: (val) {},

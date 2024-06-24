@@ -1,15 +1,15 @@
 import 'package:app_vacca/features/display%20view/custom_widgets/animated%20nav%20bar.dart';
-import 'package:app_vacca/features/display%20view/custom_widgets/background_image_container.dart';
-import 'package:app_vacca/features/doctor%20view/features/breeding%20system/create%20system/add%20system.dart';
+import 'package:app_vacca/core/widgets/background_image_container.dart';
+
 import 'package:app_vacca/features/doctor%20view/features/breeding%20system/view%20system/view_system.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../../../../core/widgets/first_row_title.dart';
 import '../../shared/button_customized.dart';
 import '../../shared/custom_sys_field.dart';
-import '../../shared/title.dart';
-import '../doctor breeding.dart';
+
 
 class EditBreedSystem extends StatefulWidget {
   EditBreedSystem({super.key});
@@ -40,7 +40,7 @@ class _EditSystemState extends State<EditBreedSystem> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                const MyTitle(text: "Edit a system "),
+                TitleRow(textTitle: "Edit a system "),
                 SizedBox(
                   height: 20.h,
                 ),

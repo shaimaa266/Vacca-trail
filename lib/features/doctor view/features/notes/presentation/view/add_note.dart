@@ -1,25 +1,21 @@
 
-import 'package:app_vacca/features/display%20view/custom_widgets/background_image_container.dart';
+import 'package:app_vacca/core/widgets/background_image_container.dart';
 import 'package:app_vacca/features/doctor%20view/features/notes/presentation/view/view_all_notes.dart';
 
 
 import 'package:flutter/material.dart';
 
+import '../../../../../../core/widgets/first_row_title.dart';
 import '../../../shared/custom_sys_field.dart';
 import '../../../shared/doctor_nav_bar.dart';
 import '../../../shared/note_button.dart';
-import '../../../shared/title.dart';
-import 'add_photo.dart';
-import 'note_container.dart';
 
-class AddNote extends StatefulWidget {
+import 'widgets/add_photo.dart';
+import 'widgets/note_container.dart';
+
+class AddNote extends StatelessWidget {
   AddNote({super.key});
 
-  @override
-  State<AddNote> createState() => _AddNoteState();
-}
-
-class _AddNoteState extends State<AddNote> {
   final TextEditingController noteNameController = TextEditingController();
 
   final TextEditingController noteDescController = TextEditingController();
@@ -36,9 +32,9 @@ class _AddNoteState extends State<AddNote> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Padding(
+                 Padding(
                     padding: EdgeInsets.all(8.0),
-                    child:  MyTitle(text: "Add Note"),
+                   child:  TitleRow(textTitle: " add note "),
                   ),
                   const SizedBox(
                     height: 30,
@@ -53,7 +49,7 @@ class _AddNoteState extends State<AddNote> {
                         withBorder: false,
                         isWhite: false,
                         colorHex:  const Color(0xff263238),
-                        text: "   Note Name",
+                        text: "   Note title..",
                         height: 100,
                         width: 360,
                         keyboardType: TextInputType.text,
@@ -76,7 +72,7 @@ class _AddNoteState extends State<AddNote> {
                           CustomSysField(
                             withBorder: false,
                             isWhite: false,
-                            text: "Note Description here",
+                            text: "Note Description ..",
                             colorHex:  const Color(0xff263238),
                             height: 430,
                             width: 540,
@@ -101,6 +97,7 @@ class _AddNoteState extends State<AddNote> {
                   ),
 
                  Center(child:  NoteButton(text: "save",onPressed: (){
+
                    Navigator.push(context,MaterialPageRoute(builder: (_)=>AllNotes()));
                  },)),
                 ],
@@ -110,6 +107,7 @@ class _AddNoteState extends State<AddNote> {
         ),
       ),
       bottomNavigationBar: DoctorNavBar(),
+
     );
   }
 }

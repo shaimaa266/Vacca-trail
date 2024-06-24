@@ -9,14 +9,17 @@ class ActivityPlaceProvider extends ChangeNotifier {
 
   final TextEditingController searchController = TextEditingController();
   final TextEditingController nameSysController = TextEditingController();
+  final TextEditingController typeController = TextEditingController();
+
   final TextEditingController purposeSysController = TextEditingController();
+
   final TextEditingController sysInfoController = TextEditingController();
-  final TextEditingController applyDuaController = TextEditingController();
-  final TextEditingController causeCreateController = TextEditingController();
-final PageController pageController=PageController();
+
+  final PageController pageController = PageController();
 
   List<ActivityPlacesModel> allActivityPlaces = [];
   List<ActivityPlacesModel> filteredPlaces = [];
+  List<ActivityPlacesModel> updatePlaceInfo = [];
   bool isLoading = false;
   String? errorMessage;
   int currentPage = 0;
@@ -30,6 +33,7 @@ final PageController pageController=PageController();
     "assets/images/cow is eating.png",
     "assets/images/eating cow.png"
   ];
+
   void _setLoading(bool value) {
     isLoading = value;
     notifyListeners();
@@ -53,38 +57,53 @@ final PageController pageController=PageController();
     }
   }
 
-  void applyStatusFilter(int? cowStatus) {
-    selectedCowStatus = cowStatus;
-    if (cowStatus == null) {
-      filteredPlaces = allActivityPlaces;
-    } else {
-      filteredPlaces = allActivityPlaces.where((place) {
-        return place.cows?.any((cow) => cow.cow_status == cowStatus) ?? false;
-      }).toList();
+  Future<void> fetchPlacesByStatus(int cowStatus, int placeId) async {
+    _setLoading(true);
+    try {
+      if (cowStatus == 0) {
+        filteredPlaces = await activityPlaceRepo.getFilterByStatus(placeId, 0);
+      }
+      filteredPlaces = await activityPlaceRepo.getFilterByStatus(placeId, 1);
+      _setError(null);
+    } catch (e) {
+      _setError(e.toString());
+    } finally {
+      _setLoading(false);
     }
-    notifyListeners();
   }
 
-  void applyTypeFilter([String? type]) {
-    placeType = type;
-    if (type == null || type.isEmpty) {
-      filteredPlaces = allActivityPlaces;
-    } else {
-      filteredPlaces = allActivityPlaces.where((place) {
-        return place.type == type;
-      }).toList();
-    }
+
+
+  void applyStatusFilter(int value, int placeId) async {
+    _setLoading(true);
     notifyListeners();
+
+    try {
+      if (value == null || placeId == null) {
+        filteredPlaces = allActivityPlaces;
+      } else {
+        filteredPlaces =
+            await activityPlaceRepo.getFilterByStatus(placeId, value);
+      }
+      _setError(null);
+    } catch (e) {
+      _setError(e.toString());
+    } finally {
+      _setLoading(false);
+      setCurrentPage(0);
+      notifyListeners();
+    }
   }
 
-  void applySearch() {
-    final query = searchController.text;
-    if (query.isEmpty) {
-      filteredPlaces = allActivityPlaces;
-    } else {
-      filteredPlaces = allActivityPlaces.where((place) {
-        return place.name?.toLowerCase().contains(query.toLowerCase()) ?? false;
-      }).toList();
+  Future<void> searchByType(String query) async {
+    _setLoading(true);
+    try {
+      filteredPlaces = await activityPlaceRepo.searchByType(query);
+      _setError(null);
+    } catch (e) {
+      _setError(e.toString());
+    } finally {
+      _setLoading(false);
     }
     notifyListeners();
   }
@@ -95,7 +114,17 @@ final PageController pageController=PageController();
     searchController.clear();
     fetchAllActivityPlaces();
   }
-
+  Future<void> changePlaceInfo(int id) async {
+    _setLoading(true);
+    try {
+      updatePlaceInfo = await activityPlaceRepo.editPlace(id );
+      _setError(null);
+    } catch (e) {
+      _setError(e.toString());
+    } finally {
+      _setLoading(false);
+    }
+  }
   void setCurrentPage(int page) {
     currentPage = page;
     notifyListeners();
@@ -104,11 +133,6 @@ final PageController pageController=PageController();
   @override
   void dispose() {
     searchController.dispose();
-    nameSysController.dispose();
-    sysInfoController.dispose();
-    purposeSysController.dispose();
-    applyDuaController.dispose();
-    causeCreateController.dispose();
     pageController.dispose();
     super.dispose();
   }

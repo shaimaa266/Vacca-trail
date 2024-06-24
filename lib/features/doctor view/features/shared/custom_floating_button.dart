@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 
 class CustomFloatingButton extends StatelessWidget {
-  const CustomFloatingButton({super.key, this.route});
-  final dynamic route;
+ CustomFloatingButton({super.key, required this.onPressed});
+
+  Function()onPressed;
   @override
   Widget build(BuildContext context) {
     return FloatingActionButton(
@@ -14,13 +15,8 @@ class CustomFloatingButton extends StatelessWidget {
         ),
       ),
       backgroundColor: const Color(0xff44885C),
-      onPressed: () {
-        Navigator.of(context).push(
-          MaterialPageRoute(
-            builder: (context) => route,
-          ),
-        );
-      },
+      onPressed: onPressed,
+
       child: const Icon(
         Icons.add,
         color: Colors.white,

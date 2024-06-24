@@ -11,7 +11,7 @@ class ActivitySystemsProvider extends ChangeNotifier {
   final ActivitySystemsRepo activitySystemsRepo;
   final TextEditingController searchController = TextEditingController();
   int? selectedSystemId;
-  int? selectedCowStatus;
+  int? selectedCowStatus=0;
   late PageController pageController;
   int currentPage = 0;
   List<String> images = [

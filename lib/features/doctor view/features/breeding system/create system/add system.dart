@@ -1,11 +1,10 @@
 
 import 'package:app_vacca/features/display%20view/custom_widgets/animated%20nav%20bar.dart';
-import 'package:app_vacca/features/display%20view/custom_widgets/background_image_container.dart';
-import 'package:app_vacca/features/doctor%20view/features/shared/title.dart';
-
+import 'package:app_vacca/core/widgets/background_image_container.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../../../../core/widgets/first_row_title.dart';
 import '../../shared/button_customized.dart';
 import '../../shared/custom_sys_field.dart';
 import '../doctor breeding.dart';
@@ -38,7 +37,7 @@ class _AddSystemState extends State<AddBreedSystem> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                const MyTitle(text: " Create a system  "),
+                TitleRow(textTitle: "create a system "),
                 SizedBox(
                   height: 10.h,
                 ),

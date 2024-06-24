@@ -11,16 +11,16 @@ class AddButton extends StatelessWidget {
 
       style: ButtonStyle(
 
-        backgroundColor: MaterialStateProperty.all<Color>(
+        backgroundColor: WidgetStateProperty.all<Color>(
           const Color(0xff44885C),
         ),
-        maximumSize: MaterialStateProperty.all<Size>(
+        maximumSize: WidgetStateProperty.all<Size>(
           const Size(300, 50),
         ),
-        minimumSize: MaterialStateProperty.all<Size>(
+        minimumSize: WidgetStateProperty.all<Size>(
           const Size(250, 40),
         ),
-        shape:MaterialStateProperty.all<RoundedRectangleBorder>(RoundedRectangleBorder(
+        shape:WidgetStateProperty.all<RoundedRectangleBorder>(RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(7.0),
 
         ))

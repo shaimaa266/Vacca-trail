@@ -143,7 +143,18 @@ class ActivitySystemView extends StatelessWidget with MyConstants {
                               items: activitySystem.cows!.map((cow) {
                                 return DropdownMenuItem<String>(
                                   value: cow.cowId.toString(),
-                                  child: Center(child: Text("Cow ID: ${cow.cowId}")),
+                                  child: Center(child: Row(
+                                    children: [
+                                      Text("Cow ID: ${cow.cowId}"),
+                                      const SizedBox(width: 35,),
+                                      CircleAvatar(
+                                        radius: 3,
+                                        backgroundColor: cow.cow_status == 0
+                                            ? baseColor
+                                            : Colors.red,
+                                      )
+                                    ],
+                                  )),
                                 );
                               }).toList(),
                               onChanged: (val) {},
