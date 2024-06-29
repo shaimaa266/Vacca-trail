@@ -32,7 +32,7 @@ class YesterdayNotes extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  note.noteId,
+                  note.title!,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
@@ -41,7 +41,7 @@ class YesterdayNotes extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  note.body,
+                  note.body!,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(

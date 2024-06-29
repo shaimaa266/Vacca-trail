@@ -2,6 +2,7 @@
 
 
 import 'package:app_vacca/features/display%20view/home/home_screen.dart';
+import 'package:app_vacca/features/display%20view/permission/permission_file.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -34,7 +35,7 @@ class _SplashScreenState extends State<SplashScreen>
 
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => Home()),
+        MaterialPageRoute(builder: (context) => PermissionsDialog()),
       );
     });
   }
@@ -43,34 +44,7 @@ class _SplashScreenState extends State<SplashScreen>
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white12,
-      body: Stack(
-        children: [
-          ClipPath(
-            child: Container(
-              width: _animation.value,
-              height: _animation.value,
-              color: Colors.green,
-            ),
-          ),
-          Positioned(
-            top: MediaQuery.of(context).size.height / 2 - 150,
-            left: MediaQuery.of(context).size.width / 2 - 125,
-            child: Image.asset(
-              "assets/images/logo.png",
-              width: 250.w,
-              height: 250.h,
-            ),
-          ),
-          Positioned(
-            top: MediaQuery.of(context).size.height / 2 + 100,
-            left: MediaQuery.of(context).size.width / 2 - 50,
-            child:  Text(
-              "Vacca",
-              style: TextStyle(fontSize: 44.sp, color: Colors.white),
-            ),
-          ),
-        ],
-      ),
+      body:Image.asset('assets/images/splash.png',fit: BoxFit.fill,),
     );
   }
 

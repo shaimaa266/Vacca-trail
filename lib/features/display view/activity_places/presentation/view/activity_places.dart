@@ -15,13 +15,11 @@ class ActivityPlaces extends StatelessWidget {
   const ActivityPlaces({Key? key, this.initialPlaceId}) : super(key: key);
 
   void fetchInitialData(BuildContext context) {
-    final activityPlacesProvider =
-    Provider.of<ActivityPlaceProvider>(context, listen: false);
+    final activityPlacesProvider = Provider.of<ActivityPlaceProvider>(context, listen: false);
     activityPlacesProvider.fetchAllActivityPlaces().then((_) {
       if (initialPlaceId != null) {
         final initialIndex = activityPlacesProvider.filteredPlaces.indexWhere(
               (place) => place.id == initialPlaceId,
-
         );
         if (initialIndex != -1) {
           activityPlacesProvider.setCurrentPage(initialIndex);
@@ -65,123 +63,58 @@ class ActivityPlaces extends StatelessWidget {
                         controller: activityPlacesProvider.searchController,
                         onTap: () {
                           activityPlacesProvider.searchByType(
-                              activityPlacesProvider.searchController.text);
+                            activityPlacesProvider.searchController.text,
+                          );
                         },
-                        onPressedSearch: () {
-                        },
-                        w: 555,
+                        onPressedSearch: () {},
+                        w: 635,
                         h: 50,
                         keyboardType: TextInputType.text,
                         hintText: "Search by place type...",
                       ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: PopupMenuButton<int>(
-                          icon: Image.asset('assets/images/sort icon.png'),
-                          onSelected: (int value) {
-                            if (value == 0 || value == 1) {
-                              activityPlacesProvider.applyStatusFilter(
-                                  value, initialPlaceId!);
-                            } else {
-                              activityPlacesProvider.clearFilters();
-                            }
-                          },
-                          itemBuilder: (BuildContext context) {
-                            return [
-                              PopupMenuItem<int>(
-                                value: 0,
-                                child: Row(
-                                  children: [
-                                    TextButton(
-                                      onPressed: () {
-                                        activityPlacesProvider
-                                            .applyStatusFilter(0, initialPlaceId!);
-                                      },
-                                      child: const Text(' only Normal cows ',
-                                          style: TextStyle(
-                                              color: Colors.black,
-                                              fontWeight: FontWeight.w700,
-                                              fontSize: 16)),
-                                    ),
-                                    IconButton(
-                                      onPressed: () {
-                                        activityPlacesProvider.clearFilters();
-                                      },
-                                      icon: const Icon(
-                                        Icons.minimize,
-                                        size: 30,
-                                        color: Colors.black,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              PopupMenuItem<int>(
-                                value: 1,
-                                child: Row(
-                                  children: [
-                                    TextButton(
-                                      onPressed: () {
-                                        activityPlacesProvider
-                                            .applyStatusFilter(1, initialPlaceId!);
-                                      },
-                                      child: const Text(
-                                        ' only Abnormal cows ',
-                                        style: TextStyle(
-                                            color: Colors.black,
-                                            fontWeight: FontWeight.w700,
-                                            fontSize: 16),
-                                      ),
-                                    ),
-                                    IconButton(
-                                      onPressed: () {
-                                        activityPlacesProvider.clearFilters();
-                                      },
-                                      icon: const Icon(
-                                        Icons.minimize,
-                                        size: 30,
-                                        color: Colors.black,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ];
-                          },
-                        ),
-                      ),
                     ],
                   ),
-                  SizedBox(
-                    height: 640,
-                    child: PageView.builder(
-                      controller: activityPlacesProvider.pageController,
-                      itemCount: activityPlacesProvider.filteredPlaces.length,
-                      onPageChanged: (index) {
-                        activityPlacesProvider.setCurrentPage(index);
-                      },
-                      itemBuilder: (context, index) {
-                        final activityPlace =
-                        activityPlacesProvider.filteredPlaces[index];
-                        return ActivityPlacesView(
-                          placeId: activityPlace.id,
-                          imageUrl: activityPlacesProvider
-                              .images[activityPlacesProvider.currentPage],
-                        );
-                      },
+                  if (initialPlaceId == null)
+                    Column(
+                      children: [
+                        SizedBox(
+                          height: 620,
+                          child: PageView.builder(
+                            controller: activityPlacesProvider.pageController,
+                            itemCount: activityPlacesProvider.filteredPlaces.length,
+                            onPageChanged: (index) {
+                              activityPlacesProvider.setCurrentPage(index);
+                            },
+                            itemBuilder: (context, index) {
+                              final activityPlace = activityPlacesProvider.filteredPlaces[index];
+                              return ActivityPlacesView(
+                                placeId: activityPlace.id,
+                                imageUrl: activityPlacesProvider.images[activityPlacesProvider.currentPage],
+                              );
+                            },
+                          ),
+                        ),
+                        SmoothPageIndicator(
+                          controller: activityPlacesProvider.pageController,
+                          count: activityPlacesProvider.filteredPlaces.length,
+                          effect: WormEffect(
+                            dotColor: Colors.blueGrey.shade200,
+                            activeDotColor: Colors.green.shade900,
+                            dotHeight: 9,
+                            dotWidth: 10,
+                            type: WormType.thinUnderground,
+                          ),
+                        ),
+                      ],
+                    )
+                  else
+                    SizedBox(
+                      height: 650,
+                      child: ActivityPlacesView(
+                        placeId: initialPlaceId!,
+                        imageUrl: activityPlacesProvider.images[activityPlacesProvider.allActivityPlaces.length],
+                      ),
                     ),
-                  ),
-                  SmoothPageIndicator(
-                    controller: activityPlacesProvider.pageController,
-                    count: activityPlacesProvider.filteredPlaces.length,
-                    effect: WormEffect(
-                      dotColor: Colors.blueGrey.shade200,
-                      activeDotColor: Colors.green.shade900,
-                      dotHeight: 16,
-                      dotWidth: 16,
-                      type: WormType.thinUnderground,
-                    ),
-                  ),
                 ],
               );
             }
@@ -192,5 +125,6 @@ class ActivityPlaces extends StatelessWidget {
     );
   }
 }
+
 
 

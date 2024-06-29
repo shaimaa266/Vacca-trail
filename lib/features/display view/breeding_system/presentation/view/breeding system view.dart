@@ -1,8 +1,8 @@
-import 'package:app_vacca/core/widgets/text%20font%20body.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
+import '../../../../../core/widgets/text font body.dart';
 import '../../../custom_widgets/constants_mixin.dart';
 import '../../data/models/breeding_model.dart';
 import '../manage/breeding_provider.dart';
@@ -11,8 +11,7 @@ class BreedingSystemView extends StatelessWidget with MyConstants {
   final int breedingSystemId;
   final String imagePath;
 
-  BreedingSystemView(
-      {required this.breedingSystemId, required this.imagePath, Key? key})
+  BreedingSystemView({required this.breedingSystemId, required this.imagePath, Key? key})
       : super(key: key);
 
   @override
@@ -21,9 +20,9 @@ class BreedingSystemView extends StatelessWidget with MyConstants {
       builder: (context, breedingProvider, child) {
         if (breedingProvider.isLoading) {
           return Center(
-            child: SpinKitFoldingCube(
-              color: Colors.green.shade700,
-              size: 70,
+            child: SpinKitWanderingCubes(
+              color: baseColor,
+              size: 50,
             ),
           );
         } else if (breedingProvider.errorMessage != null) {
@@ -32,18 +31,19 @@ class BreedingSystemView extends StatelessWidget with MyConstants {
           );
         } else {
           final breeding = breedingProvider.breedingSystems.firstWhere(
-                  (system) => system.id == breedingSystemId,
-              orElse: () => BreedingModel(
-                id: 0,
-                name: '',
-                goal: '',
-                cause_of_creation: '',
-                created_at: '',
-                updated_at: '',
-                description: '',
-                cows_count: 0,
-                cows: [],
-              ));
+                (system) => system.id == breedingSystemId,
+            orElse: () => BreedingModel(
+              id: 0,
+              name: '',
+              goal: '',
+              cause_of_creation: '',
+              created_at: '',
+              updated_at: '',
+              description: '',
+              cows_count: 0,
+              cows: [],
+            ),
+          );
 
           if (breeding.id == 0) {
             return Center(
@@ -78,12 +78,12 @@ class BreedingSystemView extends StatelessWidget with MyConstants {
                         children: [
                           const TextFont(
                             text: "Name : ",
-                            height: 30,
+                            height: 40,
                             isDark: false,
                           ),
                           TextFont(
                             text: breeding.name,
-                            height: 30,
+                            height: 40,
                             isDark: true,
                           ),
                         ],
@@ -92,19 +92,19 @@ class BreedingSystemView extends StatelessWidget with MyConstants {
                         children: [
                           const TextFont(
                             text: "Id: ",
-                            height: 30,
+                            height: 40,
                             isDark: false,
                           ),
                           TextFont(
                             text: breeding.id.toString(),
-                            height: 30,
+                            height: 40,
                             isDark: true,
                           ),
                         ],
                       ),
                       const TextFont(
                         text: "Cause of Creation:",
-                        height: 30,
+                        height: 40,
                         isDark: false,
                       ),
                       TextFont(
@@ -114,56 +114,69 @@ class BreedingSystemView extends StatelessWidget with MyConstants {
                       ),
                       const TextFont(
                         text: "System Goal:",
-                        height: 30,
+                        height: 40,
                         isDark: false,
                       ),
-                      TextFont(
-                        text: breeding.goal,
-                        height: 80,
-                        isDark: true,
+                      Text(
+                        breeding.goal,
+                        style: TextStyle(
+                          fontSize: 33.sp,
+                          fontFamily: 'Urbanist',
+                          color: const Color(0xff263238),
+                          fontWeight: FontWeight.w600,
+                        ),
                       ),
                       const TextFont(
-                        text: "description:",
-                        height: 30,
+                        text: "Description:",
+                        height: 40,
                         isDark: false,
                       ),
-                      TextFont(
-                        text: breeding.description,
-                        height: 80,
-                        isDark: true,
+                      Text(
+                        breeding.description,
+                        style: TextStyle(
+                          fontSize: 33.sp,
+                          fontFamily: 'Urbanist',
+                          color: const Color(0xff263238),
+                          fontWeight: FontWeight.w600,
+                        ),
                       ),
                       Row(
                         children: [
-
                           if (breeding.cows!.isNotEmpty)
                             DropdownButton<String>(
-                              focusColor:Colors.grey[300],
+                              focusColor: Colors.grey[300],
                               items: breeding.cows!.map((cow) {
                                 return DropdownMenuItem<String>(
                                   value: cow.cowId.toString(),
-                                  child: Center(child: Row(
-                                    children: [
-                                      Text("Cow ID: ${cow.cowId}"),
-                                      const SizedBox(width: 35,),
-                                      CircleAvatar(
-                                        radius: 3,
-                                        backgroundColor: cow.cow_status == 0
-                                            ? baseColor
-                                            : Colors.red,
-                                      )
-                                    ],
-                                  )),
+                                  child: Center(
+                                    child: Row(
+                                      children: [
+                                        Text("Cow ID: ${cow.cowId}"),
+                                        const SizedBox(width: 35),
+                                        CircleAvatar(
+                                          radius: 3,
+                                          backgroundColor: cow.cow_status == 0
+                                              ? baseColor
+                                              : Colors.red,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
                                 );
                               }).toList(),
                               onChanged: (val) {},
-                              hint:   TextFont(
-                                text:
-                                "Applied on : ${breeding.cows!.length} cows        ",
-                                height: 30,isDark: true,) ,
+                              hint: TextFont(
+                                text: "Applied on : ${breeding.cows!.length} cows",
+                                height: 30,
+                                isDark: true,
+                              ),
                             )
                           else
                             const TextFont(
-                              text: "No cows in this place.", height: 40,isDark: true,),
+                              text: "No cows in this place.",
+                              height: 40,
+                              isDark: true,
+                            ),
                         ],
                       ),
                     ],
@@ -177,4 +190,3 @@ class BreedingSystemView extends StatelessWidget with MyConstants {
     );
   }
 }
-

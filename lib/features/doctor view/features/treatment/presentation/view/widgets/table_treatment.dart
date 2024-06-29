@@ -1,124 +1,141 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
 
 import '../../../../shared/custom_sys_field.dart';
+import '../../control/treatment_provider.dart';
 
 class TreatmentTable extends StatelessWidget {
-  TreatmentTable({super.key,required this.isAdd});
-  final TextEditingController timeController = TextEditingController();
-  final TextEditingController dateController = TextEditingController();
+  TreatmentTable({super.key, required this.isAdd});
+
   bool value = false;
   bool isAdd;
-  List <Map<String,bool>>values=[{"taken":true},{"taken":false}];
+  List<Map<String, bool>> values = [
+    {"taken": true},
+    {"taken": false}
+  ];
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 130.h,
-      width: 570.w,
-      child: Table(
-        border: const TableBorder(
-          verticalInside: BorderSide(color: Color(0xff89A492), width: 1),
-          horizontalInside: BorderSide(color: Color(0xff89A492), width: 1),
-        ),
-        children: [
-          TableRow(
-              decoration: BoxDecoration(
-                color: const Color(0xffC1D5C8),
-                borderRadius: BorderRadius.circular(6),
-                border: Border.all(
-                  color: const Color(0xff89A492),
-                ),
-              ),
-              children: const [
-                SizedBox(
-                    width: 50,
-                    height: 70,
-                    child: Center(
-                        child: Text(
+    return Consumer<TreatmentProvider>(
+        builder: (context, treatProvider, child) {
+      if (treatProvider.errorMessage != null) {
+        return Center(
+          child: Text(treatProvider.errorMessage!),
+        );
+      } else {
+        final treatment=treatProvider.allTreatments[treatProvider.currentPage];
+        return SizedBox(
+          height: 130.h,
+          width: 570.w,
+          child: Table(
+            border: const TableBorder(
+              verticalInside: BorderSide(color: Color(0xff89A492), width: 1),
+              horizontalInside: BorderSide(color: Color(0xff89A492), width: 1),
+            ),
+            children: [
+
+              TableRow(
+                  decoration: BoxDecoration(
+                    color: const Color(0xffC1D5C8),
+                    borderRadius: BorderRadius.circular(6),
+                    border: Border.all(
+                      color: const Color(0xff89A492),
+                    ),
+                  ),
+                  children: const [
+                    SizedBox(
+                        width: 50,
+                        height: 70,
+                        child: Center(
+                            child: Text(
                           "Taken",
                           style: TextStyle(fontSize: 24),
                         ))),
-                SizedBox(
-                    width: 50,
-                    height: 70,
-                    child: Center(
-                        child: Text(
+                    SizedBox(
+                        width: 50,
+                        height: 70,
+                        child: Center(
+                            child: Text(
                           "Time",
                           style: TextStyle(fontSize: 24),
                         ))),
-                SizedBox(
-                    width: 50,
-                    height: 70,
-                    child: Center(
-                        child: Text(
+                    SizedBox(
+                        width: 50,
+                        height: 70,
+                        child: Center(
+                            child: Text(
                           "Date",
                           style: TextStyle(fontSize: 24),
                         ))),
-              ]),
-          TableRow(
-              decoration: BoxDecoration(
-                color: const Color(0xffFEFDFE),
-                borderRadius: BorderRadius.circular(6),
-                border: Border.all(
-                  color: const Color(0xff89A492),
+                  ]),
+              TableRow(
+                decoration: BoxDecoration(
+                  color: const Color(0xffFEFDFE),
+                  borderRadius: BorderRadius.circular(6),
+                  border: Border.all(
+                    color: const Color(0xff89A492),
+                  ),
                 ),
+                children: [
+                  SizedBox(
+                    width: 50,
+                    height: 70,
+                    child: Checkbox(
+                        activeColor: const Color(0xff44885C),
+                        /*fillColor: MaterialStateProperty.resolveWith(
+                          (Set states) {
+                            if (states.contains(MaterialState.selected)) {
+                              return const Color(0xffFEFDFE).withOpacity(.32);
+                            }
+                            return const Color(0xff44885C);
+                          },
+                        ),*/
+                        value: value,
+                        onChanged: (bool? val) {
+                          value = val!;
+                        }),
+                  ),
+                  SizedBox(
+                      width: 50,
+                      height: 70,
+                      child: Center(
+                          child: CustomSysField(
+                        withBorder: false,
+                        controller: treatProvider.timeController,
+                        height: 70,
+                        width: 230,
+                        isWhite: true,
+                        keyboardType: TextInputType.text,
+                        readOnly: false,
+                        colorHex: const Color(0xff777E82),
+                        maxLines: 1,
+                        text: treatment.createdAt!,
+                      ))),
+                  SizedBox(
+                    width: 50,
+                    height: 70,
+                    child: Center(
+                      child: CustomSysField(
+                        withBorder: false,
+                        controller: treatProvider.dateController,
+                        height: 70,
+                        width: 180,
+                        isWhite: true,
+                        keyboardType: TextInputType.text,
+                        readOnly: false,
+                        colorHex: const Color(0xff777E82),
+                        maxLines: 1,
+                        text:treatment.createdAt!,
+                      ),
+                    ),
+                  ),
+                ],
               ),
-              children: [
-                SizedBox(
-                  width: 50,
-                  height: 70,
-                  child: Checkbox(
-                      activeColor: const Color(0xff44885C),
-                      /*fillColor: MaterialStateProperty.resolveWith(
-                        (Set states) {
-                          if (states.contains(MaterialState.selected)) {
-                            return const Color(0xffFEFDFE).withOpacity(.32);
-                          }
-                          return const Color(0xff44885C);
-                        },
-                      ),*/
-                      value: value,
-                      onChanged: (bool? val) {
-                        value = val!;
-                      }),
-                ),
-                SizedBox(
-                    width: 50,
-                    height: 70,
-                    child: Center(
-                        child: CustomSysField(
-                          withBorder: false,
-                          controller: timeController,
-                          height: 70,
-                          width: 230,
-                          isWhite: true,
-                          keyboardType: TextInputType.text,
-                          readOnly: false,
-                          colorHex: const Color(0xff777E82),
-                          maxLines: 1,
-                          text:isAdd? "":"4:00",
-                        ))),
-                SizedBox(
-                    width: 50,
-                    height: 70,
-                    child: Center(
-                        child: CustomSysField(
-                          withBorder: false,
-                          controller: timeController,
-                          height: 70,
-                          width: 180,
-                          isWhite: true,
-                          keyboardType: TextInputType.text,
-                          readOnly: false,
-                          colorHex: const Color(0xff777E82),
-                          maxLines: 1,
-                          text:isAdd? "":"29/4/2024",
-                        ),),),
-              ],),
-        ],
-      ),
-    );
+            ],
+          ),
+        );
+      }
+    });
   }
 }
 /*class TreatmentTable extends StatefulWidget {

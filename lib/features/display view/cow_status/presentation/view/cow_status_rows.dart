@@ -1,10 +1,9 @@
 import 'package:app_vacca/features/display%20view/activity_places/presentation/view/activity_places.dart';
-import 'package:app_vacca/features/display%20view/activity_system/presentation/view/activity_systems.dart';
-import 'package:app_vacca/features/display%20view/breeding_system/presentation/view/breeding_systems.dart';
 import 'package:app_vacca/features/display%20view/custom_widgets/constants_mixin.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../../../../core/widgets/text font body.dart';
 import '../../../cow_data/data/model/cows_model.dart';
 
 class CowStatusRows extends StatelessWidget with MyConstants {
@@ -34,57 +33,26 @@ class CowStatusRows extends StatelessWidget with MyConstants {
       context: context,
       builder: (BuildContext context) {
         return FractionallySizedBox(
-          heightFactor: .85,
+          heightFactor: .75,
           widthFactor: 1,
           child: Padding(
             padding: const EdgeInsets.all(16.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                getText('Id: ${cow.cowId}'),
+                getText(" Age : ${cow.age!>8?7:5}"),
                 getSpace(),
-                getText(" Age : ${cow.age}"),
-                getSpace(),
-                SizedBox(
-                  height: 30,
-                  child: Row(
-                    children: [
-                      Text(
-                        " status: ",
-                        style: TextStyle(
-                            fontWeight: FontWeight.w700,
-                            fontSize: 36.sp,
-                            color: Colors.black),
-                      ),
-                      cow.cow_status == 0
-                          ? Text(
-                        "  Not Normal",
-                        style: TextStyle(
-                            fontWeight: FontWeight.w700,
-                            fontSize: 36.sp,
-                            color: Colors.red),
-                      )
-                          : Text(
-                        "  Normal ",
-                        style: TextStyle(
-                            fontWeight: FontWeight.w700,
-                            fontSize: 36.sp,
-                            fontFamily: 'Urbanist',
-                            color: baseColor),
-                      ),
-                    ],
-                  ),
-                ),
-
+                getText('Area : ${cow.original_area}'),
                 getSpace(),
                 Row(
                   children: [
                     Text(
-                      " Pregnancy status:",
+                      "Pregnancy status: ",
                       style: TextStyle(
                           fontWeight: FontWeight.w700,
                           fontSize: 36.sp,
-                          color: Colors.black),
+                          fontFamily: 'Urbanist',
+                          color: titleColor),
                     ),
                     cow.isPregnant == 1
                         ? Text(
@@ -92,7 +60,8 @@ class CowStatusRows extends StatelessWidget with MyConstants {
                       style: TextStyle(
                           fontWeight: FontWeight.w700,
                           fontSize: 36.sp,
-                          color: Colors.red),
+                          color: Colors.red,  fontFamily: 'Urbanist',
+                      ),
                     )
                         : Text(
                       " Not pregnant ",
@@ -106,75 +75,7 @@ class CowStatusRows extends StatelessWidget with MyConstants {
                 ),
 
                 getSpace(),
-                getText('Area : ${cow.original_area}'),
-                getSpace(),
-                getText('Weight: ${cow.weight}'),
-                getSpace(),
-                InkWell(
-                  onTap: () {
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                        builder: (_) => BreedingSystems(
-                          initialBreedingSystemId: cow.breadingsystem_id,
-                        ),
-                      ),
-                    );
-                  },
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Text(
-                        "Breeding System id:   ${cow.breadingsystem_id}             ",
-                        style: TextStyle(
-                            decorationThickness: 4,
-                            decorationColor: Colors.blueGrey,
-                            fontWeight: FontWeight.w700,
-                            fontSize: 36.sp,
-                            fontFamily: 'Urbanist',
-                            color: titleColor),
-                      ),
-                      Icon(
-                        Icons.arrow_forward_ios,
-                        size: 25,
-                        color: titleColor,
-                      ),
-                    ],
-                  ),
-                ),
-                getSpace(),
-                InkWell(
-                  onTap: () {
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                        builder: (_) => ActivitySystems(
-                          initialSystemId: cow.activitysystem_id,
-                        ),
-                      ),
-                    );
-                  },
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Text(
-                        "Activity System id:   ${cow.activitysystem_id}             ",
-                        style: TextStyle(
-                            decorationThickness: 4,
-                            decorationColor: Colors.blueGrey,
-                            fontWeight: FontWeight.w700,
-                            fontSize: 36.sp,
-                            fontFamily: 'Urbanist',
-                            color: titleColor),
-                      ),
-                      Icon(
-                        Icons.arrow_forward_ios,
-                        size: 25,
-                        color: titleColor,
-                      ),
-                    ],
-                  ),
-                ),
+                getText('Weight: ${cow.weight}  kg'),
                 getSpace(),
                 InkWell(
                   onTap: () {
@@ -187,27 +88,74 @@ class CowStatusRows extends StatelessWidget with MyConstants {
                       ),
                     );
                   },
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Text(
-                        "Existing place id:   ${cow.activityplace_id}             ",
-                        style: TextStyle(
-                            decorationThickness: 4,
-                            decorationColor: Colors.blueGrey,
-                            fontWeight: FontWeight.w700,
-                            fontSize: 36.sp,
-                            fontFamily: 'Urbanist',
-                            color: titleColor),
-                      ),
-                      Icon(
-                        Icons.arrow_forward_ios,
-                        size: 25,
-                        color: titleColor,
-                      ),
-                    ],
-                  ),
+                  child: Row( mainAxisAlignment :MainAxisAlignment.start,children: [
+                    getText(
+                      ' activity place   ',
+                    ),
+                    const SizedBox(width: 196,),
+                    Icon(
+                      Icons.arrow_forward_ios,
+                      size: 25,
+                      color: titleColor,
+                    ),
+                  ],)
+
+
                 ),
+                getSpace(),
+                InkWell(
+                  onTap: () {
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => ActivityPlaces(
+                          initialPlaceId: cow.activitysystem_id,
+                        ),
+                      ),
+                    );
+                  },
+                  child: Row( mainAxisAlignment :MainAxisAlignment.start,children: [
+                    getText(
+                      ' applied activity system  ',
+                    ),
+                    const SizedBox(width: 110,),
+                    Icon(
+                      Icons.arrow_forward_ios,
+                      size: 25,
+                      color: titleColor,
+                    ),
+                  ],)
+
+
+                ),
+                getSpace(),
+                InkWell(
+                  onTap: () {
+                    print(cow.breadingsystem_id,);
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => ActivityPlaces(
+                          initialPlaceId: cow.breadingsystem_id,
+                        ),
+                      ),
+                    );
+                  },
+                  child: Row( mainAxisAlignment :MainAxisAlignment.start,children: [
+                    getText(
+                         ' applied breeding system  ',
+                    ),
+                    const SizedBox(width: 95,),
+                    Icon(
+                      Icons.arrow_forward_ios,
+                      size: 25,
+                      color: titleColor,
+                    ),
+                  ],)
+
+
+                ),
+
 
               ],
             ),

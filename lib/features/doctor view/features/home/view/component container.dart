@@ -7,10 +7,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../display view/cow_status/presentation/view/cow_status_screen.dart';
-import '../../../data/manage/state managment/providerHelper.dart';
 import '../../activity place/view/doctor activity place.dart';
 import '../../../features/activity system/doctor activity sys.dart';
 import '../../../features/breeding system/doctor breeding.dart';
+import '../data/manage/providerHelper.dart';
 
 class ComponentContainer extends StatelessWidget with MyConstants {
   ComponentContainer({Key? key}) : super(key: key);

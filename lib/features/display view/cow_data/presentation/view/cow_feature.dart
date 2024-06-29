@@ -83,7 +83,7 @@ class CowFeature extends StatelessWidget with MyConstants {
                                   ),
                                 ),
                               ),
-                              PopupMenuButton<int>(
+                             /* PopupMenuButton<int>(
                                 icon: Image.asset('assets/images/sort icon.png'),
                                 onCanceled: () {
                                   clearFilters(cowProvider);
@@ -121,7 +121,7 @@ class CowFeature extends StatelessWidget with MyConstants {
                                   ),
 
                                 ],
-                              ),
+                              ),*/
 
                             ],
                           ),

@@ -5,8 +5,8 @@ class BreedingModel {
   final String goal;
   final String cause_of_creation;
   final String description;
-  final String created_at;
-  final String updated_at;
+  final String? created_at;
+  final String ?updated_at;
   final int cows_count;
   final List<CowModel>? cows;
 

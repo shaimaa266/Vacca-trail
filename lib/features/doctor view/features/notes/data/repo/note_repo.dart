@@ -1,10 +1,12 @@
 import 'package:app_vacca/core/helper/api_helper.dart';
+import 'package:dio/dio.dart';
 
 import '../model/notes_model.dart';
 
 class NoteRepo {
   final ApiService apiService;
   NoteRepo(this.apiService);
+  //done..
   Future<List<NoteModel>> getAllNotes() async {
     try {
       final response = await apiService.get(urlEndPoint: '/notes');
@@ -20,7 +22,7 @@ class NoteRepo {
       rethrow;
     }
   }
-
+//not done ...
   Future<List<NoteModel>> addNote({
     required String noteId,
     required int cowId,
@@ -29,19 +31,30 @@ class NoteRepo {
     required String body,
   }) async {
     try {
-      final response = await apiService.post(urlEndPoint: '', body: {
+      var formData = FormData.fromMap({
         'note_id': noteId,
-        'cowId': cowId,
-        'image': image,
+        'cow_id': cowId,
+        'image': image != null ? await MultipartFile.fromFile(image) : null,
         'title': title,
         'body': body,
       });
+
+      final headers = {
+        'Accept': 'application/json',
+        'Content-Type': 'multipart/form-data',
+      };
+
+      final response = await apiService.post(
+        urlEndPoint: '/store',
+        headers: headers,
+        body: formData,
+      );
+
       if (response.statusCode == 200) {
         final List<dynamic> data = response.data['notes'];
         return data.map((json) => NoteModel.fromJson(json)).toList();
       } else {
-        throw Exception(
-            'API request failed with status code: ${response.statusCode}');
+        throw Exception('API request failed with status code: ${response.statusCode}');
       }
     } catch (e) {
       print(e.toString());
@@ -49,10 +62,12 @@ class NoteRepo {
     }
   }
 
+
+//done
   Future<List<NoteModel>> deleteNote(int id) async {
     try {
       final response =
-          await apiService.post(urlEndPoint: '/note/$id', body: {});
+          await apiService.delete(urlEndPoint: '/delete/$id');
       if (response.statusCode == 200) {
         final List<dynamic> data = response.data['notes'];
         return data.map((json) => NoteModel.fromJson(json)).toList();
@@ -65,7 +80,7 @@ class NoteRepo {
       rethrow;
     }
   }
-
+//done
   Future<List<NoteModel>> editNote({
     required int id,
     required String title,
@@ -78,7 +93,7 @@ class NoteRepo {
     required String updatedAt,
   }) async {
     try {
-      final response = await apiService.put(urlEndPoint: '/note/$id', body: {
+      final response = await apiService.put(urlEndPoint: '/edit/$id', body: {
         'id': id,
         'title': title,
         'image': image,
@@ -103,14 +118,32 @@ class NoteRepo {
       rethrow;
     }
   }
-
+//done
   Future<List<NoteModel>> starNote(int id) async {
     try {
       final response =
-          await apiService.post(urlEndPoint: '/note/$id', body: {});
+          await apiService.post(urlEndPoint: '/notes/$id/star', body: {},headers: {});
 
       if (response.statusCode == 200) {
-        final List<dynamic> data = response.data[''];
+        final List<dynamic> data = response.data['data'];
+        return data.map((json) => NoteModel.fromJson(json)).toList();
+      } else {
+        throw Exception(
+            'API request failed with status code: ${response.statusCode}');
+      }
+    } catch (e) {
+      print(e.toString());
+      rethrow;
+    }
+  }
+//done
+  Future<List<NoteModel>> unStarNote(int id) async {
+    try {
+      final response =
+          await apiService.post(urlEndPoint: '/notes/$id/unstar', body: {},headers: {});
+
+      if (response.statusCode == 200) {
+        final List<dynamic> data = response.data['data'];
         return data.map((json) => NoteModel.fromJson(json)).toList();
       } else {
         throw Exception(
@@ -122,13 +155,13 @@ class NoteRepo {
     }
   }
 
-  Future<List<NoteModel>> unStarNote(int id) async {
-    try {
-      final response =
-          await apiService.post(urlEndPoint: '/note/$id', body: {});
 
+//done
+  Future<List<NoteModel>> getAllStarredNotes() async {
+    try {
+      final response = await apiService.get(urlEndPoint: '/notes/star/all');
       if (response.statusCode == 200) {
-        final List<dynamic> data = response.data[''];
+        final List<dynamic> data = response.data['data'];
         return data.map((json) => NoteModel.fromJson(json)).toList();
       } else {
         throw Exception(

@@ -8,6 +8,7 @@ import '../../../custom_widgets/animated nav bar.dart';
 import '../../../../../core/widgets/background_image_container.dart';
 import '../../../../../core/widgets/first_row_title.dart';
 import '../../../../../core/widgets/search_bar.dart';
+
 class ActivitySystems extends StatelessWidget {
   final int? initialSystemId;
 
@@ -24,11 +25,11 @@ class ActivitySystems extends StatelessWidget {
       );
       if (initialIndex != -1) {
         activitySystemsProvider.setCurrentPage(initialIndex);
-        // Use animateToPage to smoothly scroll to the initial index
+
         activitySystemsProvider.pageController.animateToPage(
           initialIndex,
-          duration: Duration(milliseconds: 500), // Adjust duration as needed
-          curve: Curves.easeInOut, // Optional: Add a curve for animation
+          duration: const Duration(milliseconds: 500),
+          curve: Curves.easeInOut,
         );
       }
     }
@@ -47,7 +48,7 @@ class ActivitySystems extends StatelessWidget {
             builder: (context, activitySystemsProvider, child) {
               if (activitySystemsProvider.isLoading) {
                 return Center(
-                  child: SpinKitFoldingCube(
+                  child: SpinKitThreeBounce(
                     color: Colors.green.shade700,
                     size: 70,
                   ),
@@ -64,105 +65,68 @@ class ActivitySystems extends StatelessWidget {
                       children: [
                         SearchBarCustom(
                           controller: activitySystemsProvider.searchController,
-                          onTap: () => activitySystemsProvider.applySearch(),
-                          onPressedSearch: () {},
-                          w: 555,
+                          onTap: (){},
+                          onPressedSearch: () => activitySystemsProvider
+                              .searchActivitySystems(activitySystemsProvider
+                  .searchController.text),
+                          w: 640,
                           h: 50,
                           keyboardType: TextInputType.text,
                           hintText: "Search by System name ....",
                         ),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: PopupMenuButton<int>(
-                            icon: Image.asset('assets/images/sort icon.png'),
-                            onCanceled: () {
-                              activitySystemsProvider.clearFilters();
+                      ],
+                    ),
+                    initialSystemId == null
+                        ? Column(
+                      children: [
+                        SizedBox(
+                          height: 620,
+                          child: PageView.builder(
+                            controller:
+                            activitySystemsProvider.pageController,
+                            itemCount: activitySystemsProvider
+                                .filteredSystems.length,
+                            onPageChanged: (index) {
+                              activitySystemsProvider
+                                  .setCurrentPage(index);
+                              activitySystemsProvider.setSelectedSystemId(
+                                activitySystemsProvider
+                                    .filteredSystems[index].id,
+                              );
                             },
-                            onSelected: (int value) {
-                              activitySystemsProvider.applyFilter(value);
-                            },
-                            itemBuilder: (BuildContext context) {
-                              return [
-                                PopupMenuItem<int>(
-                                  value: 0,
-                                  child: Row(
-                                    children: [
-                                      TextButton(
-                                        onPressed: () {
-                                          activitySystemsProvider.applyStatusFilter(1);
-                                        },
-                                        child: const Text(
-                                          ' only Normal cows',
-                                          style: TextStyle(color: Colors.black, fontSize: 16),
-                                        ),
-                                      ),
-                                      IconButton(
-                                        onPressed: () {
-                                          activitySystemsProvider.clearFilters();
-                                        },
-                                        icon: const Icon(Icons.remove),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-
-                                PopupMenuItem<int>(
-                                  value: 1,
-                                  child: Row(
-                                    children: [
-                                      TextButton(
-                                        onPressed: () {
-                                          activitySystemsProvider.applyStatusFilter(0);
-                                        },
-                                        child: const Text(
-                                          ' only Abnormal cows ',
-                                          style: TextStyle(color: Colors.black, fontSize: 16),
-                                        ),
-                                      ),
-                                      IconButton(
-                                        onPressed: () {
-                                          activitySystemsProvider.clearFilters();
-                                        },
-                                        icon: const Icon(Icons.remove),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ];
+                            itemBuilder: (context, index) {
+                              final activitySystem =
+                              activitySystemsProvider
+                                  .filteredSystems[index];
+                              return ActivitySystemView(
+                                activitySystemId: activitySystem.id,
+                                imagePath: activitySystemsProvider.images[
+                                activitySystemsProvider.currentPage],
+                              );
                             },
                           ),
                         ),
+                        SmoothPageIndicator(
+                          controller:
+                          activitySystemsProvider.pageController,
+                          count: activitySystemsProvider
+                              .filteredSystems.length,
+                          effect: WormEffect(
+                            dotColor: Colors.blueGrey.shade200,
+                            activeDotColor: Colors.green.shade900,
+                            dotHeight: 9,
+                            dotWidth: 9,
+                            type: WormType.thinUnderground,
+                          ),
+                        ),
                       ],
-                    ),
-                    SizedBox(
-                      height: 620,
-                      child: PageView.builder(
-                        controller: activitySystemsProvider.pageController,
-                        itemCount: activitySystemsProvider.filteredSystems.length,
-                        onPageChanged: (index) {
-                          activitySystemsProvider.setCurrentPage(index);
-                          activitySystemsProvider.setSelectedSystemId(
-                            activitySystemsProvider.filteredSystems[index].id,
-                          );
-                        },
-                        itemBuilder: (context, index) {
-                          final activitySystem = activitySystemsProvider.filteredSystems[index];
-                          return ActivitySystemView(
-                            activitySystemId: activitySystem.id,
-                            imagePath: activitySystemsProvider.images[activitySystemsProvider.currentPage],
-                          );
-                        },
-                      ),
-                    ),
-                    SmoothPageIndicator(
-                      controller:activitySystemsProvider.pageController,
-                      count: activitySystemsProvider.filteredSystems.length,
-                      effect: WormEffect(
-                        dotColor: Colors.blueGrey.shade200,
-                        activeDotColor: Colors.green.shade900,
-                        dotHeight: 16,
-                        dotWidth: 16,
-                        type: WormType.thinUnderground,
+                    )
+                        : SizedBox(
+                      height: 650,
+                      child: ActivitySystemView(
+                        activitySystemId: initialSystemId!,
+                        imagePath: activitySystemsProvider
+                            .images[activitySystemsProvider.currentPage],
                       ),
                     ),
                   ],
@@ -176,9 +140,5 @@ class ActivitySystems extends StatelessWidget {
     );
   }
 }
-
-
-
-
 
 

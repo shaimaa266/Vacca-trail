@@ -4,18 +4,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../notes/presentation/view/widgets/note_container.dart';
+import '../../data/model/treatment_model.dart';
 
 class LastTreatment extends StatelessWidget {
-  const LastTreatment({super.key});
-
+  const LastTreatment({super.key,required this.treatmentModel});
+  final TreatmentModel treatmentModel;
   @override
   Widget build(BuildContext context) {
-    return   ListView.builder(
-      itemCount: 10,
-      scrollDirection: Axis.vertical,
-      itemBuilder: (BuildContext context, int index) => InkWell(
+    return  InkWell(
         onTap: () {
-          Navigator.push(context, MaterialPageRoute(builder: (_)=> const TreatmentReview(),),);
+          Navigator.push(context, MaterialPageRoute(builder: (_)=>  ViewTreatment(treatmentModel: treatmentModel, cowId:treatmentModel.cowId! ,),),);
         },
         child: Padding(
           padding: const EdgeInsets.all(8.0),
@@ -30,14 +28,12 @@ class LastTreatment extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    /* noteNameController.text*/
-                    "ASDFGHJK",
+                    treatmentModel.name!,
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 28.sp),
                   ),
                   Text(
-                    /*noteDescController.text*/
-                    "asdfghjkle4rfygjfdghjhgfhjdsdfghhjklfghjklsdzfghjklggg",
-                    maxLines: 1,
+                    treatmentModel.diagnose!,
+                    maxLines: 6,
                     overflow: TextOverflow.ellipsis,
                     style:
                     TextStyle(fontWeight: FontWeight.normal, fontSize: 22.sp),
@@ -47,7 +43,7 @@ class LastTreatment extends StatelessWidget {
             ),
           ),
         ),
-      ),
+
     );
   }
 }

@@ -39,8 +39,8 @@ class ActivityPlacesView extends StatelessWidget with MyConstants {
               type: '',
               capacity: 0,
               cowCount: 0,
-              latitude: null,
-              longitude: null,
+              latitude: '',
+              longitude:'',
             ),
           );
 
@@ -66,8 +66,8 @@ class ActivityPlacesView extends StatelessWidget with MyConstants {
                       ),
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(28),
-                        child: Image.network(
-                          activityPlaces.image!,
+                        child:  activityPlaces.image.isEmpty?Image.asset( 'assets/images/cow.jpg'): Image.network(
+                          activityPlaces.image,
                           fit: BoxFit.fill,
                         ),
                       ),
@@ -115,7 +115,7 @@ class ActivityPlacesView extends StatelessWidget with MyConstants {
                         TextFont(
                             height: 30,
                             isDark: true,
-                            text: '${activityPlaces.type}'),
+                            text: activityPlaces.type),
                       ],
                     ),
                     const TextFont(
@@ -126,24 +126,22 @@ class ActivityPlacesView extends StatelessWidget with MyConstants {
                     const SizedBox(
                       height: 10,
                     ),
-                    Container(
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(15),
-                        border: Border.all(
-                          color: Colors.white10,
-                          width: 1,
-                        ),
-                      ),
-                      child: Padding(
+
+
+
+                    Padding(
                         padding: const EdgeInsets.all(4.0),
-                        child: TextFont(
-                          text: activityPlaces.goal!,
-                          height: 80,
-                          isDark: true,
+                        child: Text(
+                          activityPlaces.goal, style: TextStyle(
+                          fontSize: 33.sp,
+                          fontFamily: 'Urbanist',
+                          color: const Color(0xff263238),
+                          fontWeight: FontWeight.w600,
+                        ),
+
                         ),
                       ),
-                    ),
+
                     const SizedBox(
                       height: 10,
                     ),
@@ -152,23 +150,19 @@ class ActivityPlacesView extends StatelessWidget with MyConstants {
                       height: 30,
                       isDark: false,
                     ),
-                    Container(
-                      decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(15),
-                          border: Border.all(
-                            color: Colors.white10,
-                            width: 1,
-                          )),
-                      child: Padding(
+                   Padding(
                         padding: const EdgeInsets.all(4.0),
-                        child: TextFont(
-                          text: activityPlaces.description!,
-                          height: 80,
-                          isDark: true,
+                        child: Text(
+                        activityPlaces.description,  style: TextStyle(
+                          fontSize: 33.sp,
+                          fontFamily: 'Urbanist',
+                          color: const Color(0xff263238),
+                          fontWeight: FontWeight.w600,
+                        ),
+
                         ),
                       ),
-                    ),
+
                     const SizedBox(
                       height: 10,
                     ),
@@ -177,15 +171,7 @@ class ActivityPlacesView extends StatelessWidget with MyConstants {
                       height: 30,
                       isDark: false,
                     ),
-                    Container(
-                      decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(15),
-                          border: Border.all(
-                            color: Colors.white10,
-                            width: 1,
-                          )),
-                      child: Padding(
+                  Padding(
                         padding: const EdgeInsets.all(4.0),
                         child: Row(
                           children: [
@@ -201,7 +187,7 @@ class ActivityPlacesView extends StatelessWidget with MyConstants {
                             ),
                           ],
                         ),
-                      ),
+
                     ),
                     Row(
                       children: [

@@ -11,9 +11,48 @@ class ActivityPlaceContainer extends StatelessWidget with MyConstants {
       {super.key, required this.placeId, required this.imagePath});
   final int placeId;
   final String imagePath;
+  void fetchInitialData(BuildContext context) {
+    final activityPlacesProvider = Provider.of<ActivityPlaceProvider>(context, listen: false);
+    activityPlacesProvider.fetchAllActivityPlaces().then((_) {
+      if (initialPlaceId != null) {
+        final initialIndex = activityPlacesProvider.filteredPlaces.indexWhere(
+              (place) => place.id == initialPlaceId,
+        );
+        if (initialIndex != -1) {
+          activityPlacesProvider.setCurrentPage(initialIndex);
+          activityPlacesProvider.pageController.animateToPage(
+            initialIndex,
+            duration: const Duration(milliseconds: 500),
+            curve: Curves.easeInOut,
+          );
+        }
+      }
+    });
+  }
   @override
   Widget build(BuildContext context) {
-    return Consumer<ActivityPlaceProvider>(
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      fetchInitialData(context);
+    });
+  @override
+  Widget build(BuildContext context) {
+
+  }
+    return FutureBuilder(
+        future: noteProvider.fetchAllNotes(),
+    builder: (context, snapshot) {
+    if (snapshot.connectionState == ConnectionState.waiting) {
+    return Center(
+    child: SpinKitHourGlass(
+    color: Colors.green.shade700,
+    ),
+    );
+    } else if (snapshot.hasError) {
+    return Center(
+    child: Text('Error: ${snapshot.error}'),
+    );
+    } else {
+      Consumer<ActivityPlaceProvider>(
         builder: (context, placeProvider, child) {
           if (placeProvider.isLoading) {
             return Center(
@@ -35,7 +74,7 @@ class ActivityPlaceContainer extends StatelessWidget with MyConstants {
                 name: '',
                 goal: '',
               
-                cows: [], image: '', activitySystemId: null, updatedAt: '', createdAt: '', type: '', description: '', capacity: null, cowCount: null, latitude: '', longitude: '',
+                cows: [], image: '', activitySystemId: 0, updatedAt: '', createdAt: '', type: '', description: '', capacity: 0, cowCount: 0, latitude: '', longitude: '',
               ),
             );
 
@@ -130,7 +169,7 @@ class ActivityPlaceContainer extends StatelessWidget with MyConstants {
                     ),
                   ),
                 ),
-              ),
+              ),}
             );
           }
         });

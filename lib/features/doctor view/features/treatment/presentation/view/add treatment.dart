@@ -125,7 +125,7 @@ class _AddTreatmentState extends State<AddTreatment> {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: NoteButton(text: "save",onPressed: (){
-                    Navigator.push(context, MaterialPageRoute(builder: (_)=>AllTreatments(),),);
+                    Navigator.push(context, MaterialPageRoute(builder: (_)=>AllTreatments(id: 10,),),);
                   },),
                 )
               ],

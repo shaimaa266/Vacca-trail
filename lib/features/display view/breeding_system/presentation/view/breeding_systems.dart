@@ -1,4 +1,5 @@
-import 'package:app_vacca/features/display%20view/breeding_system/presentation/view/breeding system view.dart';
+
+import 'package:app_vacca/features/display%20view/breeding_system/presentation/view/breeding%20system%20view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
@@ -10,35 +11,35 @@ import '../../../../../core/widgets/first_row_title.dart';
 import '../../../../../core/widgets/search_bar.dart';
 import '../manage/breeding_provider.dart';
 class BreedingSystems extends StatelessWidget {
-  final int? initialBreedingSystemId;
+  final int? initialSystemId;
 
-  const BreedingSystems({Key? key, this.initialBreedingSystemId}) : super(key: key);
+  const BreedingSystems({Key? key, this.initialSystemId}) : super(key: key);
 
-  Future<void> _fetchInitialData(BuildContext context) async {
-    final breedingProvider = Provider.of<BreedingProvider>(context, listen: false);
+  Future<void> fetchInitialData(BuildContext context) async {
+    final breedingProvider =
+    Provider.of<BreedingProvider>(context, listen: false);
     await breedingProvider.fetchAllBreedingSystems();
 
-    if (initialBreedingSystemId != null) {
-      final initialIndex = breedingProvider.breedingSystems.indexWhere(
-            (system) => system.id == initialBreedingSystemId,
+    if (initialSystemId != null) {
+      final initialIndex = breedingProvider.filteredSystems.indexWhere(
+            (system) => system.id == initialSystemId,
       );
-      if (initialIndex != 0) {
+      if (initialIndex != -1) {
         breedingProvider.setCurrentPage(initialIndex);
 
         breedingProvider.pageController.animateToPage(
           initialIndex,
-          duration:  const Duration(milliseconds: 500),
+          duration: Duration(milliseconds: 500),
           curve: Curves.easeInOut,
         );
       }
     }
-
   }
 
   @override
   Widget build(BuildContext context) {
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      _fetchInitialData(context);
+      fetchInitialData(context);
     });
 
     return Scaffold(
@@ -47,11 +48,16 @@ class BreedingSystems extends StatelessWidget {
           child: Consumer<BreedingProvider>(
             builder: (context, breedingProvider, child) {
               if (breedingProvider.isLoading) {
-                return Center(
-                  child: SpinKitFoldingCube(
-                    color: Colors.green.shade700,
-                    size: 70,
-                  ),
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SpinKitWaveSpinner(
+                      waveColor: Colors.green.shade700,
+                      color: Colors.black45,
+                      size: 70,
+                    ),
+                  ],
                 );
               } else if (breedingProvider.errorMessage != null) {
                 return Center(
@@ -65,100 +71,54 @@ class BreedingSystems extends StatelessWidget {
                       children: [
                         SearchBarCustom(
                           controller: breedingProvider.searchController,
-                          onTap: () => breedingProvider.applySearch(),
+                          onTap: () => breedingProvider.searchBreedingSystems(breedingProvider.searchController.text),
                           onPressedSearch: () {},
-                          w: 555,
+                          w: 640,
                           h: 50,
                           keyboardType: TextInputType.text,
-                          hintText: "Search by name...",
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: PopupMenuButton<int>(
-                            icon: Image.asset('assets/images/sort icon.png'),
-                            onCanceled: () {
-                              breedingProvider.clearFilters();
-                            },
-                            onSelected: (int value) {
-                              if (value == 1 || value == 0) {
-                                breedingProvider.applyFilter(value);
-                              } else {
-                                breedingProvider.clearFilters();
-                              }
-                            },
-                            itemBuilder: (BuildContext context) {
-                              return [
-                                PopupMenuItem<int>(
-                                  value: 0,
-                                  child: Row(
-                                    children: [
-                                      TextButton(
-                                        onPressed: () {
-                                          breedingProvider.applyStatusFilter(0);
-                                        },
-                                        child: const Text('Normal'),
-                                      ),
-                                      IconButton(
-                                        onPressed: () {
-                                          breedingProvider.clearFilters();
-                                        },
-                                        icon: const Icon(Icons.remove),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                PopupMenuItem<int>(
-                                  value: 1,
-                                  child: Row(
-                                    children: [
-                                      TextButton(
-                                        onPressed: () {
-                                          breedingProvider.applyStatusFilter(1);
-                                        },
-                                        child: const Text('Abnormal'),
-                                      ),
-                                      IconButton(
-                                        onPressed: () {
-                                          breedingProvider.clearFilters();
-                                        },
-                                        icon: const Icon(Icons.remove),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ];
-                            },
-                          ),
+                          hintText: "Search by System name ....",
                         ),
                       ],
                     ),
-                    SizedBox(
-                   height: 620,
-                      child: PageView.builder(
-                        controller: breedingProvider.pageController,
-                        itemCount: breedingProvider.breedingSystems.length,
-                        onPageChanged: (index) {
-                          breedingProvider.setCurrentPage(index);
-                          breedingProvider.applyFilter(null);
-                        },
-                        itemBuilder: (context, index) {
-                          final breedingSystem = breedingProvider.breedingSystems[index];
-                          return BreedingSystemView(
-                            breedingSystemId: breedingSystem.id,
-                            imagePath: breedingProvider.images[breedingProvider.currentPage],
-                          );
-                        },
-                      ),
-                    ),
-                    SmoothPageIndicator(
-                      controller: breedingProvider.pageController,
-                      count: breedingProvider.filteredSystems.length,
-                      effect: WormEffect(
-                        dotColor: Colors.blueGrey.shade200,
-                        activeDotColor: Colors.green.shade900,
-                        dotHeight: 16,
-                        dotWidth: 16,
-                        type: WormType.thinUnderground,
+                    initialSystemId == null
+                        ? Column(
+                      children: [
+                        SizedBox(
+                          height: 615,
+                          child: PageView.builder(
+                            controller: breedingProvider.pageController,
+                            itemCount: breedingProvider.filteredSystems.length,
+                            onPageChanged: (index) {
+                              breedingProvider.setCurrentPage(index);
+
+                            },
+                            itemBuilder: (context, index) {
+                              final breeding = breedingProvider.filteredSystems[index];
+                              return BreedingSystemView(
+                                breedingSystemId: breeding.id,
+                                imagePath: breedingProvider.images[breedingProvider.currentPage],
+                              );
+                            },
+                          ),
+                        ),
+                        SmoothPageIndicator(
+                          controller: breedingProvider.pageController,
+                          count: breedingProvider.filteredSystems.length,
+                          effect: WormEffect(
+                            dotColor: Colors.blueGrey.shade200,
+                            activeDotColor: Colors.green.shade900,
+                            dotHeight: 9,
+                            dotWidth: 9,
+                            type: WormType.thinUnderground,
+                          ),
+                        ),
+                      ],
+                    )
+                        : SizedBox(
+                      height: 650,
+                      child: BreedingSystemView(
+                        breedingSystemId: initialSystemId!,
+                        imagePath: breedingProvider.images[breedingProvider.currentPage],
                       ),
                     ),
                   ],
@@ -172,6 +132,7 @@ class BreedingSystems extends StatelessWidget {
     );
   }
 }
+
 
 
 

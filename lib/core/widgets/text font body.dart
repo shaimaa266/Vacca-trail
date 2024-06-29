@@ -15,7 +15,7 @@ final bool isDark;
         style: TextStyle(
           fontSize: 33.sp,
           fontFamily: 'Urbanist',
-          color:isDark==true? const Color(0xff263238):Colors.grey[500],
+          color:isDark==true? const Color(0xff263238):Colors.green[900],
           fontWeight: FontWeight.w600,
         ),
       ),

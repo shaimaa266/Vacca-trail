@@ -3,10 +3,22 @@ import 'package:flutter/material.dart';
 import '../../data/model/treatment_model.dart';
 
 class TreatmentProvider extends ChangeNotifier {
-  List<TreatmentModel> treatments = [];
+  List<TreatmentModel> allTreatments = [];
   List<TreatmentModel> updateTreatments = [];
   List<TreatmentModel> addedTreatments = [];
   List<TreatmentModel> removedTreatments = [];
+  final TextEditingController noteNameController = TextEditingController();
+
+  final TextEditingController diseasesController = TextEditingController();
+
+  final TextEditingController medicineUsedController = TextEditingController();
+
+  final TextEditingController dosageController = TextEditingController();
+
+  final TextEditingController infoController = TextEditingController();
+  final TextEditingController searchController = TextEditingController();
+  final TextEditingController  dateController = TextEditingController();
+  final TextEditingController  timeController = TextEditingController();
 
   final TreatmentRepo treatmentRepo;
   TreatmentProvider(this.treatmentRepo);
@@ -23,10 +35,10 @@ class TreatmentProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> fetchAllActivityPlaces() async {
+  Future<void> fetchAllTreatments(int cowId) async {
     _setLoading(true);
     try {
-      treatments = await treatmentRepo.getAllTreatments();
+      allTreatments = await treatmentRepo.getAllTreatments(cowId);
       _setError(null);
     } catch (e) {
       _setError(e.toString());
@@ -35,10 +47,12 @@ class TreatmentProvider extends ChangeNotifier {
     }
   }
 
-  Future<void> updateTreatment(int id) async {
+  Future<void> updateTreatment({
+    required int cowId ,required String disease,required String name,required String diagnose,required int doses,required String searchTerm
+}) async {
     _setLoading(true);
     try {
-      updateTreatments = await treatmentRepo.editTreatment(id);
+      allTreatments = await treatmentRepo.editTreatment(cowId: cowId,diagnose:diagnose , name: name,disease: disease,doses: doses,searchTerm: searchTerm);
       _setError(null);
     } catch (e) {
       _setError(e.toString());
@@ -47,10 +61,10 @@ class TreatmentProvider extends ChangeNotifier {
     }
   }
 
-  Future<void> getAddTreatment(int id) async {
+  Future<void> getAddTreatment({required int cowId ,required String disease,required String name,required String diagnose,required int doses,required String searchTerm}) async {
     _setLoading(true);
     try {
-      addedTreatments = await treatmentRepo.addTreatment();
+      allTreatments = await treatmentRepo.addTreatment(searchTerm: searchTerm,doses: doses,disease: disease,diagnose: diagnose,cowId: cowId,name: name);
       _setError(null);
     } catch (e) {
       _setError(e.toString());
@@ -59,10 +73,10 @@ class TreatmentProvider extends ChangeNotifier {
     }
   }
 
-  Future<void> getRemoveTreatment(int id) async {
+  Future<void> getRemoveTreatment({required int cowId}) async {
     _setLoading(true);
     try {
-      removedTreatments = await treatmentRepo.deleteTreatment(id);
+      allTreatments = await treatmentRepo.deleteTreatment(cowId);
       _setError(null);
     } catch (e) {
       _setError(e.toString());

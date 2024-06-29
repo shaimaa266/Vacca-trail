@@ -7,7 +7,6 @@ class BreedingProvider extends ChangeNotifier {
   final BreedingRepo breedingRepo;
 
   BreedingProvider(this.breedingRepo);
-
   List<BreedingModel> breedingSystems = [];
   List<BreedingModel> filteredSystems = [];
   List<CowModel> filteredCows = [];
@@ -18,6 +17,7 @@ class BreedingProvider extends ChangeNotifier {
   PageController pageController = PageController();
   int? selectedSystemId;
   int? selectedCowStatus;
+
   List<String> images = [
     "assets/images/cow.jpg",
     "assets/images/cow eating.png",
@@ -50,62 +50,79 @@ class BreedingProvider extends ChangeNotifier {
     }
   }
 
-  Future<void> fetchFilteredCows(int systemId, int status) async {
-    _setLoading(true);
-    try {
-      filteredCows = await breedingRepo.getFilteredCows(systemId, status);
-      _setError(null);
-      print(
-          'Fetched ${filteredCows.length} filtered cows for system ID: $systemId and status: $status');
-    } catch (e) {
-      _setError(e.toString());
-      print(e);
-    } finally {
-      _setLoading(false);
-    }
-    notifyListeners();
-  }
+
 
   void searchBreedingSystems(String query) {
     if (query.isEmpty) {
       filteredSystems = breedingSystems;
     } else {
-      filteredSystems = breedingSystems.where((system) =>
-          system.name.toLowerCase().contains(query.toLowerCase())).toList();
+      filteredSystems = breedingSystems
+          .where((system) =>
+              system.name.toLowerCase().contains(query.toLowerCase()))
+          .toList();
     }
-    notifyListeners();
-  }
-
-  void applyFilter(int? cowStatus) {
-    selectedCowStatus = cowStatus;
-    if (selectedSystemId != null && selectedCowStatus != null) {
-      fetchFilteredCows(selectedSystemId!, selectedCowStatus!);
-    } else {
-      filteredSystems = breedingSystems;
-      notifyListeners();
-    }
-  }
-
-  void applyStatusFilter(int cowStatus) {
-    selectedCowStatus = cowStatus;
-    applyFilter(cowStatus);
-  }
-
-  void applySearch() {
-    searchBreedingSystems(searchController.text);
-  }
-
-  void clearFilters() {
-    selectedCowStatus = null;
-    selectedSystemId = null;
-    searchController.clear();
-    filteredSystems = breedingSystems;
     notifyListeners();
   }
 
   void setCurrentPage(int page) {
     currentPage = page;
     notifyListeners();
+  }
+
+  Future<void> getAddBreeding(
+      {required int id,
+      required String name,
+      required String goal,
+      required String causeOfCreation,
+      required String description,
+      required String activities,
+      required List<String> cows,
+      required int cowCount}) async {
+    _setLoading(true);
+    try {
+      breedingSystems = await breedingRepo.addSystem(
+          id: id,
+          name: name,
+          goal: goal,
+          causeOfCreation: causeOfCreation,
+          description: description,
+          activities: activities,
+          cows: cows,
+          cowCount: cowCount);
+      _setError(null);
+    } catch (e) {
+      _setError(e.toString());
+    } finally {
+      _setLoading(false);
+    }
+  }
+
+  Future<void> getUpdateBreeding(
+      {required int id,
+      required String name,
+      required String goal,
+      required String causeOfCreation,
+      required String description,
+      required String activities,
+      required List<String> cows,
+      required int cowCount}) async {
+    _setLoading(true);
+    try {
+      breedingSystems = await breedingRepo.editSystem(
+          id: id,
+          name: name,
+          goal: goal,
+          causeOfCreation: causeOfCreation,
+          description: description,
+          activities: activities,
+          cows: cows,
+          cowCount: cowCount);
+      _setError(null);
+    } catch (e) {
+      _setError(e.toString());
+    } finally {
+      _setLoading(false);
+    }
   }
 
   @override
@@ -115,4 +132,3 @@ class BreedingProvider extends ChangeNotifier {
     super.dispose();
   }
 }
-

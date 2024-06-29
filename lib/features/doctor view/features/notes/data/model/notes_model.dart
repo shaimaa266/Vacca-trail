@@ -1,17 +1,17 @@
 import '../../../../../display view/cow_data/data/model/cows_model.dart';
 
 class NoteModel {
-  final int id;
+  final int  id;
 
-  final String noteId;
-  final int cowId;
-  final String createdAt;
-  final String updatedAt;
-  final int  isStarred;
-  final String title;
-  final String body;
+  final String  ?noteId;
+  final int ?cowId;
+  final String ?createdAt;
+  final String? updatedAt;
+  final int  ?isStarred;
+  final String ?title;
+  final String ?body;
   final String? image;
-  final List<CowModel> cow;
+  final List<CowModel>? cow;
   NoteModel(
       {required this.title,
       required this.body,
@@ -37,5 +37,21 @@ class NoteModel {
         createdAt: json['created_at'],
         isStarred: json['is_starred'],
         noteId: json['note_id']);
+  }
+  NoteModel copyWith({
+    int? isStarred,
+  }) {
+    return NoteModel(
+      id: id,
+      noteId: noteId,
+      cowId: cowId,
+      createdAt: createdAt,
+      updatedAt: updatedAt,
+      isStarred: isStarred??this.isStarred,
+      title: title,
+      body: body,
+      image: image,
+      cow: cow,
+    );
   }
 }

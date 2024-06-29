@@ -2,9 +2,7 @@ import 'package:app_vacca/features/display%20view/cow_data/cow_profile.dart';
 import 'package:app_vacca/features/display%20view/cow_data/data/model/cows_model.dart';
 import 'package:app_vacca/features/display%20view/cow_data/presentation/control/cow_provider.dart';
 import 'package:app_vacca/features/display%20view/custom_widgets/constants_mixin.dart';
-
 import 'package:flutter/material.dart';
-
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
@@ -91,19 +89,19 @@ class CowFeatureRows extends StatelessWidget with MyConstants {
                         // Handle image loading error
                       },
                       child: cows.image!.isEmpty
-                          ? Icon(Icons.error) // Placeholder icon in case of an error
+                          ? const Icon(Icons.error) // Placeholder icon in case of an error
                           : null,
                     ),
                   ),
                   Padding(
                     padding: const EdgeInsets.only(left: 4.0, right: 16.0),
                     child: Text(
-                      "  Cow ID",
+                      "  Cow Id",
                       style: TextStyle(
                         color: titleColor,
                         fontSize: 44.sp,
                         fontFamily: 'Urbanist',
-                        fontStyle: FontStyle.italic,
+
                         fontWeight: FontWeight.w700,
                       ),
                     ),
@@ -116,7 +114,7 @@ class CowFeatureRows extends StatelessWidget with MyConstants {
                         color: titleColor,
                         fontSize: 40.sp,
                         fontFamily: 'Urbanist',
-                        fontStyle: FontStyle.italic,
+
                         fontWeight: FontWeight.w700,
                       ),
                     ),

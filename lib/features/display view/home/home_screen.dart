@@ -15,7 +15,7 @@ class Home extends StatelessWidget with MyConstants {
           child: Column(
             children: [
               Padding(
-                padding: const EdgeInsets.only(top: 70, bottom: 40),
+                padding: const EdgeInsets.only(top: 50, bottom: 30),
                 child: Center(
                     child: Text(
                   "Home",
@@ -26,7 +26,7 @@ class Home extends StatelessWidget with MyConstants {
                       fontSize: 60.sp),
                 )),
               ),
-              SizedBox(height: 600.h, child: FeatureContainer()),
+              SizedBox(height: 630.h, child: FeatureContainer()),
             ],
           ),
         ),

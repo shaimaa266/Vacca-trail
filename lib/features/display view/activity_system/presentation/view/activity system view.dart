@@ -31,8 +31,8 @@ class ActivitySystemView extends StatelessWidget with MyConstants {
             child: Text(activitySystemProvider.errorMessage!),
           );
         } else {
-          final activitySystem = activitySystemProvider.activitySystems
-              .firstWhere(
+          final activitySystem =
+          activitySystemProvider.activitySystems.firstWhere(
                 (system) => system.id == activitySystemId,
             orElse: () => ActivitySystemModel(
               id: 0,
@@ -44,12 +44,17 @@ class ActivitySystemView extends StatelessWidget with MyConstants {
               description: '',
               cows_count: 0,
               cows: [],
+              wakeUpTime: '',
+              sleepTime: '',
+              breedingId: 0,
+              activities: '',
             ),
           );
 
           if (activitySystem.id == 0) {
             return Center(
-              child: Text('Breeding system with ID $activitySystemId not found'),
+              child:
+              Text('Breeding system with ID $activitySystemId not found'),
             );
           }
 
@@ -81,7 +86,7 @@ class ActivitySystemView extends StatelessWidget with MyConstants {
                           const TextFont(
                             text: "Name : ",
                             height: 40,
-                            isDark: true,
+                            isDark: false,
                           ),
                           TextFont(
                             text: activitySystem.name,
@@ -90,82 +95,135 @@ class ActivitySystemView extends StatelessWidget with MyConstants {
                           ),
                         ],
                       ),
-                      Row(
-                        children: [
-                          const TextFont(
-                            text: "Id: ",
-                            height: 40,
-                            isDark: true,
-                          ),
-                          TextFont(
-                            text: activitySystem.id.toString(),
-                            height: 40,
-                            isDark: true,
-                          ),
-                        ],
-                      ),
+                      const SizedBox(height: 20,),
                       const TextFont(
                         text: "Cause of Creation:",
-                        height: 40,
+                        height: 30,
                         isDark: false,
                       ),
-                      TextFont(
-                        text: activitySystem.cause_of_creation,
-                        height: 80,
-                        isDark: true,
+                      Text(
+                        activitySystem.cause_of_creation,
+                        style: TextStyle(
+                          fontSize: 33.sp,
+                          fontFamily: 'Urbanist',
+                          color: const Color(0xff263238),
+                          fontWeight: FontWeight.w600,
+                        ),
                       ),
+                      const SizedBox(height: 30,),
+                      const TextFont(
+                        text: "System activities:",
+                        height: 30,
+                        isDark: false,
+                      ),
+                      Text(
+                        activitySystem.activities!,
+                        style: TextStyle(
+                          fontSize: 33.sp,
+                          fontFamily: 'Urbanist',
+                          color: const Color(0xff263238),
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      const SizedBox(height: 30,),
                       const TextFont(
                         text: "System Goal:",
-                        height: 40,
+                        height: 30,
                         isDark: false,
                       ),
-                      TextFont(
-                        text: activitySystem.goal,
-                        height: 80,
-                        isDark: true,
+                      Text(
+                        activitySystem.goal,
+                        style: TextStyle(
+                          fontSize: 33.sp,
+                          fontFamily: 'Urbanist',
+                          color: const Color(0xff263238),
+                          fontWeight: FontWeight.w600,
+                        ),
                       ),
+                      const SizedBox(height: 30,),
                       const TextFont(
                         text: "Description:",
-                        height: 40,
+                        height: 30,
                         isDark: false,
                       ),
-                      TextFont(
-                        text: activitySystem.description,
-                        height: 80,
-                        isDark: true,
+                      Text(
+                        activitySystem.description,
+                        style: TextStyle(
+                          fontSize: 33.sp,
+                          fontFamily: 'Urbanist',
+                          color: const Color(0xff263238),
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      const SizedBox(height: 20,),
+                      const TextFont(
+                        text: "sleep time :",
+                        height: 30,
+                        isDark: false,
+                      ),
+                      Text(
+                        activitySystem.sleepTime,
+                        style: TextStyle(
+                          fontSize: 33.sp,
+                          fontFamily: 'Urbanist',
+                          color: const Color(0xff263238),
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      const SizedBox(height: 20,),
+                      const TextFont(
+                        text: "wakeup  time :",
+                        height: 30,
+                        isDark: false,
+                      ),
+                      Text(
+                        activitySystem.wakeUpTime,
+                        style: TextStyle(
+                          fontSize: 33.sp,
+                          fontFamily: 'Urbanist',
+                          color: const Color(0xff263238),
+                          fontWeight: FontWeight.w600,
+                        ),
                       ),
                       Row(
                         children: [
-
                           if (activitySystem.cows!.isNotEmpty)
                             DropdownButton<String>(
-                              focusColor:Colors.grey[300],
+                              focusColor: Colors.grey[300],
                               items: activitySystem.cows!.map((cow) {
                                 return DropdownMenuItem<String>(
                                   value: cow.cowId.toString(),
-                                  child: Center(child: Row(
-                                    children: [
-                                      Text("Cow ID: ${cow.cowId}"),
-                                      const SizedBox(width: 35,),
-                                      CircleAvatar(
-                                        radius: 3,
-                                        backgroundColor: cow.cow_status == 0
-                                            ? baseColor
-                                            : Colors.red,
-                                      )
-                                    ],
-                                  )),
+                                  child: Center(
+                                      child: Row(
+                                        children: [
+                                          Text("Cow ID: ${cow.cowId}"),
+                                          const SizedBox(
+                                            width: 35,
+                                          ),
+                                          CircleAvatar(
+                                            radius: 3,
+                                            backgroundColor: cow.cow_status == 0
+                                                ? baseColor
+                                                : Colors.red,
+                                          )
+                                        ],
+                                      )),
                                 );
                               }).toList(),
                               onChanged: (val) {},
-                              hint:   TextFont(
+                              hint: TextFont(
                                 text:
                                 "Applied on : ${activitySystem.cows!.length} cows        ",
-                                height: 30,isDark: true,) ,
+                                height: 30,
+                                isDark: true,
+                              ),
                             )
                           else
                             const TextFont(
-                              text: "No cows in this place.", height: 40,isDark: true,),
+                              text: "No cows in this place.",
+                              height: 40,
+                              isDark: true,
+                            ),
                         ],
                       ),
                     ],
@@ -179,6 +237,4 @@ class ActivitySystemView extends StatelessWidget with MyConstants {
     );
   }
 }
-
-
 

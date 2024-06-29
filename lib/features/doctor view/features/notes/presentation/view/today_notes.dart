@@ -1,9 +1,6 @@
 import 'package:app_vacca/features/doctor%20view/features/notes/data/model/notes_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:provider/provider.dart';
-import '../manage/notes_provider.dart';
 import 'edit_notes.dart';
 import 'widgets/note_container.dart';
 class TodayNotes extends StatelessWidget {
@@ -33,7 +30,7 @@ class TodayNotes extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  note.noteId,
+                  note.title!,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
@@ -42,7 +39,7 @@ class TodayNotes extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  note.body,
+                  note.body!,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(

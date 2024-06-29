@@ -4,6 +4,10 @@ class ActivitySystemModel {
   final int id;
   final String name;
   final String goal;
+  final String ?activities;
+  final String sleepTime;
+  final String wakeUpTime;
+  final int ?breedingId;
   final String cause_of_creation;
   final String description;
   final String created_at;
@@ -13,6 +17,9 @@ class ActivitySystemModel {
 
   ActivitySystemModel({
     required this.id,
+    required this.wakeUpTime,
+    required this.sleepTime,required this.breedingId,
+    required this.activities,
     required this.name,
     required this.goal,
     required this.cause_of_creation,
@@ -37,6 +44,10 @@ class ActivitySystemModel {
       updated_at: json['updated_at'],
       cows_count: json['cows_count'],
       cows: cows,
+      activities: json['activities'],
+      breedingId: json['breadingsystem_id'],
+      sleepTime: json['sleep_time'],
+      wakeUpTime: json['wakeup_time'],
     );
   }
 }

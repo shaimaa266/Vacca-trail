@@ -42,6 +42,10 @@ class ActivitySysContainer extends StatelessWidget with MyConstants {
             description: '',
             cows_count: 0,
             cows: [],
+            wakeUpTime: '',
+            sleepTime: '',
+            breedingId: 0,
+            activities: '',
           ),
         );
 
@@ -125,7 +129,7 @@ class ActivitySysContainer extends StatelessWidget with MyConstants {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (_) => ViewActSystem(),
+                                builder: (_) => ViewActSystem(activitySystemModel: activitySystem,),
                               ),
                             );
                           },

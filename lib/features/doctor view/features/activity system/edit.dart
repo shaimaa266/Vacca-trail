@@ -4,220 +4,243 @@ import 'package:app_vacca/core/widgets/first_row_title.dart';
 import 'package:app_vacca/features/doctor%20view/features/activity%20system/view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:provider/provider.dart';
+import '../../../display view/activity_system/data/models/activity_system_model.dart';
+import '../../../display view/activity_system/presentation/control/activity_system_provider.dart';
 import '../shared/button_customized.dart';
 import '../shared/custom_sys_field.dart';
-class EditActSystem extends StatefulWidget {
-  EditActSystem({super.key});
 
-  @override
-  State<EditActSystem> createState() => _EditSystemState();
-}
+class EditActSystem extends StatelessWidget {
 
-class _EditSystemState extends State<EditActSystem> {
-  final TextEditingController nameSysController = TextEditingController();
+  final ActivitySystemModel activitySystemModel;
 
-  final TextEditingController purposeSysController = TextEditingController();
-
-  final TextEditingController causeCreateController = TextEditingController();
-
-  final TextEditingController sysInfoController = TextEditingController();
-
-  final TextEditingController applyDuaController = TextEditingController();
+  const EditActSystem({super.key, required this.activitySystemModel});
 
   @override
   Widget build(BuildContext context) {
+    final actSystem =
+    Provider.of<ActivitySystemsProvider>(context, listen: false);
+
     return Scaffold(
       body: BackGreoundImageContainer(
-        child: SingleChildScrollView(
-          child: Padding(
-            padding:
-                const EdgeInsets.only(top: 50, bottom: 16, left: 16, right: 16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                TitleRow(textTitle: "Edit a system "),
-                SizedBox(
-                  height: 20.h,
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(4.0),
-                  child: CustomSysField(
-                    withBorder: true,
-                    isWhite: true,
-                    colorHex: const Color(0xff263238),
-                    height: 60,
-                    width: 580,
-                    readOnly: false,
-                    keyboardType: TextInputType.text,
-                    maxLines: 2,
-                    controller: nameSysController,
-                    text: "System Name ",
-                  ),
-                ),
-                SizedBox(
-                  height: 20.h,
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(4.0),
-                  child: CustomSysField(
-                    withBorder: true,
-                    isWhite: true,
-                    colorHex: const Color(0xff263238),
-                    height: 60,
-                    width: 580,
-                    readOnly: false,
-                    keyboardType: TextInputType.text,
-                    maxLines: 20,
-                    controller: purposeSysController,
-                    text: "System Goals ",
-                  ),
-                ),
-                SizedBox(
-                  height: 20.h,
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(4.0),
-                  child: CustomSysField(
-                    withBorder: true,
-                    isWhite: true,
-                    colorHex: const Color(0xff263238),
-                    height: 60,
-                    width: 580,
-                    readOnly: false,
-                    keyboardType: TextInputType.text,
-                    maxLines: 20,
-                    controller: purposeSysController,
-                    text: "Cause of Creation ",
-                  ),
-                ),
-                SizedBox(
-                  height: 20.h,
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(4.0),
-                  child: CustomSysField(
-                    withBorder: true,
-                    isWhite: true,
-                    height: 140,
-                    colorHex: const Color(0xff263238),
-                    width: 580,
-                    readOnly: false,
-                    keyboardType: TextInputType.text,
-                    maxLines: 20,
-                    controller: sysInfoController,
-                    text: "System  Description ",
-                  ),
-                ),
-                SizedBox(
-                  height: 20.h,
-                ),
-                CustomSysField(
-                  withBorder: true,
-                  isWhite: true,
-                  height: 50,
-                  colorHex: const Color(0xff263238),
-                  width: 580,
-                  readOnly: false,
-                  keyboardType: TextInputType.text,
-                  maxLines: 1,
-                  controller: applyDuaController,
-                  text: "Apply on(number of cows) ",
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(
-                      top: 22, left: 8, right: 8, bottom: 16),
-                  child: Container(
-                    width: 350,
-                    height: 45,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(10),
-                      border: Border.all(
-                          color: const Color(0xff89A492), width: 1.2),
-                    ),
-                    child: DropdownButton(
-                      focusColor: const Color(0xff44885C),
-                      hint: const Padding(
-                        padding: EdgeInsets.all(8.0),
-                        child: Text(
-                          "Applied on ",
-                          style: TextStyle(
-                              fontWeight: FontWeight.normal,
-                              fontSize: 20,
-                              color: Colors.black),
-                        ),
-                      ),
-                      isExpanded: true,
-                      iconSize: 40.0,
-                      style: const TextStyle(
-                        color: Color(0xff44885C),
-                      ),
-                      items:
-                          ['000', '001', '002', '003', '004', '005', '006'].map(
-                        (val) {
-                          return DropdownMenuItem<String>(
-                            value: val,
-                            child: Text(val),
-                          );
-                        },
-                      ).toList(),
-                      onChanged: (val) {
-                        setState(
-                          () {},
-                        );
-                      },
-                    ),
-                  ),
-                ),
-                AddButton(
-                  onPressed: () {
-                    showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return AlertDialog(
-                          title: const Center(child: Text('Are you sure?')),
-                          content: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              ElevatedButton(
-                                onPressed: () {
-                                  // request done ...
-                                  Navigator.pushReplacement(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (_) => ViewActSystem(),
-                                    ),
-                                  );
-                                },
-                                child: const Text(
-                                  'Yes',
-                                  style: TextStyle(color: Colors.red),
-                                ),
-                              ),
-                              const SizedBox(
-                                width: 20,
-                              ),
-                              ElevatedButton(
-                                onPressed: () {
-                                  Navigator.of(context)
-                                      .pop(); // Close the dialog
-                                },
-                                child: const Text(
-                                  'No',
-                                  style: TextStyle(color: Colors.green),
-                                ),
-                              ),
-                            ],
-                          ),
-                        );
-                      },
-                    );
-                  },
-                  text: "Save",
-                ),
-              ],
-            ),
+        child: Padding(
+          padding: const EdgeInsets.only(
+            top: 43,
+            bottom: 8,
           ),
+          child: FutureBuilder(
+              future: actSystem.fetchAllActivitySystems(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return Center(
+                    child: SpinKitHourGlass(
+                      color: Colors.green.shade700,
+                    ),
+                  );
+                } else if (snapshot.hasError) {
+                  return Center(
+                    child: Text('Error: ${snapshot.error}'),
+                  );
+                } else {
+                  return Consumer<ActivitySystemsProvider>(
+                      builder: (context, noteProvider, child) {
+                        if (noteProvider.errorMessage != null) {
+                          return Center(
+                            child: Text(noteProvider.errorMessage!),
+                          );
+                        } else {
+                          return SingleChildScrollView(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                TitleRow(textTitle: " edit  a system  "),
+                                SizedBox(
+                                  height: 10.h,
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: CustomSysField(
+                                    withBorder: true,
+                                    isWhite: true,
+                                    colorHex: const Color(0xff263238),
+                                    height: 50,
+                                    width: 580,
+                                    readOnly: false,
+                                    keyboardType: TextInputType.text,
+                                    maxLines: 1,
+                                    controller: actSystem.nameSysController,
+                                    text: activitySystemModel.name,
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 10.h,
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: CustomSysField(
+                                    withBorder: true,
+                                    isWhite: true,
+                                    colorHex: const Color(0xff263238),
+                                    height: 50,
+                                    width: 580,
+                                    readOnly: false,
+                                    keyboardType: TextInputType.text,
+                                    maxLines: 20,
+                                    controller: actSystem.purposeSysController,
+                                    text: activitySystemModel.goal,
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 10.h,
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: CustomSysField(
+                                    withBorder: true,
+                                    isWhite: true,
+                                    colorHex: const Color(0xff263238),
+                                    height: 50,
+                                    width: 580,
+                                    readOnly: false,
+                                    keyboardType: TextInputType.text,
+                                    maxLines: 20,
+                                    controller: actSystem.causeCreateController,
+                                    text: activitySystemModel.goal,
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 10.h,
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: CustomSysField(
+                                    withBorder: true,
+                                    isWhite: true,
+                                    colorHex: const Color(0xff263238),
+                                    height: 140,
+                                    width: 580,
+                                    readOnly: false,
+                                    keyboardType: TextInputType.text,
+                                    maxLines: 25,
+                                    controller: actSystem.sysInfoController,
+                                    text: activitySystemModel.description,
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 10.h,
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: CustomSysField(
+                                    withBorder: true,
+                                    isWhite: true,
+                                    colorHex: const Color(0xff263238),
+                                    height: 50,
+                                    width: 580,
+                                    readOnly: false,
+                                    keyboardType: TextInputType.text,
+                                    maxLines: 5,
+                                    controller: actSystem.activitiesController,
+                                    text: actSystem.activitiesController.text,
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: CustomSysField(
+                                    withBorder: true,
+                                    isWhite: true,
+                                    colorHex: const Color(0xff263238),
+                                    height: 50,
+                                    width: 580,
+                                    readOnly: false,
+                                    keyboardType: TextInputType.text,
+                                    maxLines: 5,
+                                    controller: actSystem.activityDuaController,
+                                    text:actSystem.activityDuaController.text,
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                      top: 20, left: 8, right: 8, bottom: 34),
+                                  child: Container(
+                                    width: 340,
+                                    height: 45,
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(10),
+                                      border: Border.all(
+                                          color: const Color(0xff89A492),
+                                          width: 1.2),
+                                    ),
+                                    child: DropdownButton(
+                                      focusColor: const Color(0xff44885C),
+                                      hint: const Padding(
+                                        padding: EdgeInsets.all(8.0),
+                                        child: Text(
+                                          "Applied on ",
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.normal,
+                                              fontSize: 20,
+                                              color: Colors.black),
+                                        ),
+                                      ),
+                                      isExpanded: true,
+                                      iconSize: 40.0,
+                                      style: const TextStyle(
+                                        color: Color(0xff44885C),
+                                      ),
+                                      items: [
+                                        '000',
+                                        '001',
+                                        '002',
+                                        '003',
+                                        '004',
+                                        '005',
+                                        '006'
+                                      ].map(
+                                            (val) {
+                                          return DropdownMenuItem<String>(
+                                            value: val,
+                                            child: Text(val),
+                                          );
+                                        },
+                                      ).toList(),
+                                      onChanged: (val) {},
+                                    ),
+                                  ),
+                                ),
+                                AddButton(
+                                  onPressed: () async {
+                                    await actSystem.getUpdateSystem(
+                                        id: actSystem.activitySystems.length,
+                                        name: actSystem.nameSysController.text,
+                                        goal: actSystem.purposeSysController.text,
+                                        causeOfCreation:
+                                        actSystem.causeCreateController.text,
+                                        description:
+                                        actSystem.sysInfoController.text,
+                                        activities:
+                                        actSystem.activitiesController.text,
+                                        cows: [],
+                                        cowCount: 6);
+                                    await actSystem.fetchAllActivitySystems();
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (_) => ViewActSystem(activitySystemModel: activitySystemModel,),
+                                      ),
+                                    );
+                                  },
+                                  text: "edit system",
+                                ),
+                              ],
+                            ),
+                          );
+                        }
+                      });
+                }
+              }),
         ),
       ),
       bottomNavigationBar: const Mynavbar(),

@@ -49,18 +49,18 @@ class CowStatus extends StatelessWidget {
           child: Column(
             children: [
               TitleRow(textTitle: "Cow Status"),
-              Row(
+             /* Row(
                 children: [
                   SearchBarCustom(
                     controller: cowProvider.controller,
                     onPressedSearch: () {},
                     onTap: () => applySearch(cowProvider),
-                    w: 550,
+                    w: 650,
                     h: 50,
                     keyboardType: TextInputType.text,
-                    hintText: "Search...",
+                    hintText: "Search with cow id ...",
                   ),
-                  PopupMenuButton<int>(
+                /*  PopupMenuButton<int>(
                     icon: Image.asset('assets/images/sort icon.png'),
                     onCanceled: () {
                       clearFilters(cowProvider);
@@ -128,9 +128,9 @@ class CowStatus extends StatelessWidget {
                         ),
                       ];
                     },
-                  ),
+                  ),*/
                 ],
-              ),
+              ),*/
               FutureBuilder<List<CowModel>>(
                 future: fetchCows(cowProvider),
                 builder: (context, snapshot) {
@@ -147,7 +147,7 @@ class CowStatus extends StatelessWidget {
                   } else {
                     final cows = snapshot.data!;
                     return SizedBox(
-                      height: 770,
+                      height: 720,
                       child: ListView.builder(
                         itemCount: cows.length,
                         itemBuilder: (BuildContext context, index) {

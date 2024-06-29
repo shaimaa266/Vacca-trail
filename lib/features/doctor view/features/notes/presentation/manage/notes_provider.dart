@@ -1,12 +1,16 @@
+import 'dart:io';
+
 import 'package:app_vacca/features/doctor%20view/features/notes/data/model/notes_model.dart';
 import 'package:app_vacca/features/doctor%20view/features/notes/data/repo/note_repo.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+
 
 class NotesProvider extends ChangeNotifier {
   bool isEmpty = false;
   List<NoteModel> allNotes = [];
 
-  List<NoteModel> addedNotes = [];
+  List <NoteModel>addedNotes = [];
   List<NoteModel> deletedNotes = [];
   List<NoteModel> editedNotes = [];
   List<NoteModel> staredNotes = [];
@@ -19,6 +23,9 @@ class NotesProvider extends ChangeNotifier {
   String? errorMessage;
   int currentPage = 0;
   final NoteRepo noteRepo;
+  File? _selectedImage;
+  String? get selectedImagePath => _selectedImage?.path;
+
   NotesProvider(this.noteRepo);
   void _setLoading(bool value) {
     isLoading = value;
@@ -41,7 +48,7 @@ class NotesProvider extends ChangeNotifier {
       _setLoading(false);
     }
   }
-
+//done
   Future<void> updateNotes(
   {
    required int id,
@@ -57,7 +64,7 @@ class NotesProvider extends ChangeNotifier {
   ) async {
     _setLoading(true);
     try {
-      editedNotes = await noteRepo.editNote(
+      allNotes = await noteRepo.editNote(
           id: id,
           title: title,
           noteId: noteId,
@@ -67,6 +74,7 @@ class NotesProvider extends ChangeNotifier {
           updatedAt: updatedAt,
           body: body,
           cow: cow);
+      await fetchAllNotes();
       _setError(null);
     } catch (e) {
       _setError(e.toString());
@@ -74,18 +82,24 @@ class NotesProvider extends ChangeNotifier {
       _setLoading(false);
     }
   }
-
-  Future<void> getAddNote(
-    String noteId,
-    int cowId,
-    String? image,
-    String title,
-    String body,
-  ) async {
+//not done
+  Future<void> getAddNote({
+    required String noteId,
+    required int cowId,
+    required String? image,
+    required String title,
+    required String body,
+  }) async {
     _setLoading(true);
     try {
-      addedNotes = await noteRepo.addNote(
-          body: body, image: image, cowId: cowId, noteId: noteId, title: title);
+      allNotes = await noteRepo.addNote(
+        noteId: noteId,
+        cowId: cowId,
+        image: image,
+        title: title,
+        body: body,
+      );
+      await fetchAllNotes();
       _setError(null);
     } catch (e) {
       _setError(e.toString());
@@ -94,10 +108,12 @@ class NotesProvider extends ChangeNotifier {
     }
   }
 
+//done
   Future<void> getRemoveNote(int id) async {
     _setLoading(true);
     try {
       deletedNotes = await noteRepo.deleteNote(id);
+      await fetchAllNotes();
       _setError(null);
     } catch (e) {
       _setError(e.toString());
@@ -105,11 +121,13 @@ class NotesProvider extends ChangeNotifier {
       _setLoading(false);
     }
   }
-
+//done
   Future<void> getStarNote(int id) async {
     _setLoading(true);
     try {
-      staredNotes = await noteRepo.starNote(id);
+      staredNotes =await noteRepo.starNote(id);
+      allNotes = await noteRepo.starNote(id);
+      await fetchAllNotes();
       _setError(null);
     } catch (e) {
       _setError(e.toString());
@@ -117,16 +135,40 @@ class NotesProvider extends ChangeNotifier {
       _setLoading(false);
     }
   }
-
+//done
   Future<void> getUnStarNote(int id) async {
     _setLoading(true);
     try {
-      unStaredNotes = await noteRepo.unStarNote(id);
+
+      allNotes = await noteRepo.unStarNote(id);
+      await fetchAllNotes();
       _setError(null);
     } catch (e) {
       _setError(e.toString());
     } finally {
       _setLoading(false);
+    }
+  }
+  //done
+  Future<void> getAllStarred()async{
+    _setLoading(true);
+    try {
+    staredNotes=await noteRepo.getAllStarredNotes();
+      await fetchAllNotes();
+      _setError(null);
+    } catch (e) {
+      _setError(e.toString());
+    } finally {
+      _setLoading(false);
+    }
+  }
+  //done
+  Future<void> openImagePicker() async {
+    final ImagePicker _picker = ImagePicker();
+    final XFile? pickedImage = await _picker.pickImage(source: ImageSource.gallery);
+    if (pickedImage != null) {
+      _selectedImage = File(pickedImage.path);
+      notifyListeners();
     }
   }
 }

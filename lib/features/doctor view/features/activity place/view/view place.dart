@@ -1,19 +1,16 @@
 import 'package:app_vacca/core/widgets/text%20font%20body.dart';
-import 'package:app_vacca/features/display%20view/custom_widgets/animated%20nav%20bar.dart';
 import 'package:app_vacca/core/widgets/background_image_container.dart';
 import 'package:app_vacca/core/widgets/first_row_title.dart';
+import 'package:app_vacca/features/display%20view/custom_widgets/constants_mixin.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
 import '../../../../display view/activity_places/data/models/activity_place_model.dart';
 import '../../../../display view/activity_places/presentation/control/activity_place_provider.dart';
-import '../../shared/button_customized.dart';
-import '../../shared/button_save.dart';
-import '../../shared/containerInfo.dart';
-import '../../shared/containerRowInfo.dart';
-import 'edit place.dart';
-class ViewPlace extends StatelessWidget {
+import '../../shared/doctor_nav_bar.dart';
+
+class ViewPlace extends StatelessWidget  with MyConstants{
   final int placeId;
   ViewPlace({super.key, required this.placeId});
 
@@ -35,8 +32,8 @@ class ViewPlace extends StatelessWidget {
         type: '',
         capacity: 0,
         cowCount: 0,
-        latitude: null,
-        longitude: null,
+        latitude: '',
+        longitude: '',
       ),
     );
   }
@@ -91,8 +88,8 @@ class ViewPlace extends StatelessWidget {
                               type: '',
                               capacity: 0,
                               cowCount: 0,
-                              latitude: null,
-                              longitude: null,
+                              latitude: '',
+                              longitude: '',
                             ),
                           );
 
@@ -104,56 +101,165 @@ class ViewPlace extends StatelessWidget {
 
                           return Column(
                             children: [
-                              TitleRow(textTitle: activityPlace.name!),
-                              SizedBox(height: 10.h),
-                              containerInfo(
-                                cText: 'Place Goals: ',
-                                dataText: activityPlace.goal!,
-                                h: 80,
-                              ),
-                              containerInfo(
-                                cText: 'Cause of creation: ',
-                                dataText: activityPlace.description!,
-                                h: 80,
-                              ),
-                              containerInfo(
-                                cText: 'Place Type: ',
-                                dataText: activityPlace.type!,
-                                h: 40,
-                              ),
-                              containerRowInfo(
-                                cText: 'Capacity of the place: ',
-                                dataText: '${activityPlace.capacity} cows',
-                              ),
-                              containerRowInfo(
-                                cText: 'Number of actual cows:',
-                                dataText: '${activityPlace.cowCount} cows',
+                              Container(
+                                width: 600.w,
+                                height: 190.h,
+                                decoration: BoxDecoration(
+                                  color: containerColor,
+                                  borderRadius: BorderRadius.circular(28),
+                                ),
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(28),
+                                  child:  activityPlaces.image.isEmpty?Image.asset( 'assets/images/cow.jpg'): Image.network(
+                                    activityPlaces.image,
+                                    fit: BoxFit.fill,
+                                  ),
+                                ),
                               ),
                               Row(
                                 children: [
-                                  if (activityPlace.cows!.isNotEmpty)
+                                  const TextFont(
+                                    text: "Id: ",
+                                    height: 30,
+                                    isDark: false,
+                                  ),
+                                  TextFont(
+                                    text: " ${activityPlaces.id}",
+                                    height: 30,
+                                    isDark: true,
+                                  ),
+                                ],
+                              ),
+                              Row(
+                                children: [
+                                  const TextFont(
+                                      height: 30, isDark: false, text: 'name : '),
+                                  TextFont(
+                                      height: 30,
+                                      isDark: true,
+                                      text: ' ${activityPlaces.name}'),
+                                ],
+                              ),
+                              Row(
+                                children: [
+                                  const TextFont(
+                                      height: 30,
+                                      isDark: false,
+                                      text: 'Place Capacity : '),
+                                  TextFont(
+                                      height: 30,
+                                      isDark: true,
+                                      text: ' ${activityPlaces.capacity}'),
+                                ],
+                              ),
+                              Row(
+                                children: [
+                                  const TextFont(
+                                      height: 30, isDark: false, text: 'Place Type  :'),
+                                  TextFont(
+                                      height: 30,
+                                      isDark: true,
+                                      text: activityPlaces.type),
+                                ],
+                              ),
+                              const TextFont(
+                                text: "System Goal:",
+                                height: 30,
+                                isDark: false,
+                              ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+
+
+
+                              Padding(
+                                padding: const EdgeInsets.all(4.0),
+                                child: Text(
+                                  activityPlaces.goal, style: TextStyle(
+                                  fontSize: 33.sp,
+                                  fontFamily: 'Urbanist',
+                                  color: const Color(0xff263238),
+                                  fontWeight: FontWeight.w600,
+                                ),
+
+                                ),
+                              ),
+
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              const TextFont(
+                                text: "description :",
+                                height: 30,
+                                isDark: false,
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(4.0),
+                                child: Text(
+                                  activityPlaces.description,  style: TextStyle(
+                                  fontSize: 33.sp,
+                                  fontFamily: 'Urbanist',
+                                  color: const Color(0xff263238),
+                                  fontWeight: FontWeight.w600,
+                                ),
+
+                                ),
+                              ),
+
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              const TextFont(
+                                text: "Place location :",
+                                height: 30,
+                                isDark: false,
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(4.0),
+                                child: Row(
+                                  children: [
+                                    TextFont(
+                                      text: "latitude:  ${activityPlaces.latitude}  ,",
+                                      height: 30,
+                                      isDark: true,
+                                    ),
+                                    TextFont(
+                                      text: "  longitude:  ${activityPlaces.longitude}",
+                                      height: 30,
+                                      isDark: true,
+                                    ),
+                                  ],
+                                ),
+
+                              ),
+                              Row(
+                                children: [
+                                  if (activityPlaces.cows!.isNotEmpty)
                                     DropdownButton<String>(
                                       focusColor: Colors.grey[300],
-                                      items: activityPlace.cows!.map((cow) {
+                                      items: activityPlaces.cows!.map((cow) {
                                         return DropdownMenuItem<String>(
                                           value: cow.cowId.toString(),
                                           child: Center(
-                                            child: Row(
-                                              children: [
-                                                Text("Cow ID: ${cow.cowId}"),
-                                                const SizedBox(width: 35),
-                                                CircleAvatar(
-                                                  radius: 3,
-                                                  backgroundColor: cow.cow_status == 0 ? const Color(0xff185C30) : Colors.red,
-                                                ),
-                                              ],
-                                            ),
-                                          ),
+                                              child: Row(
+                                                children: [
+                                                  Text("Cow ID: ${cow.cowId}"),
+                                                  const SizedBox(width: 35,),
+                                                  CircleAvatar(
+                                                    radius: 3,
+                                                    backgroundColor: cow.cow_status == 0
+                                                        ? baseColor
+                                                        : Colors.red,
+                                                  ),
+                                                ],
+                                              )),
                                         );
                                       }).toList(),
                                       onChanged: (val) {},
                                       hint: TextFont(
-                                        text: "Applied on: ${activityPlace.cows!.length} cows",
+                                        text:
+                                        "Applied on : ${activityPlaces.cows!.length} cows        ",
                                         height: 30,
                                         isDark: true,
                                       ),
@@ -166,8 +272,7 @@ class ViewPlace extends StatelessWidget {
                                     ),
                                 ],
                               ),
-                              SaveButton(route: EditPlace(placeId: activityPlace.id,),),
-                            ],
+                            ]
                           );
                         }
                       },
@@ -177,7 +282,7 @@ class ViewPlace extends StatelessWidget {
           ),
         ),
       ),
-      bottomNavigationBar: const Mynavbar(),
+      bottomNavigationBar:  DoctorNavBar(),
     );
   }
 }

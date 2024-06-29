@@ -1,5 +1,6 @@
 import 'package:app_vacca/features/display%20view/cow_data/presentation/view/cow_feature.dart';
 import 'package:app_vacca/features/display%20view/custom_widgets/constants_mixin.dart';
+import 'package:app_vacca/features/display%20view/custom_widgets/display_nav_provider.dart';
 import 'package:app_vacca/features/display%20view/home/file.dart';
 
 
@@ -9,7 +10,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
-import '../../doctor view/data/manage/state managment/providerHelper.dart';
 import '../home/home_screen.dart';
 
 class Mynavbar extends StatefulWidget {
@@ -20,10 +20,10 @@ class Mynavbar extends StatefulWidget {
 }
 
 class _MynavbarState extends State<Mynavbar> with MyConstants {
-  List<Widget> paths = [Home(), CowFeature(), File()];
+
   @override
   Widget build(BuildContext context) {
-    return Consumer<ProviderHelper>(
+    return Consumer<displayProviderHelper>(
         builder: (context, providerHelper, child) => CurvedNavigationBar(
               items: [
                 CurvedNavigationBarItem(
@@ -53,7 +53,7 @@ class _MynavbarState extends State<Mynavbar> with MyConstants {
                 Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
-                        builder: (_) => paths[providerHelper.currentIndex]));
+                        builder: (_) =>providerHelper. paths[providerHelper.currentIndex]));
               },
               animationDuration:  const Duration(milliseconds: 300),
               animationCurve: Curves.easeInOut,

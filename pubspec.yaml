@@ -48,6 +48,7 @@ dependencies:
   dio:
   http:
   flutter_spinkit: ^5.2.1
+  sqflite:
 
 
 

@@ -89,7 +89,7 @@ class BreedingContainer extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      breeding.name,
+                      breeding.name!,
                       style: TextStyle(
                           fontSize: 24.sp,
                           color: Colors.blueGrey,
@@ -99,7 +99,7 @@ class BreedingContainer extends StatelessWidget {
                       height: 2,
                     ),
                     Text(
-                      breeding.goal,
+                      breeding.goal!,
                       style: TextStyle(
                           fontSize: 14.sp,
                           color: Colors.grey[600],

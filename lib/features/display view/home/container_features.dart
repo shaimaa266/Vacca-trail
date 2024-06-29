@@ -2,13 +2,10 @@ import 'package:app_vacca/features/display%20view/activity_system/presentation/v
 import 'package:app_vacca/features/display%20view/breeding_system/presentation/view/breeding_systems.dart';
 
 import 'package:app_vacca/features/display%20view/custom_widgets/constants_mixin.dart';
-
+import 'package:app_vacca/features/display%20view/custom_widgets/display_nav_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
 import 'package:provider/provider.dart';
-
-import '../../doctor view/data/manage/state managment/providerHelper.dart';
 import '../activity_places/presentation/view/activity_places.dart';
 import '../breeding_system/presentation/manage/breeding_provider.dart';
 import '../cow_status/presentation/view/cow_status_screen.dart';
@@ -44,7 +41,7 @@ class FeatureContainer extends StatelessWidget with MyConstants {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<ProviderHelper>(
+    return Consumer<displayProviderHelper>(
       builder: (context, providerHelper, child) => GridView.builder(
         gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
           maxCrossAxisExtent: 290,

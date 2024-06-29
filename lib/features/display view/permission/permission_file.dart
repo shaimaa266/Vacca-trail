@@ -158,7 +158,7 @@ class _PermissionsDialogState extends State<PermissionsDialog> {
           children: [
             ElevatedButton(
               onPressed: () {
-                _showFirstDialog();
+                _showSecondDialog();
               },
               child: const Text('Login'),
             ),

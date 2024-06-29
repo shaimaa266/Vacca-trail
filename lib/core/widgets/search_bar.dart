@@ -26,7 +26,7 @@ class SearchBarCustom extends StatelessWidget with MyConstants {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.all(12.0),
           child: Container(
             decoration: BoxDecoration(
                 color: containerColor,
@@ -44,7 +44,7 @@ class SearchBarCustom extends StatelessWidget with MyConstants {
             width: w.w,
             child: Padding(
               padding:
-                  const EdgeInsets.only(top: 6, bottom: 6, left: 3, right: 4),
+                  const EdgeInsets.only(top: 6, bottom: 6, left: 1, right: 4),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [

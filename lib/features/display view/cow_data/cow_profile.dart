@@ -1,5 +1,4 @@
-import 'package:app_vacca/features/display%20view/activity_system/presentation/view/activity_systems.dart';
-import 'package:app_vacca/features/display%20view/breeding_system/presentation/view/breeding_systems.dart';
+import 'package:app_vacca/core/widgets/text%20font%20body.dart';
 import 'package:app_vacca/features/display%20view/cow_data/data/model/cows_model.dart';
 import 'package:app_vacca/features/display%20view/cow_data/presentation/control/cow_provider.dart';
 import 'package:app_vacca/features/display%20view/custom_widgets/animated%20nav%20bar.dart';
@@ -151,146 +150,117 @@ class CowNormal extends StatelessWidget with MyConstants {
 
                     return Padding(
                       padding: const EdgeInsets.only(
-                          top: 30, left: 22, bottom: 16, right: 16),
-                      child: SizedBox(
-                        height: 490.h,
-                        child: ListView(
-                          children: [
-                            getText("Cow Appearance: ${cows.appearance}"),
-                            getText("Cow Weight: ${cows.weight}"),
-                            getText("Purpose id: ${cows.purpose_id}"),
-                            getText("Cow Gender: ${cows.gender}"),
+                          top: 20, left: 29, bottom: 16, right: 16),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SizedBox(
+                            height: 500.h,
+                            child: ListView(
+                              children: [
+                                getText("Cow Appearance: ${cows.appearance}"),
+                                getText("Cow Weight: ${cows.weight} kg "),
+                                getText("Cow Gender: ${cows.gender}"),
+                                getText("Cow Age: ${cows.age!>6?7:5} years"),
+                                RichText(
+                                  text: TextSpan(
+                                    text: 'Status:  ',
+                                    style: TextStyle(
+                                        color: const Color(0xff263238),
+                                        fontSize: 36.sp,
+                                        fontStyle: FontStyle.italic,
+                                        fontFamily: 'Urbanist',
+                                        fontWeight: FontWeight.w900),
+                                    children: [
+                                      TextSpan(
+                                          text: cows.isPregnant == 1
+                                              ? 'NotPregnant '
+                                              : "Pregnant",
+                                          style: TextStyle(
+                                              color: Colors.red,
+                                              fontSize: 40.sp,
+                                              fontStyle: FontStyle.italic,
+                                              fontFamily: 'Urbanist',
+                                              fontWeight: FontWeight.w900)),
+                                    ],
+                                  ),
+                                ),
+                                getText(
+                                    "Day Milk Amount : ${cows.milk_amount_morning} kg"),
+                                getText(
+                                    "Night Milk Amount: ${cows.milk_amount_afternoon} kg "),
+                                getText("Original Area: ${cows.original_area}"),
+                                getText("Cow location  Longitude : ${cows.longitude}"),
+                                getText("Cow location  Latitude: ${cows.latitude}"),
+                                ListTile(
+                                  onTap: () {
+                                    Navigator.pushReplacement(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (_) => ActivityPlaces(
+                                          initialPlaceId: cows.activityplace_id,
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                  leading: getText('view activity place '),
+                                  title: Text(''),
+                                  trailing:  const Icon(
+                                    Icons.arrow_forward_ios,
+                                    size: 25,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                                ListTile(
+                                  onTap: () {
+                                    Navigator.pushReplacement(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (_) => ActivityPlaces(
+                                          initialPlaceId: cows.breadingsystem_id,
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                leading: getText(
 
-                            getText("Cow Age: ${cows.age}"),
-                            RichText(
-                              text: TextSpan(
-                                text: 'Status:  ',
-                                style: TextStyle(
-                                    color: const Color(0xff263238),
-                                    fontSize: 36.sp,
-                                    fontStyle: FontStyle.italic,
-                                    fontFamily: 'Urbanist',
-                                    fontWeight: FontWeight.w900),
-                                children: [
-                                  TextSpan(
-                                      text: cows.isPregnant == 1
-                                          ? 'NotPregnant '
-                                          : "Pregnant",
-                                      style: TextStyle(
-                                          color: Colors.red,
-                                          fontSize: 40.sp,
-                                          fontStyle: FontStyle.italic,
-                                          fontFamily: 'Urbanist',
-                                          fontWeight: FontWeight.w900)),
-                                ],
-                              ),
-                            ),
-                            getText(
-                                "Day Milk Amount : ${cows.milk_amount_morning}"),
-                            getText(
-                                "Night Milk Amount: ${cows.milk_amount_afternoon}"),
-                            getText("Original Area: ${cows.original_area}"),
-                            getText("Cow Longitude : ${cows.longitude}"),
-                            getText("Cow Latitude: ${cows.latitude}"),
-                            InkWell(
-                              onTap: () {
-                                Navigator.pushReplacement(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (_) => BreedingSystems(
-                                      initialBreedingSystemId: cows.breadingsystem_id,
-                                    ),
+                                  '  applied breeding system ',
                                   ),
-                                );
-                              },
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    "Breeding System id:   ${cows.breadingsystem_id}             ",
-                                    style: TextStyle(
-                                        decorationThickness: 4,
-                                        decorationColor: Colors.blueGrey,
-                                        fontWeight: FontWeight.w700,
-                                        fontSize: 36.sp,
-                                        fontFamily: 'Urbanist',
-                                        color: titleColor),
-                                  ),
-                                  Icon(
+                                  title: Text(''),
+                                  trailing: const  Icon(
                                     Icons.arrow_forward_ios,
                                     size: 25,
-                                    color: titleColor,
+                                    color: Colors.black
                                   ),
-                                ],
-                              ),
-                            ),
-                            InkWell(
-                              onTap: () {
-                                Navigator.pushReplacement(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (_) => ActivitySystems(
-                                      initialSystemId: cows.activitysystem_id,
-                                    ),
+                                ),
+
+                                ListTile(
+                                  onTap: () {
+                                    Navigator.pushReplacement(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (_) => ActivityPlaces(
+                                          initialPlaceId: cows.activitysystem_id,
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                  leading:  getText(
+                                   ' applied activity system ',
                                   ),
-                                );
-                              },
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    "Activity System id:   ${cows.activitysystem_id}             ",
-                                    style: TextStyle(
-                                        decorationThickness: 4,
-                                        decorationColor: Colors.blueGrey,
-                                        fontWeight: FontWeight.w700,
-                                        fontSize: 36.sp,
-                                        fontFamily: 'Urbanist',
-                                        color: titleColor),
-                                  ),
-                                  Icon(
+                                  title: Text(''),
+                                  trailing: const  Icon(
                                     Icons.arrow_forward_ios,
                                     size: 25,
-                                    color: titleColor,
+                                    color: Colors.black,
                                   ),
-                                ],
-                              ),
+                                ),
+                                getText("Entrance Date and time : "),
+                                getText('${cows.entrance_date}'),
+                              ],
                             ),
-                            InkWell(
-                              onTap: () {
-                                Navigator.pushReplacement(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (_) => ActivityPlaces(
-                                      initialPlaceId: cows.activityplace_id,
-                                    ),
-                                  ),
-                                );
-                              },
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    "Existing place id:   ${cows.activityplace_id}             ",
-                                    style: TextStyle(
-                                        decorationThickness: 4,
-                                        decorationColor: Colors.blueGrey,
-                                        fontWeight: FontWeight.w700,
-                                        fontSize: 36.sp,
-                                        fontFamily: 'Urbanist',
-                                        color: titleColor),
-                                  ),
-                                  Icon(
-                                    Icons.arrow_forward_ios,
-                                    size: 25,
-                                    color: titleColor,
-                                  ),
-                                ],
-                              ),
-                            ),
-                            getText("Entrance Date: ${cows.entrance_date}"),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
                     );
                   }
@@ -312,6 +282,7 @@ Widget getText(String text) {
         color: const Color(0xff263238),
         fontSize: 36.sp,
         fontFamily: 'Urbanist',
+        fontStyle: FontStyle.normal,
         fontWeight: FontWeight.w900),
   );
 }

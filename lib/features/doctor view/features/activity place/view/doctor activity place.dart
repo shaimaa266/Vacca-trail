@@ -1,6 +1,7 @@
 import 'package:app_vacca/features/display%20view/custom_widgets/animated%20nav%20bar.dart';
 import 'package:app_vacca/core/widgets/background_image_container.dart';
 import 'package:app_vacca/core/widgets/search_bar.dart';
+import 'package:app_vacca/features/doctor%20view/features/shared/doctor_nav_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
@@ -51,7 +52,7 @@ class DoctorActivityPlaces extends StatelessWidget {
                       child: Text(activityPlacesProvider.errorMessage!),
                     );
                   } else if (activityPlacesProvider.filteredPlaces.isEmpty) {
-                    return Center(
+                    return const Center(
                       child: Text('No activity places found'),
                     );
                   } else {
@@ -68,99 +69,16 @@ class DoctorActivityPlaces extends StatelessWidget {
                                 activityPlacesProvider.searchController.text,
                               ),
                               onPressedSearch: () {},
-                              w: 555,
+                              w: 625,
                               h: 50,
                               keyboardType: TextInputType.text,
                               hintText: "Search by place name ...",
                             ),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: PopupMenuButton<int>(
-                                child: Image.asset('assets/images/sort icon.png'),
-                                onSelected: (int value) {
-                                  if (value == 0 || value == 1) {
-                                    activityPlacesProvider.applyStatusFilter(value, activityPlace.id);
-                                  } else {
-                                    activityPlacesProvider.clearFilters();
-                                  }
-                                },
-                                itemBuilder: (BuildContext context) {
-                                  return [
-                                    PopupMenuItem<int>(
-                                      value: 0,
-                                      child: Row(
-                                        children: [
-                                          TextButton(
-                                            onPressed: () {
-                                              activityPlacesProvider.applyStatusFilter(0, activityPlace.id);
-                                            },
-                                            child: const Text('only Normal cows '),
-                                          ),
-                                          IconButton(
-                                            onPressed: () {
-                                              activityPlacesProvider.clearFilters();
-                                            },
-                                            icon: const Icon(
-                                              Icons.minimize,
-                                              size: 30,
-                                              color: Colors.white,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    PopupMenuItem<int>(
-                                      value: 1,
-                                      child: Row(
-                                        children: [
-                                          TextButton(
-                                            onPressed: () {
-                                              activityPlacesProvider.applyStatusFilter(1, activityPlace.id);
-                                            },
-                                            child: const Text(' only Abnormal cows'),
-                                          ),
-                                          IconButton(
-                                            onPressed: () {
-                                              activityPlacesProvider.clearFilters();
-                                            },
-                                            icon: const Icon(
-                                              Icons.remove_circle_outlined,
-                                              size: 30,
-                                              color: Colors.white,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    PopupMenuItem<int>(
-                                      value: 2,
-                                      child: Row(
-                                        children: [
-                                          const Text(
-                                            'By Type',
-                                            style: TextStyle(fontSize: 18),
-                                          ),
-                                          IconButton(
-                                            onPressed: () {
-                                              activityPlacesProvider.clearFilters();
-                                            },
-                                            icon: const Icon(
-                                              Icons.remove_circle_outlined,
-                                              size: 30,
-                                              color: Colors.white,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ];
-                                },
-                              ),
-                            )
+
                           ],
                         ),
                         ActivityPlaceContainer(
-                          placeId: 1,
+                          placeId: activityPlace.id,
                         imagePath: activityPlacesProvider.images[currentIndex],
                         ),
                       ],
@@ -172,7 +90,7 @@ class DoctorActivityPlaces extends StatelessWidget {
           },
         ),
       ),
-      bottomNavigationBar: const Mynavbar(),
+      bottomNavigationBar: DoctorNavBar(),
     );
   }
 }
